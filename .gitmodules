@@ -1,6 +1,6 @@
 [submodule "vendor/bundles/FOS/TwitterBundle"]
 	path = vendor/bundles/FOS/TwitterBundle
-	url = git://github.com/FriendsOfSymfony/FOSTwitterBundle.
+	url = git://github.com/FriendsOfSymfony/FOSTwitterBundle.git
 	ignore = dirty
 [submodule "vendor/doctrine/common"]
 	path = vendor/doctrine/common
