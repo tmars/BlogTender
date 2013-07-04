@@ -1,0 +1,335 @@
+<?php
+
+namespace mh\BTBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * VKUser
+ */
+class VKUser
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var integer
+     */
+    private $uid;
+
+    /**
+     * @var string
+     */
+    private $first_name;
+
+    /**
+     * @var string
+     */
+    private $last_name;
+
+    /**
+     * @var string
+     */
+    private $nickname;
+
+    /**
+     * @var string
+     */
+    private $screen_name;
+
+    /**
+     * @var Sex
+     */
+    private $sex;
+
+    /**
+     * @var \DateTime
+     */
+    private $birthDate;
+
+    /**
+     * @var integer
+     */
+    private $city;
+
+    /**
+     * @var integer
+     */
+    private $country;
+
+    /**
+     * @var integer
+     */
+    private $timezone;
+
+    /**
+     * @var string
+     */
+    private $photo;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set uid
+     *
+     * @param integer $uid
+     * @return VKUser
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+    
+        return $this;
+    }
+
+    /**
+     * Get uid
+     *
+     * @return integer 
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * Set first_name
+     *
+     * @param string $firstName
+     * @return VKUser
+     */
+    public function setFirstName($firstName)
+    {
+        $this->first_name = $firstName;
+    
+        return $this;
+    }
+
+    /**
+     * Get first_name
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * Set last_name
+     *
+     * @param string $lastName
+     * @return VKUser
+     */
+    public function setLastName($lastName)
+    {
+        $this->last_name = $lastName;
+    
+        return $this;
+    }
+
+    /**
+     * Get last_name
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * Set nickname
+     *
+     * @param string $nickname
+     * @return VKUser
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+    
+        return $this;
+    }
+
+    /**
+     * Get nickname
+     *
+     * @return string 
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * Set screen_name
+     *
+     * @param string $screenName
+     * @return VKUser
+     */
+    public function setScreenName($screenName)
+    {
+        $this->screen_name = $screenName;
+    
+        return $this;
+    }
+
+    /**
+     * Get screen_name
+     *
+     * @return string 
+     */
+    public function getScreenName()
+    {
+        return $this->screen_name;
+    }
+
+    /**
+     * Set sex
+     *
+     * @param Sex $sex
+     * @return VKUser
+     */
+    public function setSex($sex)
+    {
+        $this->sex = $sex;
+    
+        return $this;
+    }
+
+    /**
+     * Get sex
+     *
+     * @return Sex 
+     */
+    public function getSex()
+    {
+        return $this->sex;
+    }
+
+    /**
+     * Set birthDate
+     *
+     * @param \DateTime $birthDate
+     * @return VKUser
+     */
+    public function setBirthDate($birthDate)
+    {
+        $this->birthDate = $birthDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get birthDate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthDate()
+    {
+        return $this->birthDate;
+    }
+
+    /**
+     * Set city
+     *
+     * @param integer $city
+     * @return VKUser
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return integer 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set country
+     *
+     * @param integer $country
+     * @return VKUser
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return integer 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set timezone
+     *
+     * @param integer $timezone
+     * @return VKUser
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+    
+        return $this;
+    }
+
+    /**
+     * Get timezone
+     *
+     * @return integer 
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     * @return VKUser
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string 
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+}

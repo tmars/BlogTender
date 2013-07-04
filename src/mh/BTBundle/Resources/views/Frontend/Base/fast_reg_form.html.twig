@@ -1,0 +1,29 @@
+{% if fast_reg_form is defined %}
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+
+
+<form action="{{ path('homepage') }}" method="post">
+<div id="fast_reg_info" class="igor_info_window">{{ forms.all_messages(fast_reg_form) }}</div>
+
+<div id="right_top_form">
+    <p>принять участие <span>Прямо сейчас!</span></p>
+
+    {{ forms.widget(fast_reg_form._token) }}
+	  <script>
+	  info('#fast_reg_info');
+	  </script>
+    {{ forms.widget(fast_reg_form.email, {placeholder: 'Введите свой e-mail...', widget_attr: {class: 'act_mail'}}) }}
+
+
+    <input class="circle" type="submit" value="" />
+    <p class="soc_ent_text">ИЛИ войдите через:</p>
+    <a href="{{ env.socnetOAuthLink('fb') }}" rel="facebox" id="fb"></a>
+	<a href="{{ env.socnetOAuthLink('vk') }}" rel="facebox" id="vk"></a>
+	<a href="{{ env.socnetOAuthLink('tw') }}" rel="facebox" id="tw"></a>
+	<a href="{{ env.socnetOAuthLink('od') }}" rel="facebox" id="od"></a>
+	<a href="{{ env.socnetOAuthLink('gl') }}" rel="facebox" id="go"></a>
+	<a href="{{ env.socnetOAuthLink('ml') }}" rel="facebox" id="ma"></a>
+</div>
+</form>
+{% endif %}

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>{% block title %}{% endblock %}</title>
+
+ <link rel="stylesheet" href="/bundles/bt/css/style.css" type="text/css" media="screen" />
+
+ <!--[if (gte IE 6)&(lte IE 8)]><script type="text/javascript" src="/bundles/bt/js/selectivizr.js"></script><![endif]-->
+ <!--[if IE 7]><link rel="stylesheet" href="/bundles/bt/css/style-ie7.css" type="text/css" media="screen" /><![endif]-->
+ <!--[if IE 8]><link rel="stylesheet" href="/bundles/bt/css/style-ie8.css" type="text/css" media="screen" /><![endif]-->
+
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+
+ <!-- videoplayer -->
+ <link rel="stylesheet" href="/bundles/bt/video/leanbackPlayer.vim.css" type="text/css" media="screen" />
+ <script type="text/javascript" src="/bundles/bt/video/leanbackPlayer.pack.js"></script>
+ <script type="text/javascript" src="/bundles/bt/video/leanbackPlayer.ru.js"></script>
+ <!-- end videoplayer -->
+
+ <!-- countdovn -->
+ <script type="text/javascript" src="/bundles/bt/js/misc.js"></script>
+ <script type="text/javascript" src="/bundles/bt/js/jquery.lwtCountdown-1.0.js"></script>
+ <!-- end countdovn -->
+
+ <!-- begin scroll -->
+ <link rel="stylesheet" href="/bundles/bt/css/jquery.jscrollpane.css" type="text/css" media="screen" />
+ <script type="text/javascript" src="/bundles/bt/js/jquery.jscrollpane.js"></script>
+ <script type="text/javascript" src="/bundles/bt/js/jquery.mousewheel.js"></script>
+ <!-- end scroll -->
+
+ <!-- search -->
+ <link rel="stylesheet" href="/bundles/bt/js/css/select2.css" type="text/css" media="screen" />
+ <script type="text/javascript" src="/bundles/bt/js/select2.min.js"></script>
+ <script type="text/javascript">post_search_form_url = '{{ path('post_search_promt') }}/';</script>
+ <script type="text/javascript" src="/bundles/bt/js/post-search-promt.js"></script>
+ <!-- end search -->
+
+ <!-- pop-up -->
+ <link rel="stylesheet" href="/bundles/bt/js/css/facebox.css" type="text/css" media="screen" />
+ <script type="text/javascript" src="/bundles/bt/js/facebox.js"></script>
+ <script type="text/javascript" src="/bundles/bt/js/pop-up.js"></script>
+ <!-- end pop-up -->
+
+ <script type="text/javascript" src="/bundles/bt/js/back-top.js"></script>
+ <script type="text/javascript" src="/bundles/bt/js/post-selector.js"></script>
+
+	<script type="text/javascript" src="/bundles/bt/js/igor_func.js"></script>
+
+ {% block scripts %}{% endblock %}
+ {% block stylies %}{% endblock %}
+
+</head>
+<body>
+
+ {% include 'BTBundle:Frontend/Base:header.html.twig' %}
+
+ <div class="content_wrap">
+  <div class="content_layout">
+   <div class="content_layout-row">
+    <div class="content_main">
+
+	 <div class="content-wiev">
+	  {% block content %}{% endblock %}
+     </div>
+
+     <div class="content-bottom"></div>
+
+	</div><!-- end content_main -->
+
+    <div class="right_side">
+
+	 <div class="right_top">
+      {% if env.user %}
+       <div class="right_post">
+		<h3>Меню [{{ env.user.screenName }}]</h3>
+        {{ env.userMenu|raw }}
+       </div>
+      {% else %}
+	   {% include 'BTBundle:Frontend/Base:counter.html.twig' %}
+       {% include 'BTBundle:Frontend/Base:fast_reg_form.html.twig' %}
+	  {% endif %}
+     </div>
+
+	 {% include 'BTBundle:Frontend/Post:post_block.html.twig' with {posts: env.getLastPosts(5), title: 'последние'} %}
+
+     {% include 'BTBundle:Frontend/Post:post_block.html.twig' with {posts: env.getRandomPosts(5), title: 'случайные'} %}
+
+     {% include 'BTBundle:Frontend/Base:history_online_block.html.twig' with {history_online: env.historyOnline} %}
+
+	 {% include 'BTBundle:Frontend/Base:post_selector_mini.html.twig' %}
+
+     <div class="right_baner"></div>
+
+	</div>
+
+   </div>
+  </div>
+ </div>
+
+ {% include 'BTBundle:Frontend/Base:footer.html.twig' %}
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+mh\BTBundle\Entity\Answer:
+    type: entity
+    table: answer__answer
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        content:
+            type: text
+            nullable: false
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+        moderationStatus:
+            type: ModerationStatus
+            nullable: false
+            column: moderation_status
+        isPublished:
+            type: boolean
+            nullable: false
+            column: is_published
+        isBest:
+            type: boolean
+            nullable: false
+            column: is_best
+        scores:
+            type: smallint
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+    manyToOne:
+        user:
+            targetEntity: User
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+                    nullable: false
+            orphanRemoval: false
+        question:
+            targetEntity: Question
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                question_id:
+                    referencedColumnName: id
+                    nullable: false
+            orphanRemoval: true
+    oneToOne:
+        contentObject:
+            targetEntity: ContentObject
+            cascade: [ persist ]
+            joinColumns:
+                content_object_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

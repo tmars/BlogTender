@@ -1,0 +1,17 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block content %}
+ {% include 'BTBundle:Frontend/Base:video_trailer_block.html.twig' %}
+
+ {% include 'BTBundle:Frontend/Base:info_block.html.twig' %}
+
+ {% include 'BTBundle:Frontend/Base:post_selector.html.twig' %}
+
+ <div class="clear"></div>
+
+ <div class="content-wiev_more">
+  {% include 'BTBundle:Frontend/Post:list_post.html.twig' %}
+  <div class="clear"></div>
+ </div>
+
+{% endblock %}

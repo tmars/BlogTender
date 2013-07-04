@@ -1,0 +1,82 @@
+.content-wiev_item > h2, .content-wiev_item > h3, .content-wiev_more > h2, .content-wiev_more > h3, .right_post > h3{background:url("../images/title.jpg") repeat-y 0 0 #FFFFFF;}
+
+.back-top:hover a{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=0 );}
+
+.head_menu ul:before{
+    position: absolute;
+    content: ' ';
+    width: 100%;
+    bottom: -13px;
+    left: 0;
+    right: 0;
+    height: 13px;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/menu_shadov_ie.png', sizingMethod='scale');
+    -ms-filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/menu_shadov_ie.png', sizingMethod='scale');
+    z-index: -1;
+    zoom:1;
+}
+
+.head_menu ul>li:first-child:before, .head_menu ul>li:last-child:before{
+    position: absolute;
+    content: ' ';
+    background: url("../images/menu_border_ie.png");
+    top: -1px;
+    width: 4px;
+    height: 38px;
+    z-index: 1;
+}
+.head_menu ul>li:first-child:before{
+    background-position: left top;
+    left: -4px;
+}
+.head_menu ul>li:last-child:before{
+    background-position: right top;
+    right: -4px;
+}
+
+
+.head_menu li > ul:before, .head_menu li > ul li:before, .head_menu li > ul li:after{display: none;}
+
+.send_post a:before{
+    position: absolute;
+    content: '';
+    bottom: -9px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: url("../images/send_post_shadov_ie.jpg") no-repeat center top;
+    z-index: -1;
+}
+
+.head_top > div.search{background: none #414548;}
+
+.content_wrap{z-index: 1;}
+.content_main{position:relative;z-index: 2;}
+.select2-search input{padding:6px 20px 6px 5px !important;}
+
+.content-wiev_tab > h2{
+    position: relative; 
+    z-index: 3;
+    background-image:url("../images/title.jpg");
+    background-repeat: repeat-y;
+    background-position: left bottom;
+    
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 -3px 5px -3px rgba(0,0,0,0.2),-3px -2px 5px -3px rgba(0,0,0,0.2),3px -2px 5px -3px rgba(0,0,0,0.2);
+}
+
+.content-wiev_tab .box{
+    position: relative;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    behavior:url(PIE.htc);
+    z-index: 0;
+}
+
+#post_body li:hover{border: 1px solid yellow;}
+
+#tab_cont{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccffffff', endColorstr='#ccffffff',GradientType=0 );}
+
+#facebox .popup .content{behavior:url(PIE.htc);}
+
+#ui-datepicker-div, .head_menu li > ul.blue{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3013859', endColorstr='#b3013859',GradientType=0 );}
+.ui-datepicker-buttonpane button.ui-datepicker-current{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebebeb', endColorstr='#b6b6b6',GradientType=0 );}

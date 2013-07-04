@@ -1,0 +1,17 @@
+mh\BTBundle\Entity\RestrictedWord:
+    type: entity
+    table: restricted_word
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        word:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

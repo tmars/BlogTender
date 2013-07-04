@@ -1,0 +1,12 @@
+error_message:
+    pattern:  /error/{mode}
+    defaults: { _controller: BTBundle:Frontend\Message:error }
+    requirements:
+        mode: "[a-z_]+"
+        
+done_message:
+    pattern:  /done/{mode}
+    defaults: { _controller: BTBundle:Frontend\Message:done }
+    requirements:
+        mode: "[a-z_]+"
+    

@@ -1,0 +1,62 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+
+{% block title %}Баллы{% endblock %}
+{% block header %}Баллы{% endblock %}
+
+{% block content %}
+<div class="content-wiev_item">
+
+ <div class="breadcrumbs">
+    <a href="{{ path('homepage') }}">Главная</a>
+    <span>Мои баллы</span>
+  </div>
+ <h2>{{ russian_date(date, 'j F Y') }}</h2>
+
+<table>
+ <thead>
+  <th>Назначение</th>
+  <th>Баллы</th>
+  <th>Количество</th>
+ </thead>
+{% for type,data in types%}
+<tr>
+ <td>{{ type }}</td>
+ <td>{{ data.scores }}</td>
+ <td>{{ data.count }}</td>
+</tr>
+{% endfor %}
+</table>
+
+ <div class="clear"></div>
+					<!--  DATE PICKER! -->
+				 
+				 <link type="text/css" href="/bundles/bt/jquery-ui-1.10.2.custom/css/smoothness/jquery-ui-1.10.2.custom.min.css" rel="stylesheet" />
+				<!-- 	<script src="/bundles/bt/jquery-ui-1.10.2.custom/js/jquery-1.9.1.js" type="text/javascript"></script> -->
+					<script src="/bundles/bt/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js" type="text/javascript"></script>
+					<script src="/bundles/bt/jquery-ui-1.10.2.custom/js/i18n/jquery-ui-i18n.js" type="text/javascript"></script>
+					
+					<!--  /DATE PICKER! -->
+					<br>
+					
+Статистика за дату: <input  id="datepicker" type="text" />
+<script type="text/javascript">
+	$(function(){
+	$.datepicker.setDefaults(
+	        $.extend($.datepicker.regional["ru"])
+	  );
+	  $("#datepicker").datepicker({dateFormat:"yy-mm-dd"});
+	  
+	  $("#datepicker").change(function () {
+		window.location.href="/profile/admin/scores/"+$("#datepicker").val();	
+	  
+	  });
+	  
+	});
+	</script>
+<!--  <a href="{{ path('profile_admin_scores', {date: prev}) }}" class="but-yellow">Раньше</a>
+ <a href="{{ path('profile_admin_scores') }}" class="but-yellow">Сегодня</a>
+ <a href="{{ path('profile_admin_scores', {date: next}) }}" class="but-yellow">Позднее</a> -->
+ <div class="clear"></div>
+</div>
+{% endblock %}

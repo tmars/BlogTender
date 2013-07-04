@@ -1,0 +1,87 @@
+<?php
+
+namespace mh\BTBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use mh\Common\Image;
+
+/**
+ * PostImage
+ */
+class UserFoto extends Image
+{
+    protected $formats = array(
+		'original' => array(
+			'name' => 'original',
+			'width' => 800,
+			'height' => 800,
+			'back' => false,
+		),
+		'miniview' => array(
+			'name' => 'miniview',
+			'width' => 100,
+			'height' => 100,
+			'back' => true,
+		),
+	);
+
+    protected $rootDir = '../web/images/user_foto';
+
+	protected $dir = '/images/user_foto';
+
+    public function getOriginal()
+    {
+		return $this->getView('original');
+   	}
+
+    public function getMiniview()
+    {
+		return $this->getView('miniview');
+   	}
+
+    /*--------------------------------------------------------------------------*/
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $filename;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set filename
+     *
+     * @param string $filename
+     * @return PostImage
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Get filename
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+}

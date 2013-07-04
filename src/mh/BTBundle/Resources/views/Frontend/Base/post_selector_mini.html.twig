@@ -1,0 +1,30 @@
+<div class="right_post post_tab">
+<h3>статьи</h3>
+<div class="content-wiev_tab">
+    <div class="section">
+        {% set posts = env.randomMarkedPosts(3) %}
+        {% for post in posts %}
+        <div class="box{% if loop.first %} visible{% endif %}">
+            <div>
+                <span>
+                    <img style="cursor:pointer;" alt="{{ post.title }}" src="{{ post.preview.original }}" onclick="window.location.href='{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}'"/>
+                    <div id="tab_cont" class="mini_tit_post"><p>{{ post.title }}</p></div>
+                </span>
+                <p style="padding:3px 9px;">{{ post.textPreview }}</p>
+               <a class="but-yellow" style="margin:10px;"  href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}">прочитать</a>
+                <div class="clear"></div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="tbl">
+          <ul class="tabs">
+            {% for post in posts %}
+            <li{% if loop.first %} class="current"{% endif %}><span>{{ post.title }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+    </div>
+</div>
+</div>

@@ -1,0 +1,10 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+<form action="{{ path('profile_login') }}" method="post">
+{{ forms.errors(form) }}
+{{ forms.row(form._token) }}
+
+{{ forms.row(form.email) }}
+{{ forms.row(form.password) }}
+<input type="submit">
+</form>

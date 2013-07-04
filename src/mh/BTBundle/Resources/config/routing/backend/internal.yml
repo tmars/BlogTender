@@ -1,0 +1,19 @@
+index:
+    pattern:  /
+    defaults: { _controller: BTBundle:Backend\Internal:index }
+
+refresh_scores:
+    pattern:  /refresh_scores
+    defaults: { _controller: BTBundle:Backend\Internal:refreshScores }
+    
+publish_posts:
+    pattern:  /load_fixtures
+    defaults: { _controller: BTBundle:Backend\Internal:loadFixtures }
+    
+check_auth:
+    pattern:  /auth_check/{auth_hash}
+    defaults: { _controller: BTBundle:Backend\Internal:authCheck }
+    
+clear_unused_images:
+    pattern:  /clear_unused_images
+    defaults: { _controller: BTBundle:Backend\Internal:clearUnusedImages }

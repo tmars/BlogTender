@@ -1,0 +1,19 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block header %}Мои посты{% endblock %}
+{% block content %}
+
+
+<div class="content-wiev_item">
+<div class="breadcrumbs">
+	<a href="{{ path('homepage') }}">Главная</a>
+	<span>Мои посты</span>
+</div>
+<h2>Мои посты</h2>
+</div>
+
+<div class="content-wiev_more">
+ {% include 'BTBundle:Frontend/Post:list_post.html.twig' %}
+</div>
+
+{% endblock %}

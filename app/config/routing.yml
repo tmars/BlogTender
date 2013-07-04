@@ -1,0 +1,18 @@
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+ 
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+_bt_back:
+    resource: "@BTBundle/Resources/config/routing/backend/routing.yml"
+    prefix:   /back
+    
+_bt_front:
+    resource: "@BTBundle/Resources/config/routing/frontend/routing.yml"
+    prefix:   /
+    
+

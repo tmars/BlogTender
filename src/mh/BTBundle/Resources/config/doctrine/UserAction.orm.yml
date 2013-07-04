@@ -1,0 +1,39 @@
+mh\BTBundle\Entity\UserAction:
+    type: entity
+    table: user__action
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        fromUrl:
+            type: string
+            length: 255
+            fixed: false
+            nullable: true
+            column: from_url
+        toUrl:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+            column: to_url
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+    manyToOne:
+        userSession:
+            targetEntity: UserSession
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_session_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

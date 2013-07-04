@@ -1,0 +1,16 @@
+<div id="tab_comments">
+ <div class="avatar"><img alt="img" src="{{ comment.user.avatar.microview }}"/></div>
+  <div id="tab_comments_item">
+   <div id="tab_comments_top">
+    <div class="author">
+     <a href="{{ path('list_post_by_login', {'login': comment.user.screenName}) }}">{{ comment.user.name }}</a>
+    </div>
+    <div class="date">
+     {{ russian_date(comment.createdDate) }}
+    </div>
+   </div>
+   <div id="tab_comments_bottom">
+    <p>{{ comment.content }}</p>
+   </div>
+  </div>
+</div>

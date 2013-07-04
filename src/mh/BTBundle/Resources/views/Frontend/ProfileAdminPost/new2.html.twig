@@ -1,0 +1,19 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Новый пост{% endblock %}
+{% block header %}Новый пост{% endblock %}
+
+{% block content %}
+{% if themes is defined and themes|length > 0 %}
+Темы для поста
+<ul>
+{% for theme in themes %}
+ <li><a>{{ theme.title }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<form action="{{ path('profile_admin_new_post') }}" method="post" {{ form_enctype(form) }}>
+ {% include 'BTBundle:Frontend/ProfileAdminPost:form.html.twig' %}
+</form>
+{% endblock %}

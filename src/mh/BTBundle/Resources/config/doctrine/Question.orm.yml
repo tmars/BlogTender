@@ -1,0 +1,71 @@
+mh\BTBundle\Entity\Question:
+    type: entity
+    table: question__question
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        title:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+        content:
+            type: text
+            nullable: false
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+        moderationStatus:
+            type: ModerationStatus
+            nullable: false
+            column: moderation_status
+        isPublished:
+            type: boolean
+            nullable: false
+            column: is_published
+        scores:
+            type: smallint
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+        answerCount:
+            type: smallint
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+            column: answer_count
+    oneToMany:
+        answers:
+            targetEntity: Answer
+            cascade: [ remove ]
+            mappedBy: question
+            orderBy:
+                createdDate: DESC
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        category:
+            targetEntity: Category
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+                    nullable: false
+    oneToOne:
+        contentObject:
+            targetEntity: ContentObject
+            cascade: [ persist ]
+            joinColumns:
+                content_object_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

@@ -1,0 +1,3 @@
+_internal:
+    resource: "internal.yml"
+    prefix:   /internal

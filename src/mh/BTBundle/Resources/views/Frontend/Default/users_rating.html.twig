@@ -1,0 +1,27 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Рейтинг пользователей{% endblock %}
+
+{% block content %}
+<div class="content-wiev_item">
+
+ <div class="breadcrumbs">
+  <a href="{{ path('homepage') }}">Главная</a>
+  <span>Рейтинг пользователей</span>
+ </div>
+
+<table>
+{% for user in users %}
+
+<tr>
+ <td><a href="{{ path('list_post_by_login', {login: user.screenName}) }}">{{ user.name }}</a></td>
+ <td>{{ user.scores }}</td>
+</tr>
+{% endfor %}
+</table>
+
+
+{{ pagerfanta(users, 'default_2') }}
+ <div class="clear"></div>
+</div>
+{% endblock %}

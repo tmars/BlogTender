@@ -1,0 +1,11 @@
+{% for comment in comments %}
+{% include 'BTBundle:Frontend/Post:comment.html.twig' %}
+<div class="clear"></div>
+{% endfor %}
+{% if comments|length > 0 %}
+{% set last_comment_id = comments[comments|length-1].id %}
+<a class="but-yellow active" onclick="(function(obj){$.ajax({url: '{{ path('more_comments', {id: last_comment_id}) }}', complete: function(data) {$(obj).replaceWith(data.responseText);}})}(this));">
+ Предыдущие комментарии
+</a>
+<div class="clear"></div>
+{% endif %}

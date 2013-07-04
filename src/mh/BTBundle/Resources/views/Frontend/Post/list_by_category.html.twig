@@ -1,0 +1,18 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Категория: {{ category.label }}{% endblock %}
+
+{% block content %}
+<div class="content-wiev_item">
+  <div class="breadcrumbs">
+    <a href="{{ path('homepage') }}">Главная</a>
+    <a href="{{ path('list_post') }}">Посты</a>
+    <span>[Категория: {{ category.label }}]</span>
+  </div>
+ <h2>Посты в категории: {{ category.label }}</h2>
+</div>
+
+ <div class="content-wiev_more">
+  {% include 'BTBundle:Frontend/Post:list_post.html.twig' %}
+ </div>
+{% endblock %}

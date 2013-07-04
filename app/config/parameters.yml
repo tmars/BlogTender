@@ -1,0 +1,38 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     localhost
+    database_port:     ~
+    database_name:     blog_tender
+    database_user:     root
+    database_password: 
+
+    mailer_transport:  gmail
+    mailer_host:       ~
+    mailer_user:       talipov.mars
+    mailer_password:   fdRNHJFNds836
+
+    locale:            ru
+    secret:            bQ7k7eqMQhHAgijvKz3O
+
+    vk_app_id:         3190758
+    vk_secret_key:     bQ7k7eqMQhHAgijvKz3O
+    
+    fb_app_id:         294601757322662
+    fb_secret_key:     349cff8e08e76a2263b93215002f5be1
+    
+    ml_app_id:         691062
+    ml_secret_key:     8f53232c64af23d473b431fba3161277
+    
+    od_app_id:         172568832
+    od_public_key:     CBACDKELABABABABA
+    od_secret_key:     92765CCA34792AF6FD66400A
+    
+    tw_app_id:         isPexEvDWhzOBIH631rBA
+    tw_secret_key:     SyUgxUm4q4qFYJWiX5oznAEC6cGaGMrhlOEJ4c4Vc
+    
+    gl_app_id:         184111728968.apps.googleusercontent.com
+    gl_secret_key:     BINscwD9JGQv_lXEdYTX-cB9
+    
+    feedback_receivers:     't.mars@mail.ru'
+
+    count_post_per_page: 18

@@ -1,0 +1,18 @@
+mh\BTBundle\Entity\ThemeForPost:
+    type: entity
+    table: theme_for_post
+    repositoryClass: mh\BTBundle\Repository\ThemeForPostRepository
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        title:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

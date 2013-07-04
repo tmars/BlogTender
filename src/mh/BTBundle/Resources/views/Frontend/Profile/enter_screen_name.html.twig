@@ -1,0 +1,24 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block content %}
+<div class="content_wrap">
+            <div class="content_layout">
+                <div class="content_layout-row">
+                    <div class="content_main">
+                        <div class="content-wiev">
+							 <div class="content-wiev_item">
+								<h2>Введите свой уникальный Ник-нэйм</h2>
+								<br>
+										
+
+										<form action="" method="post">
+										{{ forms.errors(form) }}
+										{{ forms.row(form._token) }}
+
+										{{ forms.row(form.screen_name) }}
+										<input type="submit" class="but-yellow"><br><br>
+										</form>
+							</div>
+						</div><!-- end content-wiev -->
+{% endblock %}

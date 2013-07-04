@@ -1,0 +1,22 @@
+list_question:
+    pattern:  /
+    defaults: { _controller: BTBundle:Frontend\Question:list }
+
+list_question_by_category:
+    pattern:  /category/{category_id}
+    defaults: { _controller: BTBundle:Frontend\Question:listByCategory }
+    
+show_question:
+    pattern:  /{id}
+    defaults: { _controller: BTBundle:Frontend\Question:show }
+    requirements:
+        id: "[0-9]+"
+
+show_answer:
+    pattern:  /{qid}#answer{aid}
+    defaults: { _controller: BTBundle:Frontend\Question:show }
+    requirements:
+        qid: "[0-9]+"
+        aid: "[0-9]+"
+        
+        

@@ -1,0 +1,32 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+{% block title %}Добавление вопроса{% endblock %}
+
+{% block content %}
+
+<div class="content-wiev_item">
+<div class="breadcrumbs">
+    <a href="{{ path('homepage') }}">Главная</a>
+    <span>Добавление вопроса</span>
+</div>
+	<h2>Добавление Вопроса</h2>
+	<div class="add_posts">
+		<div class="add_posts_item">
+
+			<form action="{{ path('profile_admin_new_question') }}" method="post" class="form_block">
+				{{ forms.widget(form._token) }}
+
+				{{ forms.row(form.category) }}
+				{{ forms.row(form.title) }}
+				{{ forms.row(form.content) }}
+
+				{{ forms.messages(form) }}
+				<input type="submit" class="but-yellow active" alue="Спросить">
+			    <div class="clear"></div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+<div class="add_post-theme">
+    <ul>
+        {% for theme in themes_for_post %}
+        <li><a>{{ theme.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a class="but-yellow active" onclick="(function(obj){$.ajax({url: '{{ path('other_themes_for_post') }}', complete: function(data) {$(obj).parent().replaceWith(data.responseText);}})}(this));">Ещё темы</a>
+</div>

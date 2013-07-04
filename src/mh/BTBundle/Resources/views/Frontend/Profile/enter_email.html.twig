@@ -1,0 +1,16 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block content %}
+
+Ввод почты
+
+<form action="" method="post">
+{{ forms.errors(form) }}
+{{ forms.row(form._token) }}
+
+{{ forms.row(form.email) }}
+<input type="submit">
+</form>
+
+{% endblock %}

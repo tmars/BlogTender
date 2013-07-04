@@ -1,0 +1,36 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Редактирование поста{% endblock %}
+
+{% block scripts %}
+{% include 'BTBundle:Frontend/ProfileAdminPost:form_scripts.html.twig'%}
+{% endblock %}
+
+{% block content %}
+
+<div class="content-wiev_item">
+<div class="breadcrumbs"><a>Главная</a><span>Редактирование поста</span></div>
+	<h2>Редактирование поста</h2>
+	<div class="add_posts">
+		<div class="add_posts_item">
+
+			<form action="{{ path('profile_admin_edit_post', {id: post.id}) }}" method="post" {{ form_enctype(form) }} class="form_block">
+
+				{% include 'BTBundle:Frontend/ProfileAdminPost:form.html.twig' %}
+
+				<input type="submit" class="but-yellow active" value="Сохранить" onclick="$('#post_pub_flag').val(0)" style="margin: 0 10px;"/>
+				{% if post.isPublished == false %}
+				<input type="submit" class="but-yellow active" value="Опубликовать" onclick="$('#post_pub_flag').val(1)">
+				{% else %}
+				<input type="submit" class="but-yellow active" value="Снять с публикации" onclick="$('#post_pub_flag').val(-1)">
+				{% endif %}
+
+				<div class="clear"></div>
+
+
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

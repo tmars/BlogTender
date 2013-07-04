@@ -1,0 +1,20 @@
+mh\BTBundle\Entity\Category:
+    type: entity
+    table: category
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        label:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+    manyToMany:
+        posts:
+            targetEntity: Post
+            inversedBy: categories

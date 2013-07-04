@@ -1,0 +1,20 @@
+<div class="right_post">
+<h3>{{ title }}</h3>
+<div id="post_body">
+<ul>
+ {% for post in posts %}
+  <li>
+	  <a href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}">
+       <img src="{{ post.preview.microview }}"/><p>{{ post.title }}</p>
+      </a>
+	  <div class="author">
+       <a href="{{ path('list_post_by_login', {login: post.user.screenName}) }}">{{ post.user.name }}</a><br />
+	  </div>
+      <span>{{ post.likesCount }}</span>
+	  <div class="clear"></div>
+  </li>
+  {% endfor %}
+</ul>
+<div class="clear"></div>
+</div>
+</div>

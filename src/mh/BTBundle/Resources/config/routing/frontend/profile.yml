@@ -1,0 +1,25 @@
+profile_confirm_email:
+    pattern:  /confirm/{code}
+    defaults: { _controller: BTBundle:Frontend\Profile:confirm }
+    
+profile_login:
+    pattern:  /login
+    defaults: { _controller: BTBundle:Frontend\Profile:login }
+    
+profile_socnet_login:
+    pattern:  /login/socnet/{mode}
+    defaults: { _controller: BTBundle:Frontend\Profile:socnetLogin }
+    requirements:
+        code: "vk|fb|ml|tw|gl"
+
+profile_twitter_oauth:
+    pattern:  /login/twitter/oauth
+    defaults: { _controller: BTBundle:Frontend\Profile:twitterOAuth }
+    
+profile_logout:
+    pattern:  /logout
+    defaults: { _controller: BTBundle:Frontend\Profile:logout }
+    
+
+ 
+    

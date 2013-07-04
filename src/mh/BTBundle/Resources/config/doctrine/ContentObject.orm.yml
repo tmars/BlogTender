@@ -1,0 +1,33 @@
+mh\BTBundle\Entity\ContentObject:
+    type: entity
+    table: content_object__object
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        complaintsCount:
+            type: smallint
+            column: complaints_count
+            columnDefinition: SMALLINT UNSIGNED NOT NULL DEFAULT '0'
+        likesCount:
+            type: smallint
+            column: likes_count
+            columnDefinition: SMALLINT UNSIGNED NOT NULL DEFAULT '0'
+    oneToMany:
+        likes:
+            targetEntity: ContentObjectLike
+            cascade: [ persist, remove ]
+            mappedBy: target
+            orderBy:
+                createdDate: DESC
+        complaints:
+            targetEntity: ContentObjectComplaint
+            cascade: [ remove ]
+            mappedBy: target
+            orderBy:
+                createdDate: DESC
+    

@@ -1,0 +1,36 @@
+mh\BTBundle\Entity\PostComment:
+    type: entity
+    table: post__comment
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+        content:
+            type: text
+            nullable: true
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        post:
+            targetEntity: Post
+            joinColumns:
+                post_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

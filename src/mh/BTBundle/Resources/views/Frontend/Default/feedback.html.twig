@@ -1,0 +1,26 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Обратная связь{% endblock %}
+
+{% block content %}
+ <div class="content-wiev_item">
+<div class="breadcrumbs"><a href="/index.php">Главная</a><span>Обратная связь</span></div>
+<h2>Обратная связь</h2>
+<div class="feedback">
+
+	<div>
+		<form action="{{ path('feedback') }}" method="post">
+		{{ forms.all_messages(form) }}
+		{{ forms.widget(form._token) }}
+		{{ forms.row(form.email) }}
+		{{ forms.row(form.subject) }}
+		{{ forms.row(form.content) }}
+
+		<input type="submit" class="but-yellow">
+		</form>
+	</div>
+</div>
+</div>
+
+{% endblock %}

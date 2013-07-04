@@ -1,0 +1,42 @@
+new_comment:
+    pattern:  /new_comment
+    defaults: { _controller: BTBundle:Frontend\Ajax:newComment }
+    
+post_search_promt:
+    pattern:  /post_search_promt/{tag}
+    defaults: { _controller: BTBundle:Frontend\Ajax:postSearchPromt, tag: '' }
+    
+content_like:
+    pattern:  /content_like
+    defaults: { _controller: BTBundle:Frontend\Ajax:like }
+    
+content_complaint:
+    pattern:  /content_complaint
+    defaults: { _controller: BTBundle:Frontend\Ajax:complaint }
+    
+best_answer:
+    pattern:  /best_answer
+    defaults: { _controller: BTBundle:Frontend\Ajax:bestAnswer }
+    
+more_comments:
+    pattern:  /more_comments/{id}
+    defaults: { _controller: BTBundle:Frontend\Ajax:moreComments }
+    requirements:
+        id: "[0-9]+"
+        
+other_themes_for_post:
+    pattern:  /other_themes_for_post/
+    defaults: { _controller: BTBundle:Frontend\Ajax:otherThemesForPost }
+    
+next_history:
+    pattern: /next_history/{hash}
+    defaults: { _controller: BTBundle:Frontend\Ajax:nextHistory, hash: '' }
+    requirements:
+        hash: "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9][a-z][a-z][0-9]+"
+        
+prev_history:
+    pattern: /prev_history/{hash}
+    defaults: { _controller: BTBundle:Frontend\Ajax:prevHistory, hash: '' }
+    requirements:
+        hash: "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9][a-z][a-z][0-9]+"
+    

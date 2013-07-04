@@ -1,0 +1,15 @@
+<div class="social">
+{% set user = env.user %}
+	{% if user %}
+
+	{% else %}
+    <p>Войти через соц. сеть:</p>
+    <!-- <a href="{{ path('profile_login') }}" >вход</a> -->
+    <a href="{{ env.socnetOAuthLink('fb') }}" id="fb"></a>
+    <a href="{{ env.socnetOAuthLink('vk') }}" id="vk"></a>
+    <a href="{{ env.socnetOAuthLink('tw') }}" id="tw"></a>
+    <a href="{{ env.socnetOAuthLink('od') }}" id="od"></a>
+    <a href="{{ env.socnetOAuthLink('gl') }}" id="go"></a>
+    <a href="{{ env.socnetOAuthLink('ml') }}" id="ma"></a>
+{% endif %}
+</div>

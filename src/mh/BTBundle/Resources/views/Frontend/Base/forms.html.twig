@@ -1,0 +1,83 @@
+{% macro attr(attr, val) %}
+{% if attr and val in attr|keys %}{{ attr[val] }}{% endif %}
+{% endmacro %}
+
+{% macro setWidgetAttr(form, attr, val) %}
+{% if form.setAttribute(attr, val) %}{% endif %}
+{% endmacro %}
+
+{% macro label(form, attr) %}
+{{ form_label(form) }}{#{% if form.get('required') %}<span style="color:red">&nbsp;*</span>{% endif %}#}
+{% endmacro %}
+
+{% macro widget(form, attr) %}
+ {# устанавливаем плейхолдер #}
+
+ {% if 'placeholder' in attr|keys %}
+  {{ _self.setWidgetAttr(form, 'placeholder', attr['placeholder']) }}
+  {{ _self.setWidgetAttr(form, 'onblur', "if(this.placeholder=='') this.placeholder='" ~ attr['placeholder'] ~ "';") }}
+  {{ _self.setWidgetAttr(form, 'onfocus', "if(this.placeholder=='" ~ attr['placeholder'] ~ "') this.placeholder='';") }}
+ {% endif %}
+
+ {% if 'widget_attr' in attr|keys %}
+ {% for k,v in attr['widget_attr'] %}
+  {{ _self.setWidgetAttr(form, k, v) }}
+ {% endfor %}
+ {% endif %}
+
+ {{ _self.attr(attr, 'prefix') }}{{ form_widget(form) }}{{ _self.attr(attr, 'postfix') }}
+{% endmacro %}
+
+{% macro error(message) %}
+<div class="form_error">
+ {{ message }}
+</div>
+{% endmacro %}
+
+{% macro info(message) %}
+<div class="form_info">
+ {{ message }}
+</div>
+{% endmacro %}
+
+{% macro messages(form) %}
+ {% for m in form.get('errors') %}
+
+  {% if 'info' in m.messageParameters|keys %}
+   {% if form.get('label') %}
+   {{ _self.info(form.get('label') ~ ': ' ~ m.messageTemplate) }}
+   {% else %}
+   {{ _self.info(m.messageTemplate) }}
+   {% endif %}
+  {% else %}
+   {% if form.get('label') %}
+   {{ _self.error(form.get('label') ~ ': ' ~ m.messageTemplate) }}
+   {% else %}
+   {{ _self.error(m.messageTemplate) }}
+   {% endif %}
+  {% endif %}
+
+ {% endfor %}
+{% endmacro %}
+
+{% macro all_messages(form) %}
+{{ _self.messages(form) }}
+{% for f in form %}
+ {{ _self.messages(f) }}
+{% endfor %}
+{% endmacro %}
+
+{% macro row(form, attr) %}
+<div style="clear: both;">
+ {{ _self.label(form, attr) }}<br>
+ {{ _self.widget(form, attr) }}<br>
+ {{ _self.messages(form) }}
+</div>
+{% endmacro %}
+
+{% macro short_row(form, attr) %}
+<div style="clear: both;">
+ {{ _self.widget(form, attr) }}<br>
+ {{ _self.messages(form) }}
+</div>
+{% endmacro %}

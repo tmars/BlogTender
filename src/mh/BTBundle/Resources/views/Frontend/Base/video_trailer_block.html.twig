@@ -1,0 +1,12 @@
+{% if env.user %}
+{% else %}
+<div class="content-top">
+        <div class="leanback-player-video">
+            <!-- HTML5 <video> element -->
+            <video width="639" height="314" preload="metadata" controls poster="/bundles/bt/video/poster.jpg">
+                <!-- HTML5 <video> sources -->
+                <source src="/bundles/bt/video/trailer_400p.ogg" type='/bundles/bt/video/ogg; codecs="theora, vorbis"'/>
+            </video>
+        </div>
+</div>
+{% endif %}

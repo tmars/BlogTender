@@ -1,0 +1,7 @@
+services:
+    form.type.moderation_status:
+        class: mh\BTBundle\Form\Backend\ModerationStatusType
+        tags:
+            - { name: form.type, alias: moderation_status }
+    #cache:
+    #    class: Doctrine\Common\Cache\ApcCache

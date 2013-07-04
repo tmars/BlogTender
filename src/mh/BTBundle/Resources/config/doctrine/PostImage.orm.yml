@@ -1,0 +1,27 @@
+mh\BTBundle\Entity\PostImage:
+    type: entity
+    table: post_image
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+              strategy: IDENTITY
+        filename:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+    oneToOne:
+        post:
+            targetEntity: Post
+            mappedBy: image
+            orphanRemoval: true
+    lifecycleCallbacks: 
+        prePersist: [ preUpload ]
+        preUpdate: [ preUpload ]
+        postPersist: [ upload ]
+        postUpdate: [ upload ]
+        postRemove: [ removeUpload ]

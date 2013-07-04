@@ -1,0 +1,23 @@
+profile_admin_list_post:
+    pattern:  /list
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:list }
+    
+profile_admin_new_post:
+    pattern:  /new
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:new }
+    
+profile_admin_edit_post:
+    pattern:  /{id}/edit
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:edit }
+    requirements:
+        id: "[0-9]+"
+        
+profile_admin_delete_post:
+    pattern:  /{id}/delete
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:delete }
+    requirements:
+        id: "[0-9]+"
+        
+profile_admin_list_foreign_link:
+    pattern:  /foreign_link
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:listForeignLink }

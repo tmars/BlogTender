@@ -1,0 +1,21 @@
+_profile_admin_post:
+    resource: "profile_admin_post.yml"
+    prefix:   /post
+    
+_profile_admin_question:
+    resource: "profile_admin_question.yml"
+    prefix:   /question
+    
+profile_admin_scores:
+    pattern:  /scores/{date}
+    defaults: { _controller: BTBundle:Frontend\ProfileAdmin:scores, date: 'now' }    
+    requirements:
+        date: "\d\d\d\d-\d\d-\d\d"
+        
+profile_admin_edit:
+    pattern:  /edit
+    defaults: { _controller: BTBundle:Frontend\ProfileAdmin:edit }
+    
+profile_admin_invite_friends:
+    pattern:  /invite_friends
+    defaults: { _controller: BTBundle:Frontend\ProfileAdmin:inviteFriends } 

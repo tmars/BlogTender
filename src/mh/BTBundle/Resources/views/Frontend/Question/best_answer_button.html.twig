@@ -1,0 +1,17 @@
+{% if env.user and env.user.id == question.user.id %}
+
+{% set form = env.contentObjectForm(object) %}
+{% if form %}
+
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+<form action="{{ path('best_answer') }}" method="post" style="display: inline;">
+ {{ forms.messages(form) }}
+ {{ forms.widget(form._token) }}
+ {{ forms.widget(form.content_id) }}
+ <a class="but-yellow active" onclick="bestAnswer(this);">Лучший ответ</a>
+</form>
+
+{% endif %}
+
+{% endif %}

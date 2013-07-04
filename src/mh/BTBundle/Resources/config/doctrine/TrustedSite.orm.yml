@@ -1,0 +1,17 @@
+mh\BTBundle\Entity\TrustedSite:
+    type: entity
+    table: trusted_site
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        url:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

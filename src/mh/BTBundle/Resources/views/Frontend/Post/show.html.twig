@@ -1,0 +1,92 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block scripts %}
+<script type="text/javascript" src="/bundles/bt/js/send-form.js"></script>
+<script type="text/javascript" src="/bundles/bt/js/content-obj-toggle.js"></script>
+<script type="text/javascript" src="//vk.com/js/api/openapi.js?82"></script>
+
+<script type="text/javascript">
+  VK.init({apiId: {{ vk_app_id }}, onlyWidgets: true});
+</script>
+{% endblock %}
+
+{% block title %}Просмотр поста: {{ post.title }}{% endblock %}
+
+{% block content %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId={{ fb_app_id }}";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="content-wiev_item">
+	   <div class="breadcrumbs">
+		<a href="{{ path('homepage') }}">Главная</a>
+		<a href="{{ path('list_post') }}">Посты</a>
+		<a href="{{ path('list_post_by_login', {login: post.user.screenName}) }}">{{ post.user.name }}</a>
+		<span>{{ post.title }}</span>
+	   </div>
+	   <h2>{{ post.title }}</h2>
+	   <div class="post_item">
+		   <div class="author">
+			   <a href="{{ path('list_post_by_login', {login: post.user.screenName}) }}">{{ post.user.name }}</a>
+			   <div class="date">
+				<span id="clock">Опублукованно: </span>
+				<span>{{ russian_date(post.createdDate) }}</span>
+			   </div>
+		   </div>
+		   {% if post.image %}
+		   <img src="{{ post.image.original }}"/>
+		   {% endif %}
+		   {{ post.content|raw }}
+		   </div>
+	   <div class="post_teg">
+		   Теги: {% for tag in post.tags %}
+			   <a href="{{ path('list_post_by_tag', {tag: tag.label}) }}">{{ tag.label }}</a>{% if not loop.last %}, {% endif %}
+			   {% endfor %}
+	   </div>
+	   <h2>Понравился пост - помоги автору!</h2>
+	   <div class="social">
+        {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': post} %}
+		{% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': post} %}
+	   </div>
+   </div>
+   <div class="content-wiev_tab content-wiev_item_tab">
+		   <div class="section">
+			 <div class="tbl">
+			 <ul class="tabs">
+			   <li class="current"><span>КомментЫ FReeporter</span></li>
+			   <li><span>Комменты Вконтакте</span></li>
+			   <li><span>Комменты Facebook</span></li>
+			 </ul>
+			 </div><div class="clear"></div>
+			 {% include 'BTBundle:Frontend/Post:comment_block.html.twig' %}
+			 <div class="box">
+			   <div id="vk_comments"></div>
+			   <script type="text/javascript">
+			   VK.Widgets.Comments("vk_comments", {limit: 5, width: "496", attach: "*"});
+			   </script>
+			 </div>
+			 <div class="box">
+			   <div class="fb-comments" data-href="{{ app.request.requestUri }}" data-width="470" data-num-posts="5"></div>
+			 </div>
+		   </div>
+   </div><!-- end content-wiev_tab-->
+
+   <div class="content-wiev_more">
+
+{% if similar_posts|length > 0 %}
+<h2 class="wiev_more_title">Смотрите также</h2>
+{% for post in similar_posts %}
+ {% if loop.index%3==1  %}  <div class="row"> {% endif %}
+  {% include 'BTBundle:Frontend/Post:post_item.html.twig' %}
+ {% if loop.index%3==0 or loop.last %} <div class="clear"></div>  </div><!-- end row --> {% endif %}
+{% endfor %}
+{% endif %}
+
+   </div>
+
+{% endblock %}

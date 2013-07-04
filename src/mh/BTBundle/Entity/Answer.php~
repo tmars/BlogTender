@@ -1,0 +1,40 @@
+<?php
+
+namespace mh\BTBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use mh\BTBundle\DBAL\ModerationStatusType;
+
+/**
+ * Answer
+ */
+class Answer extends Base\ContentObject
+{
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+		$this->setCreatedDate(new \DateTime());
+        $this->setModerationStatus(ModerationStatusType::NOT_MODERATED);
+        $this->setIsPublished(true);
+        $this->setIsBest(false);
+        if (!$this->getScores()) $this->setScores(0);
+
+		parent::prePersist();
+	}
+
+    public function getPreview()
+    {
+        return strip_tags($this->getContent());
+    }
+
+    public function __toString()
+    {
+        return $this->getPreview();
+    }
+
+    /*--------------------------------------------------------------------------*/
+
+
+}

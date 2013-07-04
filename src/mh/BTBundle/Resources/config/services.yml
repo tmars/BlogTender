@@ -1,0 +1,111 @@
+parameters:
+    user_mailer.class: mh\Common\UserMailer
+    user_mailer.templates_dir: 'BTBundle:Frontend\MailTemplates:'
+    
+    random.class: mh\Common\Random
+    
+    cookie_container.class: mh\Common\CookieContainer
+    
+    uniquer_checker.class: mh\Common\UniqueChecker
+    
+    link_checker.class: mh\Common\LinkChecker
+    
+    scores_allocator.class: mh\Common\ScoresAllocator
+    
+    twitter_oauth.class: mh\Common\Twitter\TwitterOAuth
+    
+services:
+    
+    pagerfanta.view.default_2:
+        class: mh\BTBundle\Twig\MyView
+        public: false
+        tags: [{ name: pagerfanta.view, alias: default_2 }]
+    
+# Twig
+    twig.extension.mh.blog_tender:
+        class: mh\BTBundle\Twig\BTExtension
+        tags:
+            - { name: twig.extension }
+            
+# Сервисы
+    link_checker:
+        class:     %link_checker.class%
+    cookie_container:
+        class:     %cookie_container.class%
+        arguments: [@request]
+        scope: request
+    user_mailer:
+        class:     %user_mailer.class%
+        arguments: [@mailer, @templating, %user_mailer.templates_dir%]
+    random:
+        class:     %random.class%
+    unique_checker:
+        class:     %uniquer_checker.class%
+    scores_allocator:
+        class:     %scores_allocator.class%
+    twitter_oauth:
+        class:     %twitter_oauth.class%
+        arguments: [%tw_app_id%, %tw_secret_key%]
+
+            
+# Сущности для админки
+    admin.post:
+        class: mh\BTBundle\Admin\PostAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Посты", label: "Посты"}
+        arguments: [ null, mh\BTBundle\Entity\Post, BTBundle:Backend\ContentObjectCRUD ]
+    admin.complaint:
+        class: mh\BTBundle\Admin\ContentObjectComplaintAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Посты", label: "Жалобы"}
+        arguments: [ null, mh\BTBundle\Entity\ContentObjectComplaint, SonataAdminBundle:CRUD ]
+    admin.post_comment:
+        class: mh\BTBundle\Admin\PostCommentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Посты", label: "Комментарии"}
+        arguments: [ null, mh\BTBundle\Entity\PostComment, SonataAdminBundle:CRUD ]
+    admin.post_foreign_link:
+        class: mh\BTBundle\Admin\PostForeignLinkAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Посты", label: "Внешние ссылки"}
+        arguments: [ null, mh\BTBundle\Entity\PostForeignLink, SonataAdminBundle:CRUD ]
+    
+    
+    admin.tag:
+        class: mh\BTBundle\Admin\TagAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Админка", label: "Теги"}
+        arguments: [ null, mh\BTBundle\Entity\Tag, SonataAdminBundle:CRUD ]
+    admin.trusted_site:
+        class: mh\BTBundle\Admin\TrustedSiteAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Админка", label: "Партнерские сайты"}
+        arguments: [ null, mh\BTBundle\Entity\TrustedSite, SonataAdminBundle:CRUD ]
+    admin.theme_for_post:
+        class: mh\BTBundle\Admin\ThemeForPostAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Админка", label: "Темы для постов"}
+        arguments: [ null, mh\BTBundle\Entity\ThemeForPost, SonataAdminBundle:CRUD ]
+    admin.restricted_word:
+        class: mh\BTBundle\Admin\RestrictedWordAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Админка", label: "Запрещенные слова"}
+        arguments: [ null, mh\BTBundle\Entity\RestrictedWord, SonataAdminBundle:CRUD ]
+    admin.category:
+        class: mh\BTBundle\Admin\CategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Админка", label: "Категории"}
+        arguments: [ null, mh\BTBundle\Entity\Category, SonataAdminBundle:CRUD ]
+    
+    admin.question:
+        class: mh\BTBundle\Admin\QuestionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Вопросы", label: "Вопросы"}
+        arguments: [ null, mh\BTBundle\Entity\Question, BTBundle:Backend\ContentObjectCRUD ]
+    
+    admin.answer:
+        class: mh\BTBundle\Admin\AnswerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Вопросы", label: "Ответы"}
+        arguments: [ null, mh\BTBundle\Entity\Answer, BTBundle:Backend\ContentObjectCRUD ]
+    
