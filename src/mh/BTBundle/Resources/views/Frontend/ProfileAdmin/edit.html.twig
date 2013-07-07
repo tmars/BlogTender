@@ -1,0 +1,57 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+
+{% block title %}Редактирование профиля{% endblock %}
+
+
+{% block content %}
+{% if message is defined %}
+<b>Сообщение:{{ message }}</b>
+{% endif %}
+
+ <div class="content-wiev_item">
+  <div class="breadcrumbs">
+    <a href="{{ path('homepage') }}">Главная</a>
+    <span>Редактирование профиля</span>
+  </div>
+
+   <h2>Редактирование профиля</h2>
+
+   <form action="{{ path('profile_admin_edit') }}" method="post" {{ form_enctype(form) }} class="form_block">
+   <div class="profil_edit">
+
+    <div class="avatar">
+     {% if user.foto %}
+      <img src="{{ user.foto.q122 }}">
+     {% else %}
+      <img src="/bundles/bt/images/no-avatar.jpg">
+     {% endif %}
+     {{ forms.widget(form.foto, {'widget_attr': {'style': 'display:none', 'onchange': "$('#edit_avatar').html($(this).val());"}}) }}
+     <br><a onclick="$('#profile_foto').click()" id="edit_avatar">Редактировать аватар</a>
+    </div>
+
+    <div class="info">
+      {{ form_widget(form._token) }}
+
+      {{ forms.short_row(form.email, {'placeholder': 'Email'}) }}
+      {{ forms.short_row(form.screen_name, {'placeholder': 'Логин'}) }}
+      {{ forms.short_row(form.name, {'placeholder': 'Имя пользователя'}) }}
+      {{ forms.short_row(form.password, {'placeholder': 'Пароль'}) }}
+      {{ forms.short_row(form.password_repeat, {'placeholder': 'Повторите пароль'}) }}
+      {{ forms.short_row(form.about, {'placeholder': 'О себе...'}) }}
+    </div>
+
+    <div class="clear"></div>
+    {{ forms.messages(form) }}
+    {{ forms.messages(form.foto) }}
+    <div class="clear"></div>
+    <input type="submit" class="but-yellow active" value="сохранить">
+    <div class="clear"></div>
+
+   </div>
+   </form>
+
+ </div>
+
+{% endblock %}

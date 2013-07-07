@@ -1,0 +1,30 @@
+mh\BTBundle\Entity\Tag:
+    type: entity
+    table: tag
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        label:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+        isModered:
+            type: boolean
+            nullable: false
+            column: is_modered
+    manyToMany:
+        posts:
+            targetEntity: Post
+            inversedBy: tags
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

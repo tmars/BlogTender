@@ -1,0 +1,7 @@
+{% if value == 'not_moderated' %}
+ <img src="{{ asset('bundles/sonataadmin/famfamfam/magnifier.png') }}">&nbsp;Не модерирован
+{% elseif value == 'valid' %}
+ <img src="{{ asset('bundles/sonataadmin/famfamfam/accept.png') }}">&nbsp;Прошел модерацию
+{% elseif value == 'not_valid' %}
+ <img src="{{ asset('bundles/sonataadmin/famfamfam/exclamation.png') }}">&nbsp;Не прошел модерацию
+ {% endif %}

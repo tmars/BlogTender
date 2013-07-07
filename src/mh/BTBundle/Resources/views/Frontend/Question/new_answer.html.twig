@@ -1,0 +1,31 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+{% block title %}Новый ответ{% endblock %}
+
+{% block content %}
+
+<div class="content-wiev_item">
+<div class="breadcrumbs">
+    <a href="{{ path('homepage') }}">Главная</a>
+    <a href="{{ path('show_question', {id: question.id}) }}" >{{ question.title }}</a>
+    <span>Новый ответ</span>
+</div>
+	<h2>Новый ответ</h2>
+	<div class="add_posts">
+		<div class="add_posts_item">
+
+			<form action="{{ path('profile_admin_new_answer', {id: question.id}) }}" method="post" class="form_block">
+				{{ forms.widget(form._token) }}
+
+				{{ forms.row(form.content) }}
+
+				{{ forms.messages(form) }}
+				<input type="submit" class="but-yellow active" value="Ответить">
+			    <div class="clear"></div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

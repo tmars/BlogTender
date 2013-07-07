@@ -1,0 +1,28 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+{{ form_stylesheet(form) }}
+
+{{ forms.widget(form._token) }}
+{{ forms.widget(form.pub_flag) }}
+
+{{ forms.row(form.categories) }}
+{% if post is defined and post.image %}
+<img src="{{ post.preview.miniview }}">
+{% endif %}
+<div id="new_input_image_info" class="igor_info_window">{{ forms.row(form.image) }}</div>
+<div id="post_image_value" ></div><br>
+<input class="but-yellow active" style="float:left; margin-top:-15px;" type="button" onclick="$('#post_image').click()" value="Загрузить картинку">
+<script>
+	  info('#new_input_image_info');
+	$("#post_image").change(function () {
+		var val=$('#post_image').val();
+		$("#post_image_value").html(val);
+	});
+</script>
+{{ forms.row(form.title) }}
+{{ forms.row(form.subtitle) }}
+{{ forms.row(form.content) }}
+{{ forms.row(form.tags) }}
+<br>
+
+{{ forms.messages(form) }}

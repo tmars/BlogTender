@@ -1,0 +1,78 @@
+<script>
+next_history_hash = '{% if history_online|length > 0 %}{{ history_online[history_online|length - 1].hash }}{% endif %}';
+prev_history_hash = '{% if history_online|length > 0 %}{{ history_online[0].hash }}{% endif %}';
+function loadNextHistory()
+{
+    $.ajax({
+        url: '{{ path('next_history') }}/' + next_history_hash,
+        complete: function(data) {
+            data = JSON.parse(data.responseText);
+            if (data.status == 'done') {
+                next_history_hash = data.hash;
+                $('.jspPane').append(data.content);
+                setupScrollActions();
+            } else {
+                //alert(data.message);
+
+            }
+        }
+    });
+}
+function loadPrevHistory()
+{
+    $.ajax({
+        url: '{{ path('prev_history') }}/' + prev_history_hash,
+        complete: function(data) {
+            data = JSON.parse(data.responseText);
+            if (data.status == 'done') {
+                prev_history_hash = data.hash;
+                $('.jspPane').prepend(data.content);
+                setupScrollActions();
+            } else {
+               // alert(data.message);
+            }
+        }
+    });
+}
+function setupScrollActions() {
+    $('.story_main').jScrollPane({showArrows: true});
+    $('.story_main').bind(
+        'jsp-scroll-y',
+        function(event, scrollPositionY, isAtTop, isAtBottom) {
+            if (isAtTop) {
+                loadPrevHistory();
+            } else if (isAtBottom) {
+                loadNextHistory();
+            }
+        }
+    );
+
+    $('.jspPane_gotop').mousedown(function(){
+        $('.jspArrowUp').mousedown();
+    });
+    $('.jspPane_gotop').mouseup(function(){
+        $('.jspArrowUp').mouseup();
+    });
+    $('.jspPane_godown').mousedown(function(){
+        $('.jspArrowDown').mousedown();
+    });
+    $('.jspPane_godown').mouseup(function(){
+        $('.jspArrowDown').mouseup();
+    });
+}
+$(document).ready(function() {
+    setupScrollActions();
+});
+</script>
+
+<div class="right_post">
+	<h3>История онлайн</h3>
+
+    <span class="jspPane_gotop"></span>
+
+    <div class="story_main">
+     {% include 'BTBundle:Frontend/Base:history_online_list.html.twig' %}
+    </div>
+
+    <span class="jspPane_godown"></span>
+</div>

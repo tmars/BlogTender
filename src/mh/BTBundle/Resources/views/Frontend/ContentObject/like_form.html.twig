@@ -1,0 +1,15 @@
+<div> Лайкнули {{ object.likesCount|number_format() }}</div>
+
+{% set form = env.contentObjectForm(object) %}
+{% if form %}
+
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+<form action="{{ path('content_like') }}" method="post">
+ {{ form_errors(form) }}
+ {{ form_widget(form._token) }}
+ {{ form_widget(form.content_id) }}
+ <input type="button" onClick="likeIt(this);" value="Нравится">
+</form>
+
+{% endif %}

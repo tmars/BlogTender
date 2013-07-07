@@ -1,0 +1,67 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block scripts %}
+<script type="text/javascript" src="/bundles/bt/js/send-form.js"></script>
+<script type="text/javascript" src="/bundles/bt/js/content-obj-toggle.js"></script>
+{% endblock %}
+
+{% block title %}Просмотр вопроса: {{ question.title }}{% endblock %}
+
+{% block content %}
+
+<div class="content-wiev_item">
+<div class="breadcrumbs">
+ <a href="{{ path('homepage') }}">Главная</a>
+ <a>Вопросы  и ответы</a>
+ <span>{{ question.title }}</span>
+</div>
+<h2>{{ question.title }}</h2>
+    <div class="vopros">
+        <div class="author">
+            <a href="{{ path('list_post_by_login', {login: question.user.screenName}) }}">{{ question.user.name }}</a>
+            <div class="date">
+             <span id="clock">Опубликовано: </span>
+             {{ russian_date(question.createdDate) }}
+            </div>
+        </div>
+        <p>{{ question.content }}</p>
+    </div>
+    <div class="social">
+     {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': question} %}
+	 <a href="{{ path('profile_admin_new_answer', {id: question.id}) }}" class="but-yellow active">Ответить</a>
+     {% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': question} %}
+	</div>
+</div>
+
+<div class="content-wiev_answer">
+ {% if answers|length > 0%}
+ <h2>Ответы</h2>
+ {% else %}
+ <h2>Ответов на вопрос пока нет :)</h2>
+ {% endif %}
+
+ {% for answer in answers %}
+     <a name="answer{{ answer.id }}"></a>
+     <div class="content-wiev_answer-item">
+         <div class="answer">
+             <div class="author">
+                 <a href="{{ path('list_post_by_login', {login: answer.user.screenName}) }}">{{ answer.user.name }}</a>
+                 <div class="date">
+                  <span id="clock">Опубликовано: </span>
+                  {{ russian_date(answer.createdDate) }}
+                 </div>
+             </div>
+             <p>{% if answer.isBest %}ЛУЧШИЙ ОТВЕТ{% endif %}{{ answer.content }}</p>
+         </div>
+         <div class="social">
+             {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': answer} %}
+             {% include 'BTBundle:Frontend/Question:best_answer_button.html.twig' with {'object': answer} %}
+             {% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': answer} %}
+         </div>
+     </div>
+ {% endfor %}
+
+ {{ pagerfanta(answers, 'default_2') }}
+</div>
+
+{% endblock %}

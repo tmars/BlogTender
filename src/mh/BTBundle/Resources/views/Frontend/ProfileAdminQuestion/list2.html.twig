@@ -1,0 +1,20 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Список моих вопросов{% endblock %}
+{% block header %}Список моих вопросов{% endblock %}
+
+{% block content %}
+Список моих вопросов<br>
+<table>
+{% for question in questions %}
+<tr>
+ <td><a href="{{ path('show_question', {id: question.id}) }}">{{ question.title }}</a></td>
+ <td><a href="{{ path('profile_admin_delete_question', {id: question.id}) }}">удалить</a></td>
+</tr>
+{% else %}
+нет вопросов
+{% endfor %}
+</table>
+
+{{ pagerfanta(questions) }}
+{% endblock %}

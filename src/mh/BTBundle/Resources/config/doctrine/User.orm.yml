@@ -1,0 +1,165 @@
+mh\BTBundle\Entity\User:
+    type: entity
+    table: user__user
+    repositoryClass: mh\BTBundle\Repository\UserRepository
+    uniqueConstraints:
+        user_screen_name_idx:
+            columns: screen_name
+        user_socnet_id_idx:
+            columns: id_in_source
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        salt:
+            type: string
+            length: 10
+            fixed: false
+            nullable: true
+        inviteCode:
+            type: string
+            length: 10
+            nullable: false
+            column: invite_code
+        password:
+            type: string
+            length: 255
+            fixed: false
+            nullable: true
+        name:
+            type: string
+            length: 50
+            fixed: false
+            nullable: false
+        about:
+            type: string
+            length: 300
+            fixed: false
+            nullable: true
+        email:
+            type: string
+            length: 50
+            fixed: false
+            nullable: true
+        screenName:
+            type: string
+            length: 30
+            fixed: false
+            nullable: true
+            column: screen_name
+        emailConfirmed:
+            type: boolean
+            nullable: true
+            column: email_confirmed
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+        source:
+            type: smallint
+            nullable: false
+        idInSource:
+            type: string
+            length: 50
+            fixed: false
+            nullable: true
+            column: id_in_source
+        socnetInfo:
+            type: text
+            nullable: true
+# данные для высчитывания баллов
+        scores:
+            type: integer
+            nullable: false
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+        countersDay:
+            type: date
+            nullable: false
+            column: counters_date
+        countPostAtDay:
+            type: smallint
+            nullable: false
+            column: count_post_at_day
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+        countQuestionAtDay:
+            type: smallint
+            nullable: false
+            column: count_question_at_day
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+        countAnswerAtDay:
+            type: smallint
+            nullable: false
+            column: count_answer_at_day
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+        countPostForeignLinkAtDay:
+            type: smallint
+            nullable: false
+            column: count_post_foreign_link_at_day
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+        countPostForeignLinkOnTrustedSiteAtDay:
+            type: smallint
+            nullable: false
+            column: count_post_foreign_link_on_trusted_site_at_day
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+    manyToOne:
+        currentSession:
+            targetEntity: UserSession
+            cascade: [remove]
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                current_session_id:
+                    referencedColumnName: id
+                    onDelete: SET NULL
+            orphanRemoval: false
+        invitingUser:
+            targetEntity: User
+            joinColumns:
+                inviting_user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        sessions:
+            targetEntity: UserSession
+            cascade: [ remove ]
+            mappedBy: user
+            orderBy:
+                beginDate: DESC
+        posts:
+            targetEntity: Post
+            cascade: [ remove ]
+            mappedBy: user
+            orderBy:
+                createdDate: DESC
+        answers:
+            targetEntity: Answer
+            cascade: [ remove ]
+            mappedBy: user
+            orderBy:
+                createdDate: DESC
+        questions:
+            targetEntity: Question
+            cascade: [ remove ]
+            mappedBy: user
+            orderBy:
+                createdDate: DESC
+        postComments:
+            targetEntity: PostComment
+            cascade: [ remove ]
+            mappedBy: user
+            orderBy:
+                createdDate: DESC
+    oneToOne:
+        foto:
+            cascade: [ persist, remove ]
+            targetEntity: UserFoto
+            joinColumns:
+                foto_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

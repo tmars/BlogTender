@@ -1,0 +1,35 @@
+mh\BTBundle\Entity\Tender:
+    type: entity
+    table: tender
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        beginDate:
+            type: datetime
+            nullable: false
+            column: begin_date
+        endDate:
+            type: datetime
+            nullable: false
+            column: end_date
+        title:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+    manyToOne:
+        parent:
+            targetEntity: Tender
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

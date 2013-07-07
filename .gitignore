@@ -1,0 +1,10 @@
+!app/cache/
+app/cache/*
+
+!app/logs/
+app/logs/*
+
+app/config/db_parameters.yml
+
+web/bundles/
+web/images/

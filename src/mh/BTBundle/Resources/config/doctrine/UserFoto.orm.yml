@@ -1,0 +1,27 @@
+mh\BTBundle\Entity\UserFoto:
+    type: entity
+    table: user__foto
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+              strategy: IDENTITY
+        filename:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+    oneToOne:
+        user:
+            targetEntity: User
+            mappedBy: foto
+            orphanRemoval: true
+    lifecycleCallbacks: 
+        prePersist: [ preUpload ]
+        preUpdate: [ preUpload ]
+        postPersist: [ upload ]
+        postUpdate: [ upload ]
+        postRemove: [ removeUpload ]

@@ -1,0 +1,6 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block name %}Жалобы{% endblock %}
+{% block field %}
+ <a href="{{ admin.generateUrl('complaints', {'id': object.id}) }}">Жалобы ({{value|length}})</a>
+{% endblock %}

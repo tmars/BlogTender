@@ -1,0 +1,12 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+<h2>Заголовок h2</h2>
+<form action="{{ path('profile_login') }}" method="post">
+{{ forms.messages(form) }}
+{{ forms.widget(form._token) }}
+
+{{ forms.row(form.email) }}
+{{ forms.row(form.password) }}
+<input type="submit">
+</form>
+<input type="text" value="поле ввода"/><br /><a class="but-yellow active">отправить</a>
+<input type="checkbox" id="chek"/><label for="chek">checkbox</label><input type="radio" id="rad"/><label for="rad">radiobox</label>

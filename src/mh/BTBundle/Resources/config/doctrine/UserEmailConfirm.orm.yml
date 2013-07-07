@@ -1,0 +1,32 @@
+mh\BTBundle\Entity\UserEmailConfirm:
+    type: entity
+    table: user__email_confirm
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        code:
+            type: string
+            length: 50
+            fixed: false
+            nullable: false
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+    oneToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

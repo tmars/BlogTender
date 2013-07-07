@@ -1,0 +1,7 @@
+{% spaceless %}
+[
+{% for tag in tags %}
+ {id: '{{ tag.label }}', text: '{{ tag.label }}'}{% if not loop.last%}, {% endif %}
+{% endfor %}
+]
+{% endspaceless %}

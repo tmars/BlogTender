@@ -1,0 +1,18 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Вопросы в категории: {{ category.label }}{% endblock %}
+
+{% block content %}
+<div class="content-wiev_item">
+  <div class="breadcrumbs">
+    <a href="{{ path('homepage') }}">Главная</a>
+    <a href="{{ path('list_question') }}">Вопросы</a>
+    <span>[Категория: {{ category.label }}]</span>
+  </div>
+ <h2>Вопросы в категории: {{ category.label }}</h2>
+</div>
+
+<div class="content-wiev_answer">
+ {% include 'BTBundle:Frontend/Question:list_question.html.twig'%}
+</div>
+{% endblock %}

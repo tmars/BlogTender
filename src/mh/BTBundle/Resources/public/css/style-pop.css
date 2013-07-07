@@ -1,0 +1,32 @@
+.social_pop > a{
+    display: inline-block;
+    vertical-align: top;
+    width: 36px;
+    height: 35px;
+    margin: 0;
+    line-height: 12px;
+    background: url("../images/soc_head.png") no-repeat -2px -35px;
+}
+  
+.social_pop #vk{background-position: -38px -35px;} 
+.social_pop #tw{background-position: -74px -35px;} 
+.social_pop #od{background-position: -110px -35px;} 
+.social_pop #go{background-position: -146px -35px;} 
+.social_pop #ma{background-position: -182px -35px;} 
+ 
+.social_pop #fb:hover{background-position: -2px 0;}   
+.social_pop #vk:hover{background-position: -38px 0;} 
+.social_pop #tw:hover{background-position: -74px 0;} 
+.social_pop #od:hover{background-position: -110px 0;} 
+.social_pop #go:hover{background-position: -146px 0;} 
+.social_pop #ma:hover{background-position: -182px 0;}  
+
+.social_pop > a:hover{
+    position: relative;
+    width: 31px;
+    height: 31px;
+    margin: 0 5px 0 0;
+    border-radius: 20px;
+    box-shadow: 0 0 5px yellow,0 0 5px yellow inset;
+    behavior:url(PIE.htc);
+}

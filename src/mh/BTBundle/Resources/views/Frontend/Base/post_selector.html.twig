@@ -1,0 +1,30 @@
+<div class="content-wiev_tab">
+<!-- <h2>Статьи</h2> -->
+<div class="section">
+
+  {% set myposts = env.randomMarkedPosts(3) %}
+  {% for mypost in myposts %}
+  <div class="box" style="display:{% if loop.first %}block;{% else %}none;{% endif %}">
+    <div>
+      <img alt="{{ mypost.title }}" style="max-width: 636px; cursor:pointer;" src="{{ mypost.preview.original }}" onclick="window.location.href='{{ path('show_post', {login: mypost.user.screenName, post_slug: mypost.slug}) }}'"/>
+      <div id="tab_cont" class="long_post">
+        <a href="{{ path('show_post', {login: mypost.user.screenName, post_slug: mypost.slug}) }}"><h3>{{ mypost.title }}</h3></a>
+		<a href="" style="font-size:10px;">Как сюда попасть?</a>
+        <p>{{ mypost.textPreview }}</p>
+     <noindex> <!--   <a class="but-yellow" href="{{ path('show_post', {login: mypost.user.screenName, post_slug: mypost.slug}) }}">прочитать</a> --> </noindex>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+
+  <div class="tbl">
+  <ul class="tabs">
+    {% for mypost in myposts %}
+    <li{% if loop.first %} class="current"{% endif %}><span>{{ mypost.title }}</span></li>
+    {% endfor %}
+  </ul>
+  </div>
+
+</div>
+</div><!-- end content-wiev_tab-->

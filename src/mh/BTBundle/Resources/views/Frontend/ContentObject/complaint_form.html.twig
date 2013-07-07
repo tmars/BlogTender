@@ -1,0 +1,13 @@
+{% set form = env.contentObjectForm(object) %}
+{% if form %}
+
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+<form action="{{ path('content_complaint') }}" method="post" style="display: inline;">
+ {{ forms.messages(form) }}
+ {{ forms.widget(form._token) }}
+ {{ forms.widget(form.content_id) }}
+ <a class="but-yellow active" onclick="complaintIt(this);">Пожаловаться</a>
+</form>
+
+{% endif %}

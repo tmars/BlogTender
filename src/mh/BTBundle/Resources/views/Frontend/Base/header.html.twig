@@ -1,0 +1,55 @@
+<div class="back-top"><a href="#head" id="back-to-top">&#9650; Наверх</a></div>
+    <div class="wraper">
+        <div class="header" id="head">
+            <div class="head_top">
+                <div class="logo">
+                    <a href="{{ path('homepage') }}"><img src="/bundles/bt/img/logo.png" alt="logo" /></a>
+                    <h2><a href="{{ path('homepage') }}">Freeporter.ru</a></h2>
+                    <h4>сообщество свободных писателей</h4>
+                    <div class="clear"></div>
+                </div>
+                <div class="search">
+                    <input type="text" class="search" id="post_tag" value="Поиск по сайту...">
+                    <input class="button" type="submit"  onclick="window.location.href='{{ path('list_post_by_tag') }}/' + $('#post_tag').val();" value="искать" />
+                </div>
+
+				 {% include 'BTBundle:Frontend/Base:user_menu.html.twig' %}
+				  <div class="send_post">{% set user = env.user %}{% if user %}<a href="{{ path('profile_admin_new_post') }}">Написать пост</a>{% else %}<a href="{{ path('profile_login') }}" rel="facebox" id="fb">Вход</a>{% endif %}</div>
+
+            </div>
+            <div class="head_menu">
+					{{ env.renderedMenu(env.topMenu)|raw }}
+                    <!--
+                <ul>
+					<li>{% set user = env.user %}{% if user %}<a href="profile/admin/post/new">{% else %}<a href="{{ path('profile_login') }}" rel="facebox" id="fb">{% endif %}<b>Написать пост</b></a></li>
+                    <li><a href="usloviya.html" class="active">Условия</a>
+                        <ul>
+                            <li><a >Статьи</a></li>
+                            <li><a >Картинки</a></li>
+                            <li><a class="active">Лайки</a></li>
+                            <li><a >Вопросы и ответы</a></li>
+                            <li><a >Ссылки</a></li>
+                            <li><a >Модерация</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="kak_eto_rabotaet.html">Как это работает?</a>
+                        <ul class="blue">
+                            <li><a >Статьи</a></li>
+                            <li><a >Картинки</a></li>
+                            <li><a class="active">Лайки</a></li>
+                            <li><a >Вопросы и ответы</a></li>
+                            <li><a >Ссылки</a></li>
+                            <li><a >Модерация</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="priz.html">Призы</a></li>
+                    <li><a>Посты</a></li>
+                    <li><a>Вопросы и ответы</a></li>
+                    <li><a>Рейтинг</a></li>
+                </ul>
+					-->
+            </div>
+            <div class="head_bottom">
+                <img src="/bundles/bt/images/head_bottom1.png"/>
+            </div>
+        </div>

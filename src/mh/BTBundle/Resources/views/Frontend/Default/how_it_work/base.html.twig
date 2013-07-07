@@ -1,0 +1,21 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block header %}Как это работает{% endblock %}
+
+{% block content %}
+<div class="content-wiev_item">
+ <div class="breadcrumbs"><a href="/index.php">Главная</a><span>Как это работает?</span></div>
+ <h2>Как это работает?</h2>
+ <div class="how_work">
+
+  <div class="how_work-menu">
+   {{ env.renderedMenu(env.topMenu.child('how_it_work'))|raw }}
+  </div>
+
+  <h3>{% block title %}{% endblock %}</h3>
+
+  <div class="how_work-item">{% block info %}{% endblock %}</div>
+
+ </div>
+</div>
+{% endblock %}

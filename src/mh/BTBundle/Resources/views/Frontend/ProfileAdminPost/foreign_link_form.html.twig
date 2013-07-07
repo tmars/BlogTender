@@ -1,0 +1,10 @@
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+<form action="" method="post" class="form_block">
+{{ forms.widget(form._token) }}
+
+{{ forms.row(form.url) }}
+{{ forms.messages(form) }}
+<input type="submit" class="but-yellow active" alue="Отправить">
+<div class="clear"></div>
+</form>

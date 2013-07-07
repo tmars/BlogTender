@@ -1,0 +1,43 @@
+mh\BTBundle\Entity\ContentObjectComplaint:
+    type: entity
+    table: content_object__complaint
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+        moderationStatus:
+            type: ModerationStatus
+            nullable: false
+            column: moderation_status
+        scores:
+            type: smallint
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        target:
+            targetEntity: ContentObject
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                content_object_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

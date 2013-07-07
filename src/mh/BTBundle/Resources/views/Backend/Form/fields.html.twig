@@ -1,0 +1,16 @@
+{% block moderation_status_row %}
+<div class="control-group" >
+ {#<label class="control-label required"></label>#}
+ <div class="controls sonata-ba-field sonata-ba-field-standard-natural ">
+  {% include 'BTBundle:Backend/Default:moderation_status.html.twig' %}
+  {#{% if value == 'not_valid' or value == 'not_moderated' %}
+   <a class="btn btn-success" href="/app_dev.php/admin/post/3/show">Одобрить</a>&nbsp;
+  {% endif %}
+  {% if value == 'valid' or value == 'not_moderated' %}
+   <a class="btn btn-danger" href="/app_dev.php/admin/post/3/show">Отвергнуть</a>&nbsp;
+
+   {{ form_row(form) }}
+  {% endif %}#}
+ </div>
+</div>
+{% endblock %}

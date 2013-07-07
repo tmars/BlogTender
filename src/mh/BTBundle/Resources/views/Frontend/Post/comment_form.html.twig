@@ -1,0 +1,18 @@
+{% if env.user %}
+
+{% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
+
+<div class="send_comment">
+<form action="{{ path('new_comment') }}" method="post" class="form_block">
+ {{ forms.widget(form._token) }}
+
+ {{ forms.widget(form.post_id) }}
+ {{ forms.widget(form.content, {'placeholder': 'оставить свой комментарий'}) }}
+ {{ forms.messages(form.content) }}
+
+ {{ forms.messages(form) }}
+ <a class="but-yellow active" onclick="commentIt(this);">Добавить комментарий</a>
+</form>
+</div>
+
+{% endif %}

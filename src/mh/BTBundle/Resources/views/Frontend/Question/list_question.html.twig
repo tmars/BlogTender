@@ -1,0 +1,27 @@
+{% for question in questions %}
+<div class="content-wiev_answer-item">
+    <div class="answer">
+        <h3 class="answer_title">{{ question.title }}</h3>
+        <div class="author">
+            <a href="{{ path('list_post_by_login', {login: question.user.screenName}) }}">{{ question.user.name }}</a>
+            <div class="date">
+             <span id="clock">Опубликовано: </span>{{ russian_date(question.createdDate) }}
+             <span id="dialog">Ответов: <a href="{{ path('show_question', {id: question.id}) }}">{{ question.answerCount }}</a></span>
+            </div>
+        </div>
+        <p>{{ question.content }}</p>
+    </div>
+
+    <a href="{{ path('show_question', {id: question.id}) }}" class="but-yellow active" style="margin-top: 10px;">Подробнее</a>
+
+    {% if env.user and env.user.id == question.user.id %}
+    <a href="{{ path('profile_admin_delete_question', {id: question.id}) }}" class="but-yellow active" style="margin-top: 10px;">Удалить</a>
+    {% endif %}
+
+    <div class="clear"></div>
+</div>
+{% else %}
+<h3>Вопросы отсутствуют</h3>
+{% endfor %}
+
+{{ pagerfanta(questions, 'default_2') }}
