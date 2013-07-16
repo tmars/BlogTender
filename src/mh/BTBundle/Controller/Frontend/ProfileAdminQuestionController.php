@@ -49,7 +49,7 @@ class ProfileAdminQuestionController extends Base\BaseUserController
 			$question->setCategory($data['category']);
 
 			$allocator = $this->get('scores_allocator');
-			$allocator->allocateScoresForQuestion($question);
+			$allocator->forQuestion($question);
 
 			$em = $this->getEM();
 			$em->persist($question);
@@ -110,7 +110,7 @@ class ProfileAdminQuestionController extends Base\BaseUserController
 			$answer->setQuestion($question);
 
 			$allocator = $this->get('scores_allocator');
-			$allocator->allocateScoresForAnswer($answer);
+			$allocator->forAnswer($answer);
 
 			$question->setAnswerCount($question->getAnswerCount() + 1);
 			$em = $this->getEM();

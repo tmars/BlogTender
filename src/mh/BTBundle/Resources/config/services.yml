@@ -10,7 +10,7 @@ parameters:
     
     link_checker.class: mh\Common\LinkChecker
     
-    scores_allocator.class: mh\Common\ScoresAllocator
+    scores_allocator.class: mh\BTBundle\Common\ScoresAllocator
     
     twitter_oauth.class: mh\Common\Twitter\TwitterOAuth
     
@@ -43,6 +43,7 @@ services:
         class:     %uniquer_checker.class%
     scores_allocator:
         class:     %scores_allocator.class%
+        arguments:    ["@doctrine.orm.entity_manager"]
     twitter_oauth:
         class:     %twitter_oauth.class%
         arguments: [%tw_app_id%, %tw_secret_key%]

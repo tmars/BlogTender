@@ -107,7 +107,7 @@ class ProfileController extends Base\SocnetLoginController
             $data = $form->getData();
 
 
-			$emailConstraint = new Assert\Email(array('checkMX' => true));
+			$emailConstraint = new Assert\Email(array('checkMX' => false));
 
 			$loginConstraint = array(
 				new Assert\MaxLength(array('limit' => 30)),

@@ -59,7 +59,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 					$link->setPost($posts[$postId]);
 					$link->setUrl($data['url']);
 
-					$allocator->allocateScoresForPostForeignLink($link);
+					$allocator->forPostForeignLink($link);
 
 					$em->persist($link);
 				}
@@ -324,7 +324,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		$form->addError(new \Symfony\Component\Form\FormError('Количество знаков: '.$post->getClearContentLength(), array('info' => 1)));
 		$form->addError(new \Symfony\Component\Form\FormError('Количество изображений: '.$post->getImageCount(), array('info' => 1)));
 
-		//$allocator = $this->get('scores_allocator');
-		//$allocator->allocateScoresForPost($post);
+		$allocator = $this->get('scores_allocator');
+		$allocator->forPost($post);
 	}
 }
