@@ -49,4 +49,19 @@ class Random
 		}
 		return $password;
 	} // End of generate
+
+	public static function getArrayElement(array &$m)
+	{
+		$index = array_rand($m);
+		return $m[$index];
+	}
+
+	public static function popArrayElement(array &$m)
+	{
+		$index = array_rand($m);
+		$r = $m[$index];
+		unset ($m[$index]);
+		return $r;
+	}
+
 } // End of Class Password
