@@ -36,7 +36,7 @@ mh\BTBundle\Entity\UserSession:
     manyToOne:
         user:
             targetEntity: User
-            cascade: {  }
+            cascade: [remove]
             mappedBy: null
             inversedBy: null
             joinColumns:

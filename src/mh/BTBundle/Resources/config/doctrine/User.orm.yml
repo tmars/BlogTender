@@ -108,12 +108,13 @@ mh\BTBundle\Entity\User:
     manyToOne:
         currentSession:
             targetEntity: UserSession
-            cascade: {  }
+            cascade: [remove]
             mappedBy: null
             inversedBy: null
             joinColumns:
                 current_session_id:
                     referencedColumnName: id
+                    onDelete: SET NULL
             orphanRemoval: false
         invitingUser:
             targetEntity: User
