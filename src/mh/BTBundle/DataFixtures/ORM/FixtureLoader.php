@@ -23,6 +23,10 @@ class FixtureLoader implements FixtureInterface
         $fs->mkdir(WEB_DIR.'images/user_foto/q122');
         $fs->mkdir(WEB_DIR.'images/user_foto/q190');
 
+        $fs->mkdir(WEB_DIR.'images/post_image/original');
+        $fs->mkdir(WEB_DIR.'images/post_image/miniview');
+        $fs->mkdir(WEB_DIR.'images/post_image/microview');
+
         $this->execRawQueries($manager);
 
         $themes = $this->getThemes();
