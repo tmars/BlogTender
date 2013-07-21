@@ -60,17 +60,15 @@ class ProfileController extends Base\SocnetLoginController
 				$user->setInvitingUser($invitingUser);
 			}
 
-			if (@$userData['photo'] &&
-				($content = @file_get_contents($userData['photo']))) {
+			if (	@$userData['photo'] &&
+					($content = @file_get_contents($userData['photo']))) {
 				$filename = $this->get('random')->generate(array('length' => 8));
+				$filepath = sprintf("%s/%s", $this->container->getParameter("kernel.cache_dir"), $filename);
 
-				file_put_contents($this->container->getParameter("kernel.cache_dir").'/'.$filename, $content);
+				file_put_contents($filepath, $content);
 
 				$user->setFoto(new \mh\BTBundle\Entity\UserFoto(
-					new \Symfony\Component\HttpFoundation\File\UploadedFile(
-						$this->container->getParameter("kernel.cache_dir").'/'.$filename,
-						$filename
-					)
+					new \Symfony\Component\HttpFoundation\File\UploadedFile($filepath, $filename)
 				));
 			}
 
@@ -107,7 +105,11 @@ class ProfileController extends Base\SocnetLoginController
             $data = $form->getData();
 
 
+<<<<<<< HEAD
 			$emailConstraint = new Assert\Email(array('checkMX' => false));
+=======
+			$emailConstraint = new Assert\Email(array('checkMX' => true));
+>>>>>>> ccaa6675e314eea0467b726b9377cb9df4877486
 
 			$loginConstraint = array(
 				new Assert\MaxLength(array('limit' => 30)),
