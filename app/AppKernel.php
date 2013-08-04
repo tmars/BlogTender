@@ -28,6 +28,7 @@ class AppKernel extends Kernel
 			new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 			new Sonata\jQueryBundle\SonatajQueryBundle(),
 			new Sonata\BlockBundle\SonataBlockBundle(),
+			new Trsteel\CkeditorBundle\TrsteelCkeditorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

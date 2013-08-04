@@ -1,5 +1,9 @@
 {
-    "hash": "96eef3e45d941b0fc5bc332b0b4319c8",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "007c80f4cb7fa242a47d7f177cf1571b",
     "packages": [
         {
             "name": "doctrine/common",
@@ -1814,6 +1818,56 @@
             "time": "2012-11-12 09:50:10"
         },
         {
+            "name": "trsteel/ckeditor-bundle",
+            "version": "v1.1",
+            "target-dir": "Trsteel/CkeditorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/trsteel88/TrsteelCkeditorBundle.git",
+                "reference": "v1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/trsteel88/TrsteelCkeditorBundle/zipball/v1.1",
+                "reference": "v1.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/form": ">=2.1,<2.3-dev",
+                "symfony/framework-bundle": "2.*,<2.3",
+                "twig/twig": ">=1.1,<2.0-dev"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Trsteel\\CkeditorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Trent Steel",
+                    "email": "trsteel88@gmail.com"
+                }
+            ],
+            "description": "Symfony2 bundle for easy integration of the CKEditor WYSIWYG",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "wysiwyg"
+            ],
+            "time": "2013-05-21 02:12:14"
+        },
+        {
             "name": "twig/extensions",
             "version": "dev-master",
             "source": {
@@ -1919,7 +1973,8 @@
         "gedmo/doctrine-extensions": 20,
         "sonata-project/doctrine-orm-admin-bundle": 20,
         "sonata-project/block-bundle": 20,
-        "doctrine/doctrine-fixtures-bundle": 20
+        "doctrine/doctrine-fixtures-bundle": 20,
+        "trsteel/ckeditor-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"
