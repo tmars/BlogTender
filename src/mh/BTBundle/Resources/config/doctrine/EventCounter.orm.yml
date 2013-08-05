@@ -1,0 +1,37 @@
+mh\BTBundle\Entity\EventCounter:
+    type: entity
+    table: event_counter
+    repositoryClass: mh\BTBundle\Repository\EventCounterRepository
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        type:
+            type: EventCounter
+            nullable: false
+            column: type
+        activeDay:
+            type: datetime
+            nullable: false
+            column: active_day
+        value:
+            type: smallint
+            nullable: false
+            column: val
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+                    nullable: false
+            orphanRemoval: false
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

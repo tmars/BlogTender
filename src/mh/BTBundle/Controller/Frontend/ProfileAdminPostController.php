@@ -114,6 +114,12 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$post->setUser($user);
 			$this->updatePost($form, $post);
 
+			$allocator = $this->get('scores_allocator');
+			$val = $allocator->forPost($post);
+			echo 'sd';
+			var_dump($val);
+			echo 'sd2';
+
 			$em = $this->getEM();
 			$em->persist($post);
 			$em->flush();
@@ -324,7 +330,6 @@ class ProfileAdminPostController extends Base\BaseUserController
 		$form->addError(new \Symfony\Component\Form\FormError('Количество знаков: '.$post->getClearContentLength(), array('info' => 1)));
 		$form->addError(new \Symfony\Component\Form\FormError('Количество изображений: '.$post->getImageCount(), array('info' => 1)));
 
-		$allocator = $this->get('scores_allocator');
-		$allocator->forPost($post);
+
 	}
 }
