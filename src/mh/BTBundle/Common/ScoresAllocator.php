@@ -24,10 +24,36 @@ class ScoresAllocator
 	private $postBonusLength = 25;
 	private $postBonusLengthFactor = 1.5;
 
+	private $postBonusImageCount = 3;
+	private $postBonusImageCountScores = 3;
+
+	private $forPostForeignLink = array(
+		1 => 5,
+		2 => 5,
+		3 => 5,
+		4 => 5,
+		5 => 5,
+		6 => 5,
+		7 => 5,
+		8 => 5,
+		9 => 5,
+		10 => 5,
+		11 => 0,
+	);
+
+	private $forQuestion = array(
+		1 => 3,
+		2 => 3,
+		3 => 3,
+		4 => 3,
+		5 => 3,
+		6 => 0,
+	);
+
 	private function evaluate(array $scores, $number)
 	{
-		if ($count > count($scores)) $count = count($scores);
-		return $scores[$count];
+		if ($number > count($scores)) $number = count($scores);
+		return $scores[$number];
 	}
 
 	public function __construct($em)
@@ -40,27 +66,38 @@ class ScoresAllocator
 		if ( ! $object->getId()) {
 			$num = $this->em->getRepository('BTBundle:EventCounter')->incCounter($object->getUser(), EventCounterType::SHARE_POST);
 			$scores = $this->evaluate($this->forPost, $num);
+			$object->setBaseRate($scores);
 
-			//'Количество знаков: '.$post->getClearContentLength(), array('info' => 1)));
-			//'Количество изображений: '.$post->getImageCount(), array('info' => 1)));
 		} else {
 			$scores = $object->getBaseRate();
 		}
 
-		if ($post->getClearContentLength() >= $this->postBonusLength) {
+		if ($object->getClearContentLength() >= $this->postBonusLength) {
 			$scores *= $this->postBonusLengthFactor;
 		}
 
+		if ($object->getImageCount() >= $this->postBonusImageCount) {
+			$scores += $this->postBonusImageCountScores;
+		}
+
+		$scores = round($scores);
 		$object->setScores($scores);
+
 		return $scores;
 	}
 
-	public function forPostForeignLink(Entity\PostForeignList $object)
+	public function forPostForeignLink(Entity\PostForeignLink $object)
 	{
+		$num = $this->em->getRepository('BTBundle:EventCounter')->incCounter($object->getPost()->getUser(), EventCounterType::SHARE_LINK_TO_POST);
+		$scores = $this->evaluate($this->forPost, $num);
+		$object->setScores($scores);
 	}
 
 	public function forQuestion(Entity\Question $object)
 	{
+		$num = $this->em->getRepository('BTBundle:EventCounter')->incCounter($object->getUser(), EventCounterType::MAKE_QUESTION);
+		$scores = $this->evaluate($this->forPost, $num);
+		$object->setScores($scores);
 	}
 
 	public function forAnswer(Entity\Answer $object)

@@ -17,7 +17,6 @@ class EventCounterRepository extends BaseRepository
 	{
 		$counter = $this->getForUserByType($user, $type);
 		$counter->setValue($counter->getValue() + 1);
-		$this->_em->flush();
 		return $counter->getValue();
 	}
 
@@ -37,7 +36,6 @@ class EventCounterRepository extends BaseRepository
 			$counter->setValue(0);
 
 			$this->_em->persist($counter);
-			$this->_em->flush();
 			$val = 0;
 		}
 
