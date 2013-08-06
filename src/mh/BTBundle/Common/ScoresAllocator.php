@@ -33,12 +33,7 @@ class ScoresAllocator
 		3 => 5,
 		4 => 5,
 		5 => 5,
-		6 => 5,
-		7 => 5,
-		8 => 5,
-		9 => 5,
-		10 => 5,
-		11 => 0,
+		5 => 0,
 	);
 
 	private $forQuestion = array(
@@ -96,7 +91,7 @@ class ScoresAllocator
 	public function forQuestion(Entity\Question $object)
 	{
 		$num = $this->em->getRepository('BTBundle:EventCounter')->incCounter($object->getUser(), EventCounterType::MAKE_QUESTION);
-		$scores = $this->evaluate($this->forPost, $num);
+		$scores = $this->evaluate($this->forQuestion, $num);
 		$object->setScores($scores);
 	}
 
