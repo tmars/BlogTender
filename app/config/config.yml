@@ -152,3 +152,22 @@ sonata_block:
         #sonata.media.block.media:
         #sonata.media.block.gallery:
         #sonata.media.block.feature_media:
+
+trsteel_ckeditor:
+    class: Trsteel\CkeditorBundle\Form\Type\CkeditorType
+    transformers: ['strip_js', 'strip_css', 'strip_comments']
+    toolbar: ['basicstyles', 'paragraph', 'links', '/', 'insert', 'styles', 'tools']
+    toolbar_groups:
+        basicstyles: ['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat']
+        paragraph: ['NumberedList','BulletedList']
+        links: ['Link','Unlink','Anchor']
+        insert: ['Image','Flash','Table','HorizontalRule']
+        styles: ['Styles','Format']
+        tools: ['Maximize']
+    ui_color: '#E8E8E8'
+    startup_outline_blocks: false
+    width: 647 #Integer or %
+    height: 300 #Integer or %
+    language: 'ru-ru'
+    filebrowser_upload_url:
+        url: relative-url.php?type=file

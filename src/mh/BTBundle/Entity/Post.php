@@ -96,12 +96,22 @@ class Post extends Base\ContentObjectBase
     /**
      * @var string
      */
+    private $subtitle;
+
+    /**
+     * @var string
+     */
     private $content;
 
     /**
      * @var \DateTime
      */
     private $createdDate;
+
+    /**
+     * @var integer
+     */
+    private $baseRate;
 
     /**
      * @var ModerationStatus
@@ -112,6 +122,11 @@ class Post extends Base\ContentObjectBase
      * @var boolean
      */
     private $isPublished;
+
+    /**
+     * @var boolean
+     */
+    private $showOnMain;
 
     /**
      * @var integer
@@ -167,7 +182,7 @@ class Post extends Base\ContentObjectBase
         $this->foreignLinks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+	}
 
     /**
      * Get id
@@ -226,6 +241,29 @@ class Post extends Base\ContentObjectBase
     }
 
     /**
+     * Set subtitle
+     *
+     * @param string $subtitle
+     * @return Post
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * Get subtitle
+     *
+     * @return string
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
      * Set content
      *
      * @param string $content
@@ -272,6 +310,29 @@ class Post extends Base\ContentObjectBase
     }
 
     /**
+     * Set baseRate
+     *
+     * @param integer $baseRate
+     * @return Post
+     */
+    public function setBaseRate($baseRate)
+    {
+        $this->baseRate = $baseRate;
+
+        return $this;
+    }
+
+    /**
+     * Get baseRate
+     *
+     * @return integer
+     */
+    public function getBaseRate()
+    {
+        return $this->baseRate;
+    }
+
+    /**
      * Set moderationStatus
      *
      * @param ModerationStatus $moderationStatus
@@ -315,6 +376,29 @@ class Post extends Base\ContentObjectBase
     public function getIsPublished()
     {
         return $this->isPublished;
+    }
+
+    /**
+     * Set showOnMain
+     *
+     * @param boolean $showOnMain
+     * @return Post
+     */
+    public function setShowOnMain($showOnMain)
+    {
+        $this->showOnMain = $showOnMain;
+
+        return $this;
+    }
+
+    /**
+     * Get showOnMain
+     *
+     * @return boolean
+     */
+    public function getShowOnMain()
+    {
+        return $this->showOnMain;
     }
 
     /**
@@ -383,7 +467,7 @@ class Post extends Base\ContentObjectBase
      */
     public function getImage()
     {
-		return $this->image;
+        return $this->image;
     }
 
     /**
@@ -562,61 +646,5 @@ class Post extends Base\ContentObjectBase
     public function getCategories()
     {
         return $this->categories;
-    }
-    /**
-     * @var boolean
-     */
-    private $showOnMain;
-
-
-    /**
-     * Set showOnMain
-     *
-     * @param boolean $showOnMain
-     * @return Post
-     */
-    public function setShowOnMain($showOnMain)
-    {
-        $this->showOnMain = $showOnMain;
-
-        return $this;
-    }
-
-    /**
-     * Get showOnMain
-     *
-     * @return boolean
-     */
-    public function getShowOnMain()
-    {
-        return $this->showOnMain;
-    }
-    /**
-     * @var string
-     */
-    private $subtitle;
-
-
-    /**
-     * Set subtitle
-     *
-     * @param string $subtitle
-     * @return Post
-     */
-    public function setSubtitle($subtitle)
-    {
-        $this->subtitle = $subtitle;
-
-        return $this;
-    }
-
-    /**
-     * Get subtitle
-     *
-     * @return string
-     */
-    public function getSubtitle()
-    {
-        return $this->subtitle;
     }
 }

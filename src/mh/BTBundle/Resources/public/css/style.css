@@ -112,12 +112,12 @@ table
 
 table tr th{border-bottom: 1px solid #BFBFBF;}
 table tr td, table tr th{border-left:1px dotted #BFBFBF; padding: 5px;}
-table tr:nth-child(even) td{background-color: #EEECEE; border-bottom: 1px dotted #BFBFBF; border-top: 1px dotted #BFBFBF;}
+/*table tr:nth-child(even) td{background-color: #EEECEE; border-bottom: 1px dotted #BFBFBF; border-top: 1px dotted #BFBFBF;}*/
 table tr:nth-child(odd) td{background-color: #FFFFFF;}
 table tr td:first-child, table tr th:first-child{border-left: 0;}
-table tr td:first-child{background-color: #EEECEE;}
+/*table tr td:first-child{background-color: #EEECEE;}
 table tr:last-child td{border-bottom: 1px solid #BFBFBF;}
-
+*/
 h1, h2, h3, h4, h5, h6, p, a, ul, ol, li
 {
    margin: 0;

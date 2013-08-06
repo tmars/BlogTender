@@ -35,13 +35,8 @@ class PostType extends AbstractType
                 'required' => true,
                 'expanded' => true,
             ))
-            ->add('content', 'textarea', array(
+            ->add('content', 'ckeditor', array(
                 'label' => 'Содержание статьи',
-                'required' => true,
-                'attr' => array(
-                    'class' => 'tinymce',
-                    'data-theme' => 'advanced',
-                )
             ))
             ->add('tags', 'text', array(
                 'label' => 'Тэги',

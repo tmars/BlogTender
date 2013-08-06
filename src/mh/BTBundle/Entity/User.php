@@ -55,7 +55,6 @@ class User
         $this->setCreatedDate(new \DateTime());
         $this->setCountersDay(new \DateTime());
         $this->setScores(0);
-        $this->setCountPostAtDay(0);
         $this->setCountAnswerAtDay(0);
         $this->setCountQuestionAtDay(0);
         $this->setCountPostForeignLinkAtDay(0);
@@ -181,11 +180,6 @@ class User
      * @var \DateTime
      */
     private $countersDay;
-
-    /**
-     * @var integer
-     */
-    private $countPostAtDay;
 
     /**
      * @var integer
@@ -528,29 +522,6 @@ class User
     public function getCountersDay()
     {
         return $this->countersDay;
-    }
-
-    /**
-     * Set countPostAtDay
-     *
-     * @param integer $countPostAtDay
-     * @return User
-     */
-    public function setCountPostAtDay($countPostAtDay)
-    {
-        $this->countPostAtDay = $countPostAtDay;
-
-        return $this;
-    }
-
-    /**
-     * Get countPostAtDay
-     *
-     * @return integer
-     */
-    public function getCountPostAtDay()
-    {
-        return $this->countPostAtDay;
     }
 
     /**
