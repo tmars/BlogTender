@@ -23,7 +23,8 @@
 		"sonata-project/doctrine-orm-admin-bundle":"dev-master",
         "sonata-project/block-bundle": "dev-master",
 		"doctrine/doctrine-fixtures-bundle": "dev-master",
-		"friendsofsymfony/user-bundle": "*"
+		"friendsofsymfony/user-bundle": "*",
+	    "Trsteel/ckeditor-bundle": "1.1.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

@@ -13,6 +13,7 @@ class BTBundle extends Bundle
         $conn = $em->getConnection();
         $conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
         Type::addType('ModerationStatus', 'mh\BTBundle\DBAL\ModerationStatusType');
+        Type::addType('EventCounter', 'mh\BTBundle\DBAL\EventCounterType');
         Type::addType('Sex', 'mh\BTBundle\DBAL\SexType');
     }
 }

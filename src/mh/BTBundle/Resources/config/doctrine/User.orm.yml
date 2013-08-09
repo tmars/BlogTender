@@ -80,11 +80,6 @@ mh\BTBundle\Entity\User:
             type: date
             nullable: false
             column: counters_date
-        countPostAtDay:
-            type: smallint
-            nullable: false
-            column: count_post_at_day
-            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
         countQuestionAtDay:
             type: smallint
             nullable: false

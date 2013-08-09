@@ -4,7 +4,6 @@ namespace mh\BTBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
-use mh\Common\Random;
 
 use mh\BTBundle\Entity as Entity;
 
@@ -91,43 +90,5 @@ class FixtureLoader implements FixtureInterface
         }
 
         return $categories;
-    }
-
-    private function getUsers($count)
-    {
-        $users = array();
-
-        $m_names = file(DATA_DIR."m_names.txt", FILE_IGNORE_NEW_LINES);
-        $m_second_names = file(DATA_DIR."m_second_names.txt", FILE_IGNORE_NEW_LINES);
-
-        $f_names = file(DATA_DIR."f_names.txt");
-        $f_second_names = file(DATA_DIR."f_second_names.txt", FILE_IGNORE_NEW_LINES);
-
-        $nicknames = file(DATA_DIR."nicknames.txt", FILE_IGNORE_NEW_LINES);
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if (mt_rand(0, 1) == 0) {
-                $name = Random::getArrayElement($m_names);
-                $sname = Random::getArrayElement($m_second_names);
-            } else {
-                $name = Random::getArrayElement($f_names);
-                $sname = Random::getArrayElement($f_second_names);
-            }
-
-            $screenName = Random::popArrayElement($nicknames);
-
-            $user = new Entity\User();
-            $user->setSource(Entity\User::SOURCE_INTERNAL);
-            $user->setName(sprintf("%s %s", $name, $sname));
-            $user->setEmail(sprintf("%s@mail.ru", $screenName));
-            $user->setEmailConfirmed(true);
-            $user->setScreenName($screenName);
-            $user->setPassword('password');
-
-            $users[] = $user;
-        }
-
-        return $users;
     }
 }

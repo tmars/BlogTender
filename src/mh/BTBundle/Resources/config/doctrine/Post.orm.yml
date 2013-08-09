@@ -38,6 +38,10 @@ mh\BTBundle\Entity\Post:
             type: datetime
             nullable: false
             column: created_date
+        baseRate:
+            type: smallint
+            nullable: false
+            column: base_rate
         moderationStatus:
             type: ModerationStatus
             nullable: false

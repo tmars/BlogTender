@@ -2,9 +2,10 @@
 
 namespace mh\BTBundle\Controller\Frontend;
 
-use \mh\BTBundle\Form\Frontend\PostType;
-use \mh\BTBundle\Entity\Post;
-use \mh\BTBundle\Entity\Tag;
+use Symfony\Component\Form as Form;
+use mh\BTBundle\Form\Frontend\PostType;
+use mh\BTBundle\Entity\Post;
+use mh\BTBundle\Entity\Tag;
 use mh\BTBundle\DBAL\ModerationStatusType;
 
 class ProfileAdminPostController extends Base\BaseUserController
@@ -34,30 +35,31 @@ class ProfileAdminPostController extends Base\BaseUserController
 			}
 
 			$data = $form->getData();
+			list($target_url) = explode('/', $data['url']);
 
 			$posts = array();
-			$links = array();
+			$urls = array();
 			foreach ($this->getRepository("Post")->findBy(array('user' => $user, 'isPublished' => true)) as $post) {
-				$links[$post->getId()] = $this->generateUrl('show_post', array('login' => $user->getScreenName(), 'post_slug' => $post->getSlug()), true);
+				$urls[$post->getId()] = $this->generateUrl('show_post', array('login' => $user->getScreenName(), 'post_slug' => $post->getSlug()), true);
 				$posts[$post->getId()] = $post;
 			}
 
 			$checker = $this->get('link_checker');
-			$postIds = $checker->hasLinks($data['url'], $links);
+			$postIds = $checker->hasLinks($target_url, $urls);
 
 			if (false === $postIds) {
 				$form->addError(new
-					\Symfony\Component\Form\FormError('На странице ссылок не найдено.'));
+					Form\FormError('На странице ссылок не найдено.'));
 				break;
 			}
 
 			$em = $this->getEM();
 			$allocator = $this->get('scores_allocator');
 			foreach ($postIds as $postId) {
-				if (!$this->getRepository("PostForeignLink")->findOneBy(array('url' => $data['url'], 'post' => $posts[$postId]))) {
+				if (!$this->getRepository("PostForeignLink")->findOneBy(array('url' => $target_url, 'post' => $posts[$postId]))) {
 					$link = new \mh\BTBundle\Entity\PostForeignLink();
 					$link->setPost($posts[$postId]);
-					$link->setUrl($data['url']);
+					$link->setUrl($target_url);
 
 					$allocator->forPostForeignLink($link);
 
@@ -113,6 +115,8 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$post = new Post();
 			$post->setUser($user);
 			$this->updatePost($form, $post);
+
+
 
 			$em = $this->getEM();
 			$em->persist($post);
@@ -175,18 +179,18 @@ class ProfileAdminPostController extends Base\BaseUserController
 				if ($post->getModerationStatus() == ModerationStatusType::NOT_VALID) {
 					$post->setIsPublished(false);
 					$post->setModerationStatus(ModerationStatusType::NOT_MODERATED);
-					$form->addError(new \Symfony\Component\Form\FormError('Пост отправлен на проверку модератору.', array('info' => 1)));
+					$form->addError(new Form\FormError('Пост отправлен на проверку модератору.', array('info' => 1)));
 				} else {
 					$post->setIsPublished(true);
-					$form->addError(new \Symfony\Component\Form\FormError('Пост опубликован.', array('info' => 1)));
+					$form->addError(new Form\FormError('Пост опубликован.', array('info' => 1)));
 				}
 				break;
 			case -1:
 				$post->setIsPublished(false);
-				$form->addError(new \Symfony\Component\Form\FormError('Пост снят с публикации.', array('info' => 1)));
+				$form->addError(new Form\FormError('Пост снят с публикации.', array('info' => 1)));
 				break;
 			default:
-				$form->addError(new \Symfony\Component\Form\FormError('Пост сохранен.', array('info' => 1)));
+				$form->addError(new Form\FormError('Пост сохранен.', array('info' => 1)));
 				break;
 			}
 
@@ -194,6 +198,8 @@ class ProfileAdminPostController extends Base\BaseUserController
 
 			break;
 		}
+
+		$form->addError(new Form\FormError('Количество баллов за пост: '.$post->getScores(), array('info' => 1)));
 
 		return $this->render('ProfileAdminPost:edit.html.twig', array(
             'form' => $form->createView(),
@@ -233,19 +239,19 @@ class ProfileAdminPostController extends Base\BaseUserController
 		$uniqueChecker = $this->get('unique_checker');
 		if (!$uniqueChecker->isUnique($data['content'])) {
 			$form->addError(new
-				\Symfony\Component\Form\FormError('Текст не уникален.'));
+				Form\FormError('Текст не уникален.'));
 			return false;
 		}
 
 		if (count($data['categories']) == 0 || count($data['categories']) > 3) {
 			$form->get('categories')->addError(new
-				\Symfony\Component\Form\FormError('количество категорий от 1 до 3'));
+				Form\FormError('количество категорий от 1 до 3'));
 			return false;
 		}
 
 		if (count($data['tags']) == 0 || count($data['tags']) > 10) {
 			$form->get('tags')->addError(new
-				\Symfony\Component\Form\FormError('количество тегов от 1 до 10'));
+				Form\FormError('количество тегов от 1 до 10'));
 			return false;
 		}
 
@@ -319,10 +325,6 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$post->addTag($tag);
 			$tag->addPost($post);
 		}
-
-		// Оцениваем пост
-		$form->addError(new \Symfony\Component\Form\FormError('Количество знаков: '.$post->getClearContentLength(), array('info' => 1)));
-		$form->addError(new \Symfony\Component\Form\FormError('Количество изображений: '.$post->getImageCount(), array('info' => 1)));
 
 		$allocator = $this->get('scores_allocator');
 		$allocator->forPost($post);

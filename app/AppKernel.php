@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new mh\BTBundle\BTBundle(),
-            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 			new Sonata\AdminBundle\SonataAdminBundle(),
@@ -28,6 +27,7 @@ class AppKernel extends Kernel
 			new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 			new Sonata\jQueryBundle\SonatajQueryBundle(),
 			new Sonata\BlockBundle\SonataBlockBundle(),
+			new Trsteel\CkeditorBundle\TrsteelCkeditorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
