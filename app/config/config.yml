@@ -135,8 +135,13 @@ trsteel_ckeditor:
     width: 647 #Integer or %
     height: 300 #Integer or %
     language: 'ru-ru'
+    
     filebrowser_upload_url:
-        url: relative-url.php?type=file
+        url: '?type=Files'
+    filebrowser_image_upload_url:
+        url: '?type=Images'
+    filebrowser_flash_upload_url:
+        url: '?type=Flash'
     external_plugins:
             imagepaste:
                 path: bundles/trsteelckeditor/plugins/imagepaste

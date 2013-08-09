@@ -124,5 +124,5 @@
 	ignore = dirty
 [submodule "vendor/Trsteel/ckeditor-bundle/Trsteel/CkeditorBundle"]
 	path = vendor/Trsteel/ckeditor-bundle/Trsteel/CkeditorBundle
-	url = git://github.com/trsteel88/TrsteelCkeditorBundle
+	url = git://github.com/tmars/CkeditorBundle
 	ignore = dirty
