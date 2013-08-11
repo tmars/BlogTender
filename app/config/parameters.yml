@@ -29,3 +29,5 @@ parameters:
     feedback_receivers:     't.mars@mail.ru'
 
     count_post_per_page: 18
+
+    user_upload_image_dir: '/userfiles/images/'

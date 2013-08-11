@@ -38,7 +38,8 @@ twig:
         od_app_id:              %od_app_id%
         feedback_receivers:     %feedback_receivers%
         count_post_per_page:    %count_post_per_page%
-        
+        user_upload_image_dir:  %user_upload_image_dir%
+
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
@@ -137,11 +138,17 @@ trsteel_ckeditor:
     language: 'ru-ru'
     
     filebrowser_upload_url:
-        url: '?type=Files'
+        route: 'user_upload'
+        route_parameters:
+            mode: 'file'
     filebrowser_image_upload_url:
-        url: '?type=Images'
+        route: 'user_upload'
+        route_parameters:
+            mode: 'image'
     filebrowser_flash_upload_url:
-        url: '?type=Flash'
+        route: 'user_upload'
+        route_parameters:
+            mode: 'flash'
     external_plugins:
             imagepaste:
                 path: bundles/trsteelckeditor/plugins/imagepaste

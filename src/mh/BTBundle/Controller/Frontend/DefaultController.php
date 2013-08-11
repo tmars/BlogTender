@@ -182,4 +182,38 @@ class DefaultController extends Base\BaseUserController
 
 		return $this->redirect($this->generateUrl('homepage'));
 	}
+
+	public function userUploadAction($mode)
+	{
+		$request = $this->getRequest();
+
+		switch($mode) {
+			default:
+				$message = 'Error mode.';
+				break;
+
+			case 'image':
+				if (count($request->files) == 1) {
+					$fs = new \Symfony\Component\Filesystem\Filesystem();
+					foreach ($request->files as $uploadFile) {
+						$name = sprintf("%s_%s", uniqid(), $uploadFile->getClientOriginalName());
+						$path = sprintf("%s/../web%s",
+							$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_image_dir'));
+						$file = $uploadFile->move($path, $name);
+						$url = $this->container->getParameter('user_upload_image_dir') . $name;
+					}
+					$message = 'New file uploaded';
+				} else {
+					$message = 'No file has been sent';
+				}
+				break;
+		}
+
+		return new \Symfony\Component\HttpFoundation\Response(
+			sprintf(
+				'<script type="text/javascript">window.parent.CKEditor.tools.callFunction(%d, "%s", "%s")</script>',
+				$request->get('CKEditorFuncNum'), $url, $message)
+		);
+
+	}
 }

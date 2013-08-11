@@ -42,3 +42,7 @@ reg_from_invite:
 static_page:
     pattern:  /page/{page}/{subpage}
     defaults: { _controller: BTBundle:Frontend\Default:staticPage, subpage: '' }
+
+user_upload:
+    pattern: /upload/{mode}
+    defaults: { _controller: BTBundle:Frontend\Default:userUpload }
