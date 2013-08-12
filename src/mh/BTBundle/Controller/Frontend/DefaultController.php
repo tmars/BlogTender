@@ -1,8 +1,8 @@
 <?php
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 namespace mh\BTBundle\Controller\Frontend;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 class DefaultController extends Base\BaseUserController
 {
@@ -188,45 +188,56 @@ class DefaultController extends Base\BaseUserController
 	public function userUploadAction($mode)
 	{
 		$request = $this->getRequest();
-
+		$url = '';
+		$status = 400;
+		
+		if ( ! $this->getUser()) {
+			$message = '"Unauthorized."';
+		}
+		
 		switch($mode) {
 			default:
-				$message = 'Error mode.';
+				$message = '"Error mode."';
 				break;
 
 			case 'image':
 				if (count($request->files) == 1) {
-					$fs = new \Symfony\Component\Filesystem\Filesystem();
-					foreach ($request->files as $uploadFile) {
+					$uploadFile = $request->files->get('upload');
+					$imageConstraint = new Assert\Image();
+					$errorList = $this->get('validator')->validateValue($uploadFile, $imageConstraint);
 
-						$imageConstraint = new Assert\Image();
-	
-						// use the validator to validate the value
-						$errorList = $this->get('validator')->validateValue($uploadFile, $imageConstraint);
-
-						if (count($errorList) == 0) {
-							$name = sprintf("%s_%s", uniqid(), $uploadFile->getClientOriginalName());
-							$path = sprintf("%s/../web%s",
-								$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_image_dir'));
-							$file = $uploadFile->move($path, $name);
-							$url = $this->container->getParameter('user_upload_image_dir') . $name;
-							$message = 'New file uploaded';
-						} else {
-							$url = '';
-							$message = $errorList[0];
-						}
+					if (count($errorList) == 0) {
+						$name = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_FILENAME);
+						$ext = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_EXTENSION);
+						$name = $this->get('slug')->getSlug($name);
+						$name = sprintf("%s_%s.%s", uniqid(), $name, $ext);
+						
+						$path = sprintf("%s/../web%s",
+							$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_image_dir'));
+						
+						$file = $uploadFile->move($path, $name);
+				
+						//$image = new \Imagick($path.$name);
+						//$image->cropImage(600, 0);
+						//$image->writeImage($path.$name);
+						
+						$url = $this->container->getParameter('user_upload_image_dir') . $name;
+						$message = '"New file uploaded"';
+						$status = 200;
+					} else {
+						$message = 'function() {[return false;]}';
 					}
 				} else {
-					$message = 'No file has been sent';
+					$message = '"No file has been sent"';
 				}
 				break;
 		}
 
-		return new \Symfony\Component\HttpFoundation\Response(
-			sprintf(
-				'<script type="text/javascript">window.parent.CKEditor.tools.callFunction(%d, "%s", "%s")</script>',
-				$request->get('CKEditorFuncNum'), $url, $message)
-		);
+		return $this->render('Default:uploaded.html.twig', array(
+			'func_num' => $request->get('CKEditorFuncNum'),
+			'url' => $url,
+			'message' => $message,
+		));
 
 	}
 }

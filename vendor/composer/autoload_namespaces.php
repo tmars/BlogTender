@@ -28,6 +28,7 @@ return array(
     'JMS\\SecurityExtraBundle' => array($vendorDir . '/jms/security-extra-bundle'),
     'JMS\\DiExtraBundle' => array($vendorDir . '/jms/di-extra-bundle'),
     'JMS\\AopBundle' => array($vendorDir . '/jms/aop-bundle'),
+    'Imagine' => array($vendorDir . '/imagine/imagine/lib'),
     'Genemu\\Bundle\\FormBundle' => array($vendorDir . '/genemu/form-bundle'),
     'Gedmo' => array($vendorDir . '/gedmo/doctrine-extensions/lib'),
     'FOS\\UserBundle' => array($vendorDir . '/friendsofsymfony/user-bundle'),
@@ -39,6 +40,7 @@ return array(
     'Doctrine\\Bundle\\FixturesBundle' => array($vendorDir . '/doctrine/doctrine-fixtures-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle' => array($vendorDir . '/doctrine/doctrine-bundle'),
     'CG\\' => array($vendorDir . '/jms/cg/src'),
+    'Avalanche\\Bundle\\ImagineBundle' => array($vendorDir . '/avalanche123/imagine-bundle'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
     '' => array($baseDir . '/src'),
 );

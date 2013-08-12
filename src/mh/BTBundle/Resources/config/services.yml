@@ -4,6 +4,8 @@ parameters:
     
     random.class: mh\Common\Random
     
+    slug.class: mh\Common\Slug
+    
     cookie_container.class: mh\Common\CookieContainer
     
     uniquer_checker.class: mh\Common\UniqueChecker
@@ -34,6 +36,8 @@ services:
         class:     %cookie_container.class%
         arguments: [@request]
         scope: request
+    slug:
+        class:     %slug.class%
     user_mailer:
         class:     %user_mailer.class%
         arguments: [@mailer, @templating, %user_mailer.templates_dir%]
