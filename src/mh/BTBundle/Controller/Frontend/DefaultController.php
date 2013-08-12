@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 namespace mh\BTBundle\Controller\Frontend;
 
 class DefaultController extends Base\BaseUserController
@@ -196,13 +198,24 @@ class DefaultController extends Base\BaseUserController
 				if (count($request->files) == 1) {
 					$fs = new \Symfony\Component\Filesystem\Filesystem();
 					foreach ($request->files as $uploadFile) {
-						$name = sprintf("%s_%s", uniqid(), $uploadFile->getClientOriginalName());
-						$path = sprintf("%s/../web%s",
-							$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_image_dir'));
-						$file = $uploadFile->move($path, $name);
-						$url = $this->container->getParameter('user_upload_image_dir') . $name;
+
+						$imageConstraint = new Assert\Image();
+	
+						// use the validator to validate the value
+						$errorList = $this->get('validator')->validateValue($uploadFile, $imageConstraint);
+
+						if (count($errorList) == 0) {
+							$name = sprintf("%s_%s", uniqid(), $uploadFile->getClientOriginalName());
+							$path = sprintf("%s/../web%s",
+								$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_image_dir'));
+							$file = $uploadFile->move($path, $name);
+							$url = $this->container->getParameter('user_upload_image_dir') . $name;
+							$message = 'New file uploaded';
+						} else {
+							$url = '';
+							$message = $errorList[0];
+						}
 					}
-					$message = 'New file uploaded';
 				} else {
 					$message = 'No file has been sent';
 				}
