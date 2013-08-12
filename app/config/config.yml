@@ -152,3 +152,8 @@ trsteel_ckeditor:
     external_plugins:
             imagepaste:
                 path: bundles/trsteelckeditor/plugins/imagepaste
+avalanche_imagine:
+    filters:
+        image_in_post:
+            type:    thumbnail
+            options: { size: [600, 600], mode: inset }

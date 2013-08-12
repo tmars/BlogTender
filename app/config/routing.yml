@@ -15,4 +15,8 @@ _bt_front:
     resource: "@BTBundle/Resources/config/routing/frontend/routing.yml"
     prefix:   /
     
+_imagine:
+    resource: .
+    type:     imagine
+    
 

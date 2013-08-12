@@ -8,7 +8,7 @@ use mh\BTBundle\Form\Frontend\LoginType;
 use mh\BTBundle\Entity\User;
 use mh\BTBundle\Entity\UserSession;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Form as Form;
 
 class ProfileController extends Base\SocnetLoginController
 {
@@ -130,19 +130,24 @@ class ProfileController extends Base\SocnetLoginController
 				$user = $this->getRepository('User')->findOneByScreenName($data['email']);
 			} else {
 				$form->get('email')->addError(new
-                    \Symfony\Component\Form\FormError('нет такого логина и email.'));
+                    Form\FormError('нет такого логина и email.'));
 				break;
 			}
-
+			if ( ! $user) {
+				$form->get('email')->addError(new
+                    Form\FormError('нет такого пользоватля.'));
+				break;
+			}
+			
 			if ($user->getPassword() != $user->passwordEncode($data['password'])) {
                 $form->addError(new
-                    \Symfony\Component\Form\FormError('Неверный пароль. '.$user->getPassword().'.'.$user->passwordEncode($data['password'])));
+                    Form\FormError('Неверный пароль. '.$user->getPassword().'.'.$user->passwordEncode($data['password'])));
                 break;
             }
 
-            if (!$user->getEmailConfirmed()) {
+            if ( ! $user->getEmailConfirmed()) {
                 $form->addError(new
-                    \Symfony\Component\Form\FormError('Пользователь не подтвердил почту.'));
+                    Form\FormError('Пользователь не подтвердил почту.'));
                 break;
             }
 
