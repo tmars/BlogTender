@@ -223,6 +223,7 @@ class DefaultController extends Base\BaseUserController
 						
 						$url = $this->container->getParameter('user_upload_image_dir') . $name;
 						$message = '"New file uploaded"';
+
 						$status = 200;
 					} else {
 						$message = 'function() {[return false;]}';
