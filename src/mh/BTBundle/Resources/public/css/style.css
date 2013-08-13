@@ -1467,7 +1467,8 @@ ul.expand_cont li.expand_act div{
 }
 
 .right_top form p{
-    font-size: 32px;
+	font-family: 'Cuprum', sans-serif;
+    font-size: 28px;
     font-weight: bold;
     color: #414141;
     text-transform: uppercase;
@@ -1477,10 +1478,15 @@ ul.expand_cont li.expand_act div{
     font-weight: normal;
     letter-spacing: 2px;
     word-spacing: 11px;
+    font-size: 12px;
+	float: right;
+	line-height: 1em;
+	padding-top: 4px;
 }
 
 #right_top_form{
-    background: url("../images/form-top.jpg") repeat 0 0;
+    /*background: url("../images/form-top.jpg") repeat 0 0;*/
+	background-color: #ffc018;
     margin-left: -20px;
     margin-bottom: 30px;
     display: block;
@@ -1517,7 +1523,7 @@ ul.expand_cont li.expand_act div{
     height: 31px;
     width: 196px;
     border-color: #D1C2A2;
-    box-shadow: 0 8px 19px -10px rgba(0, 0, 0, 0.7) inset;
+   /* box-shadow: 0 8px 19px -10px rgba(0, 0, 0, 0.7) inset;*/
     behavior:url(PIE.htc);
 }
 
@@ -1531,11 +1537,19 @@ ul.expand_cont li.expand_act div{
     margin-top: -2px;
 }
 
+#right_top_form input[type="submit"]:hover {
+	background-position: 0px -53px;
+}
+
 .right_top form p.soc_ent_text{
-    font-size: 18px;
+    font-size: 12px;
     text-shadow: none;
     text-transform: none;
     margin-top: 0;
+	text-align: center;
+	margin-left: 30px;
+	font-family: Arial;
+	font-weight: normal;
 }
 
 #right_top_form a#fb, #right_top_form a#vk, #right_top_form a#tw, #right_top_form a#od, #right_top_form a#go, #right_top_form a#ma{
