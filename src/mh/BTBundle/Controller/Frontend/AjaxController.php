@@ -241,14 +241,15 @@ class AjaxController extends Base\BaseUserController
 		while (1) {
 			if ( ! $this->getUser()) {
 				break;
-			}	
+			}
+			
+			if (count($request->files) != 1) {
+				break;
+			}
 		
-			if ($mode == 'image') {
-				if (count($request->files) != 1) {
-					break;
-				}
+			$uploadFile = $request->files->get('upload');
 				
-				$uploadFile = $request->files->get('upload');
+			if ($mode == 'image') {
 				$imageConstraint = new Assert\Image();
 				$errorList = $this->get('validator')->validateValue($uploadFile, $imageConstraint);
 
@@ -256,21 +257,35 @@ class AjaxController extends Base\BaseUserController
 					break;
 				}
 				
-				$name = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_FILENAME);
-				$ext = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_EXTENSION);
-				$name = $this->get('slug')->getSlug($name);
-				$name = sprintf("%s_%s.%s", uniqid(), $name, $ext);
-				
+				$name = $this->generateName($uploadFile);
 				$path = sprintf("%s/../web%s",
 					$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_image_dir'));
+				$uploadFile->move($path, $name);
 				
-				$file = $uploadFile->move($path, $name);
-		
 				$url = $this->container->getParameter('user_upload_image_dir') . $name;
-				
 				$avalancheService = $this->get('imagine.cache.path.resolver');
 				$url = $avalancheService->getBrowserPath($url, 'image_in_post');
 				
+				$message = '"New image uploaded"';
+				$status = 200;
+			}
+			
+			if ($mode == 'file') {
+				$fileConstraint = new Assert\File();
+				$fileConstraint->maxSize = '1M';
+				
+				$errorList = $this->get('validator')->validateValue($uploadFile, $fileConstraint);
+
+				if (count($errorList) != 0) {
+					break;
+				}
+				
+				$name = $this->generateName($uploadFile);
+				$path = sprintf("%s/../web%s",
+					$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_file_dir'));
+				$uploadFile->move($path, $name);
+				
+				$url = $this->container->getParameter('user_upload_file_dir') . $name;
 				$message = '"New file uploaded"';
 				$status = 200;
 			}
@@ -287,6 +302,16 @@ class AjaxController extends Base\BaseUserController
 		$response->setStatusCode($status);
 		return $response;
 		
+	}
+	
+	private function generateName($uploadFile)
+	{
+		$name = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_FILENAME);
+		$ext = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_EXTENSION);
+		$name = $this->get('slug')->getSlug($name);
+		$name = sprintf("%s_%s.%s", uniqid(), $name, $ext);
+		
+		return $name;
 	}
 
 	private function checkForm(&$message) {

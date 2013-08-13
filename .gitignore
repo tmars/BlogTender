@@ -14,4 +14,7 @@ web/images/*
 !web/userfiles/images/
 web/userfiles/images/*
 
+!web/userfiles/files/
+web/userfiles/files/*
+
 web/media/*
