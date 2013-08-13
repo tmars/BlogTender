@@ -14,6 +14,8 @@ parameters:
     
     scores_allocator.class: mh\BTBundle\Common\ScoresAllocator
     
+    like_count_reader.class: mh\Common\LikeCountReader
+    
     twitter_oauth.class: mh\Common\Twitter\TwitterOAuth
     
 services:
@@ -32,6 +34,8 @@ services:
 # Сервисы
     link_checker:
         class:     %link_checker.class%
+    like_count_reader:
+        class:     %like_count_reader.class%
     cookie_container:
         class:     %cookie_container.class%
         arguments: [@request]
