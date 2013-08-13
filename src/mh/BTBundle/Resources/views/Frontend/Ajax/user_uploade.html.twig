@@ -1,0 +1,9 @@
+<script type="text/javascript">
+window.parent.CKEditor.tools.callFunction(
+    {{ func_num }},
+    "{{ url }}",
+    {% autoescape false %}
+    {{ message }}
+    {% endautoescape %}
+)
+</script>

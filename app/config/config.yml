@@ -136,7 +136,6 @@ trsteel_ckeditor:
     width: 647 #Integer or %
     height: 300 #Integer or %
     language: 'ru-ru'
-    
     filebrowser_upload_url:
         route: 'user_upload'
         route_parameters:
@@ -149,11 +148,13 @@ trsteel_ckeditor:
         route: 'user_upload'
         route_parameters:
             mode: 'flash'
+    image_max_width: %image_in_post_max_width%
     external_plugins:
-            imagepaste:
-                path: bundles/trsteelckeditor/plugins/imagepaste
+        imagepaste:
+            path: bundles/trsteelckeditor/plugins/imagepaste
+                
 avalanche_imagine:
     filters:
         image_in_post:
             type:    thumbnail
-            options: { size: [600, 600], mode: inset }
+            options: { size: [%image_in_post_max_width%, 600], mode: inset }

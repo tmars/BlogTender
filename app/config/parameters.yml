@@ -31,3 +31,4 @@ parameters:
     count_post_per_page: 18
 
     user_upload_image_dir: '/userfiles/images/'
+    image_in_post_max_width: 600
