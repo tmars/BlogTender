@@ -39,6 +39,7 @@ twig:
         feedback_receivers:     %feedback_receivers%
         count_post_per_page:    %count_post_per_page%
         user_upload_image_dir:  %user_upload_image_dir%
+        user_upload_file_dir:  %user_upload_file_dir%
 
 # Assetic Configuration
 assetic:
