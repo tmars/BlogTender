@@ -750,7 +750,7 @@ div.search input.button:hover{ background-position: 0 -42px; cursor: pointer;}
 
 .content-wiev .social #fb, .content-wiev .social #vk, .content-wiev .social #tw, .content-wiev .social #od, .content-wiev .social #go,
 .content-wiev .social #ma, .content-wiev .social #li{
-    background: url("../images/soc_black.png") no-repeat 0 0;
+    background: url("../images/soc_black_2.png") no-repeat 0 0;
     width: 37px;
     height: 37px;
     margin-right: 3px;
@@ -1815,6 +1815,21 @@ ul.expand_cont li.expand_act div{
     display: block;
 }
 /* end right_side */
+
+#scores-table {
+	font-size: 14px;
+}
+
+#scores-table tbody tr td:first-child {
+	background-color: #EEECEE;
+}
+
+#scores-table thead { font-weight: bold; }
+#scores-table tr td{border-bottom: 1px solid #BFBFBF;}
+#scores-table tr td {border-left:1px dotted #BFBFBF; padding: 5px;}
+#scores-table tr td:first-child {border-left: 0;}
+#scores-table tbody tr td:first-child{background-color: #EEECEE;}
+#scores-table tr:last-child td{border-bottom: 1px solid #BFBFBF;}
 
 /* begin Footer */
 .footer{
