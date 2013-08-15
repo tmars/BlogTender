@@ -50,8 +50,8 @@ abstract class Image
 	
 	protected function generateUniqueFilename($originalName)
 	{
-		$prefix = \Random::generate(array('length' => 8));
-		$name = \Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
+		$prefix = Random::generate(array('length' => 8));
+		$name = Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
 		$ext = pathinfo($originalName, PATHINFO_EXTENSION);
 		
 		$filename = sprintf("%s_%s.%s", $prefix, $name, $ext);
