@@ -1,8 +1,8 @@
 parameters:
     mailer_transport:  gmail
     mailer_host:       ~
-    mailer_user:       talipov.mars
-    mailer_password:   fdRNHJFNds836
+    mailer_user:       konkursman.php
+    mailer_password:   sdfsa33df00OP
 
     locale:            ru
     secret:            bQ7k7eqMQhHAgijvKz3O

@@ -1526,7 +1526,8 @@ ul.expand_cont li.expand_act div{
     font-size: 12px;
 	float: right;
 	line-height: 1em;
-	padding-top: 4px;
+	padding-top: 3px;
+	margin-right: -5px;
 }
 
 #right_top_form{
