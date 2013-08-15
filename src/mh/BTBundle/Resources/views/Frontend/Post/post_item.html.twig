@@ -13,7 +13,7 @@
 	</div>
 	  <div class="date">{{ russian_date(post.createdDate) }}</div>
 
-   <a href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}"><img src="{{ post.preview.miniview }}"/></a><br>
+   <a href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}"><img src="{{ post.preview | apply_filter('post_image_mini') }}"/></a><br>
 	
 	<p>{{ post.textPreview }}</p>
 	<div class="clear"></div>

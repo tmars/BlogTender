@@ -16,7 +16,7 @@
 {% endfor %}
 </h2>
 
-<img src="{{ post.preview.miniview }}">
+<img src="{{ post.preview| apply_filter('post_image_mini') }}">
 <div>
 <h3>Содержание:</h3>
 {{ post.content|raw }}

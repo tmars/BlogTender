@@ -4,53 +4,22 @@ namespace mh\BTBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use mh\Common\Image;
-
+use mh\Common\Random;
 /**
  * PostImage
  */
 class PostImage extends Image
 {
-    protected $formats = array(
-		'original' => array(
-			'name' => 'original',
-			'width' => 632,
-			'height' => 800,
-			'back' => false,
-		),
-		'miniview' => array(
-			'name' => 'miniview',
-			'width' => 183,
-			'height' => 130,
-			'back' => true,
-		),
-		'microview' => array(
-			'name' => 'microview',
-			'width' => 92,
-			'height' => 75,
-			'back' => true,
-		),
-	);
-
-    protected $rootDir = '../web/images/post_image';
-
-	protected $dir = '/images/post_image';
-
-    public function getOriginal()
-    {
-		return $this->getView('original');
-   	}
-
-    public function getMiniview()
-    {
-		return $this->getView('miniview');
-   	}
-
-	public function getMicroview()
-    {
-		return $this->getView('microview');
-   	}
-
-    /*--------------------------------------------------------------------------*/
+	protected $browserDir = '/u/p/i';
+	
+	protected $defaultFilename = 'unknow.jpg';
+	
+	public function preUpload()
+	{
+		parent::preUpload();
+	}
+	
+	/*--------------------------------------------------------------------------*/
 
     /**
      * @var integer

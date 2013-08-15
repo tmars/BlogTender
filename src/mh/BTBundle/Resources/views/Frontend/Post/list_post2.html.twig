@@ -82,7 +82,7 @@
 							           {% if loop.index%3==1  %}  <div class="row"> {% endif %}
                                     <div class="row-cell float-left"><div class="spacer">
                                         <div class="date">11.12.2012 <span>/ 15:43</span></div>
-                                        <a href="/"><img src="{{ post.preview.miniview }}"/></a>
+                                        <a href="/"><img src="{{ post.preview | apply_filter('post_image_mini') }}"/></a>
                                         <a class="itm_title" href="/">{{ post.title }}</a>
                                         <div class="author">
                                             <a href="/">{{ post.user.screenName }}</a><br />

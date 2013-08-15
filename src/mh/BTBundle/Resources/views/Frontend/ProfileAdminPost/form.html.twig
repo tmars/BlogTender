@@ -7,7 +7,7 @@
 
 {{ forms.row(form.categories) }}
 {% if post is defined and post.image %}
-<img src="{{ post.preview.miniview }}">
+<img src="{{ post.preview | apply_filter('post_image_mini') }}">
 {% endif %}
 <div id="new_input_image_info" class="igor_info_window">{{ forms.row(form.image) }}</div>
 <div id="post_image_value" ></div><br>

@@ -39,14 +39,8 @@ class Post extends Base\ContentObjectBase
 
 	public function getPreview()
     {
-		if ($this->getImage()) {
-			$image = $this->getImage();
-		} else {
-			$image = new \mh\BTBundle\Entity\PostImage();
-            $image->setFilename('unknow');
-		}
-
-		return $image;
+		$image = $this->getImage() ? $this->getImage() : new PostImage();
+		return $image->getBrowserPath();
     }
 
 	public function getTextPreview()

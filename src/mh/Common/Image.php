@@ -7,26 +7,31 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class Image
 {
 	/**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="2M")
      */
     private $file;
+	
+	protected $dir;
+	
+	protected $defaultFilename = '';
+	
+	public function getBrowserPath()
+	{
+		return sprintf("%s/%s",
+			$this->getBrowserDir(),
+			$this->getFilename() ? $this->getFilename() : $this->defaultFilename);
+	}
+	
+	public function getPath()
+	{
+		return sprintf("%s/%s", $this->getDir(), $this->getFilename()); 
+	}
 
 	public function __construct($file = null)
     {
-    	$this->setFormat('original');
-
 		if ($file) {
 			$this->setFile($file);
 		}
-	}
-
-	protected function setFormat($name, $width = 0, $height = 0)
-	{
-		$formats[$name] = array(
-			'name' => $name,
-			'width' => $width,
-			'height' => $height,
-		);
 	}
 
 	public function setFile($file)
@@ -42,12 +47,23 @@ abstract class Image
     abstract public function setFilename($filename);
 
     abstract public function getFilename();
+	
+	protected function generateUniqueFilename($originalName)
+	{
+		$prefix = \Random::generate(array('length' => 8));
+		$name = \Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
+		$ext = pathinfo($originalName, PATHINFO_EXTENSION);
+		
+		$filename = sprintf("%s_%s.%s", $prefix, $name, $ext);
+		
+		return $filename;
+	}
 
     public function preUpload()
     {
-        if (null !== $this->file) {
+		if (null !== $this->file) {
             // генерируем любое уникальное имя
-            $this->setFilename(uniqid());
+            $this->setFilename($this->generateUniqueFilename($this->file->getClientOriginalName()));
         }
     }
 
@@ -56,80 +72,24 @@ abstract class Image
     	if (null === $this->file) {
     	    return;
     	}
-		//var_dump($this->file);
-        $imageResizer = new \mh\Common\ImageResizer($this->file->getRealPath());
-        $imageResizer->setDir($this->getRootDir());
-
-        $imageResizer->setSize($this->getWidth('original'), $this->getHeight('original'));
-        $imageResizer->save($this->getName('original'));
-
+        $this->file->move($this->getDir(), $this->getFilename());
 		unset($this->file);
     }
 
     public function removeUpload()
     {
-		foreach ($this->formats as $mode => $parameters) {
-			if (file_exists($file = $this->getRootDir().'/'.$this->getName($mode))) {
-				unlink($file);
-			}
+		if (file_exists($file = $this->getPath())) {
+			unlink($file);
 		}
     }
 
-	protected function getName($mode)
-	{
-		return $this->formats[$mode]['name'].'/'.$this->getFilename().'.jpg';
-	}
-
-	protected function getWidth($mode)
-	{
-		return $this->formats[$mode]['width'];
-	}
-
-	protected function getHeight($mode)
-	{
-		return $this->formats[$mode]['height'];
-	}
-
-	protected function getBack($mode)
-	{
-		return $this->formats[$mode]['back'];
-	}
-
-	protected function setRootDir($rootDir)
-	{
-		$this->rootDir = $rootDir;
-	}
-
-	protected function getRootDir()
+	protected function getDir()
     {
-        // абсолютный путь к каталогу, куда будут сохраняться загруженные документы
-        return $this->rootDir;
+        return '../web' . $this->getBrowserDir();
     }
 
-	protected function setDir($dir)
-	{
-		$this->dir = $dir;
-	}
-
-    protected function getDir()
+    protected function getBrowserDir()
     {
-        //избавьтесь от __ DIR __, так чтобы его не было, когда отображался загруженный документ/изображение
-        return $this->dir;
+        return $this->browserDir;
     }
-
-	protected function getView($mode)
-	{
-		if (!file_exists($this->getRootDir().'/'.$this->getName($mode))) {
-
-			$imageResizer = new \mh\Common\ImageResizer($this->getRootDir().'/'.$this->getName('original'));
-			$imageResizer->setDir($this->getRootDir());
-
-			$imageResizer->setBack($this->getBack($mode));
-			$imageResizer->setSize($this->getWidth($mode), $this->getHeight($mode));
-			$imageResizer->save($this->getName($mode));
-
-		}
-
-		return $this->getDir().'/'.$this->getName($mode);
-	}
 }

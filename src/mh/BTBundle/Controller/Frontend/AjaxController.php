@@ -259,10 +259,11 @@ class AjaxController extends Base\BaseUserController
 				
 				$name = $this->generateName($uploadFile);
 				$path = sprintf("%s/../web%s",
-					$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_image_dir'));
+					$this->get('kernel')->getRootDir(),
+					$this->container->getParameter('post_attachment_image_dir'));
 				$uploadFile->move($path, $name);
 				
-				$url = $this->container->getParameter('user_upload_image_dir') . $name;
+				$url = $this->container->getParameter('post_attachment_image_dir') . $name;
 				$avalancheService = $this->get('imagine.cache.path.resolver');
 				$url = $avalancheService->getBrowserPath($url, 'image_in_post');
 				
@@ -282,10 +283,11 @@ class AjaxController extends Base\BaseUserController
 				
 				$name = $this->generateName($uploadFile);
 				$path = sprintf("%s/../web%s",
-					$this->get('kernel')->getRootDir(), $this->container->getParameter('user_upload_file_dir'));
+					$this->get('kernel')->getRootDir(),
+					$this->container->getParameter('post_attachment_file_dir'));
 				$uploadFile->move($path, $name);
 				
-				$url = $this->container->getParameter('user_upload_file_dir') . $name;
+				$url = $this->container->getParameter('post_attachment_file_dir') . $name;
 				$message = '"New file uploaded"';
 				$status = 200;
 			}

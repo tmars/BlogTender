@@ -8,13 +8,9 @@ app/config/db_parameters.yml
 
 web/bundles/
 
-!web/images/
-web/images/*
-
-!web/userfiles/images/
-web/userfiles/images/*
-
-!web/userfiles/files/
-web/userfiles/files/*
+web/u/p/i/*
+!web/u/p/i/unknow.jpg
+web/u/p/a/i/*
+web/u/p/a/f/*
 
 web/media/*

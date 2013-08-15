@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 
 {{ forms.row(form.categories) }}
 {% if post is defined and post.image %}
-<img src="{{ post.preview.miniview }}">
+<img src="{{ post.preview | apply_filter('post_image_mini') }}">
 {% endif %}
 {{ forms.row(form.image) }}
 {{ forms.row(form.title) }}

@@ -6,7 +6,7 @@
   {% for mypost in myposts %}
   <div class="box" style="display:{% if loop.first %}block;{% else %}none;{% endif %}">
     <div>
-      <img alt="{{ mypost.title }}" style="max-width: 636px; cursor:pointer;" src="{{ mypost.preview.original }}" onclick="window.location.href='{{ path('show_post', {login: mypost.user.screenName, post_slug: mypost.slug}) }}'"/>
+      <img alt="{{ mypost.title }}" style="max-width: 636px; cursor:pointer;" src="{{ mypost.preview | apply_filter('post_image') }}" onclick="window.location.href='{{ path('show_post', {login: mypost.user.screenName, post_slug: mypost.slug}) }}'"/>
       <div id="tab_cont" class="long_post">
         <a href="{{ path('show_post', {login: mypost.user.screenName, post_slug: mypost.slug}) }}"><h3>{{ mypost.title }}</h3></a>
 		<a href="" style="font-size:10px;">Как сюда попасть?</a>
