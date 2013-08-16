@@ -10,7 +10,7 @@ use mh\Common\Random;
  */
 class PostImage extends Image
 {
-	protected $browserDir = '/u/p/i';
+	protected $browserDir = '/media/p/i';
 	
 	protected $defaultFilename = 'unknow.jpg';
 	
