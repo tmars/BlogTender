@@ -38,7 +38,6 @@ twig:
         od_app_id:              %od_app_id%
         feedback_receivers:     %feedback_receivers%
         count_post_per_page:    %count_post_per_page%
-        post_attachment_image_dir:  %post_attachment_image_dir%
         post_attachment_file_dir:  %post_attachment_file_dir%
 
 # Assetic Configuration
@@ -169,3 +168,18 @@ avalanche_imagine:
         post_image_micro:
             type:    thumbnail
             options: { size: [92, 75], mode: inset }
+        user_foto:
+            type:    thumbnail
+            options: { size: [800, 800], mode: inset }
+        user_foto_mini:
+            type:    thumbnail
+            options: { size: [100, 100], mode: inset }
+        user_foto_micro:
+            type:    thumbnail
+            options: { size: [50, 50], mode: inset }
+        user_foto_q190:
+            type:    thumbnail
+            options: { size: [190, 190], mode: inset }
+        user_foto_q122:
+            type:    thumbnail
+            options: { size: [122, 122], mode: inset }

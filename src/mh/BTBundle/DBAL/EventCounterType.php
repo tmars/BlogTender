@@ -8,7 +8,7 @@ class EventCounterType extends EnumType
     const SHARE_LINK_TO_POST = 'share_link_to_post';
     const MAKE_QUESTION = 'make_question';
 
-    protected $name = 'EventType';
+    protected $name = 'EventCounter';
     protected $values = array('share_post', 'share_link_to_post', 'make_question');
 
     public static function getNameByValue($value)

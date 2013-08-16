@@ -16,11 +16,6 @@ class PostImage extends File
 
 	protected $filenameTemplate = 'R:length=8|S:v=_|N:length=12|S:v=.|E';
 
-	public function preUpload()
-	{
-		parent::preUpload();
-	}
-
 	/*--------------------------------------------------------------------------*/
 
 	/**

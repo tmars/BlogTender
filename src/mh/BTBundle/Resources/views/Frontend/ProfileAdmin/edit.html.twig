@@ -22,11 +22,7 @@
    <div class="profil_edit">
 
     <div class="avatar">
-     {% if user.foto %}
-      <img src="{{ user.foto.q122 }}">
-     {% else %}
-      <img src="/bundles/bt/images/no-avatar.jpg">
-     {% endif %}
+     <img src="{{ user.avatar | apply_filter('user_foto_q122') }}">
      {{ forms.widget(form.foto, {'widget_attr': {'style': 'display:none', 'onchange': "$('#edit_avatar').html($(this).val());"}}) }}
      <br><a onclick="$('#profile_foto').click()" id="edit_avatar">Редактировать аватар</a>
     </div>

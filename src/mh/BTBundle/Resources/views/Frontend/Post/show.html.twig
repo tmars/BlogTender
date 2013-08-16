@@ -39,7 +39,7 @@
 			   </div>
 		   </div>
 		   {% if post.image %}
-		   <img src="{{ post.image.original }}"/>
+		   <img src="{{ post.preview | apply_filter('post_image') }}"/>
 		   {% endif %}
 		   {{ post.content|raw }}
 		   </div>

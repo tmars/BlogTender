@@ -93,14 +93,8 @@ class User
 
 	public function getAvatar()
     {
-		if ($this->getFoto()) {
-			$foto = $this->getFoto();
-		} else {
-			$foto= new \mh\BTBundle\Entity\UserFoto();
-            $foto->setFilename('unknow');
-		}
-
-		return $foto;
+		$image = $this->getFoto() ? $this->getFoto() : new UserFoto();
+		return $image->getBrowserPath();
     }
 
 	public function setScreenName($screenName)

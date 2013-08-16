@@ -63,7 +63,7 @@ class Post extends Base\ContentObjectBase
 		return mb_strlen($this->getClearContent(),'UTF-8');
 	}
 
-	public function getImageCount()
+	public function getAttachedImageCount()
 	{
 		preg_match_all('/<img[^>]+>/i', $this->getContent(), $result);
 		return $result ? count($result[0]) : 0;

@@ -14,7 +14,7 @@
 
 <div class="content-wiev_item">
  <h2>{{ profile.name }}</h2>
- <img src="{{ profile.avatar.q190 }}">
+ <img src="{{ profile.avatar | apply_filter('user_foto_q190') }}">
  <div style="float: right">
   {% if profile.about %}
   О себе: {{ profile.getAbout }}<br>

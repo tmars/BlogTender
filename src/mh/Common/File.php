@@ -50,11 +50,28 @@ abstract class File
 	
 	protected function generateUniqueFilename($originalName)
 	{
-		$prefix = Random::generate(array('length' => 8));
-		$name = Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
-		$ext = pathinfo($originalName, PATHINFO_EXTENSION);
-		
-		$filename = sprintf("%s_%s.%s", $prefix, $name, $ext);
+		$filename = '';
+		foreach (explode('|', $this->filenameTemplate) as $t) {
+			$t = explode(':', $t);
+			$mode = $t[0];
+			if (count($t) == 2) {
+				$parameters = array();
+				foreach (explode(',', $t[1]) as $p) {
+					list($k, $v) = explode('=', $p);
+					$parameters[$k] = $v;
+				}
+			}
+			
+			if ($mode == 'R') {
+				$filename .= Random::generate(array('length' => 8));
+			} else if ($mode == 'N') {
+				$filename .= Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
+			} else if ($mode == 'E') {
+				$filename .= pathinfo($originalName, PATHINFO_EXTENSION);
+			} else if ($mode == 'S') {
+				$filename .= $parameters['v'];
+			}
+ 		}
 		
 		return $filename;
 	}

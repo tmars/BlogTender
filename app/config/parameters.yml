@@ -30,7 +30,6 @@ parameters:
 
     count_post_per_page: 18
 
-    post_attachment_image_dir: '/media/p/a/i/'
     post_attachment_file_dir: '/media/p/a/f/'
     image_cache_dir: 'cache/'
     

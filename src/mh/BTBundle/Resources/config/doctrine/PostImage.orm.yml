@@ -11,7 +11,7 @@ mh\BTBundle\Entity\PostImage:
               strategy: IDENTITY
         filename:
             type: string
-            length: 20
+            length: 30
             fixed: false
             nullable: false
     oneToOne:

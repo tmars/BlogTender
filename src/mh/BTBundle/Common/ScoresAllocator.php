@@ -71,7 +71,7 @@ class ScoresAllocator
 			$scores *= $this->postBonusLengthFactor;
 		}
 
-		if ($object->getImageCount() >= $this->postBonusImageCount) {
+		if ($object->getAttachedImageCount() >= $this->postBonusImageCount) {
 			$scores += $this->postBonusImageCountScores;
 		}
 

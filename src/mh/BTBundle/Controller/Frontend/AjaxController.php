@@ -3,7 +3,7 @@
 namespace mh\BTBundle\Controller\Frontend;
 
 use Symfony\Component\Validator\Constraints as Assert;
-
+use mh\BTBundle\Entity as Entity;
 class AjaxController extends Base\BaseUserController
 {
 	public function fastRegAction()
@@ -27,7 +27,7 @@ class AjaxController extends Base\BaseUserController
 			$data = $form->getData();
 			$user = $this->getRepository('User')->findOneBy(array(
 				'email' => $data['email'],
-				'source' => \mh\BTBundle\Entity\User::SOURCE_INTERNAL,
+				'source' => Entity\User::SOURCE_INTERNAL,
 			));
 
 			if ($user) {
@@ -43,8 +43,8 @@ class AjaxController extends Base\BaseUserController
 			$screenName = $this->getRepository('User')->getUniqueScreenName($login);
             $password = $random->generate(array('length' => 10));
 
-			$user = new \mh\BTBundle\Entity\User();
-			$user->setSource(\mh\BTBundle\Entity\User::SOURCE_INTERNAL);
+			$user = new Entity\User();
+			$user->setSource(Entity\User::SOURCE_INTERNAL);
 			$user->setEmail($data['email']);
 			$user->setName($login);
 			$user->setScreenName($screenName);
@@ -59,7 +59,7 @@ class AjaxController extends Base\BaseUserController
 
 			$code = $random->generate(array('length' => 32));
 
-			$confirm = new \mh\BTBundle\Entity\UserEmailConfirm();
+			$confirm = new Entity\UserEmailConfirm();
 			$confirm->setUser($user);
 			$confirm->setCode($code);
 
@@ -133,7 +133,7 @@ class AjaxController extends Base\BaseUserController
             return $this->errorMessage('объект не опубликован');
 		}
 
-		$comment = new \mh\BTBundle\Entity\PostComment();
+		$comment = new Entity\PostComment();
 		$comment->setUser($user);
 		$comment->setPost($post);
 		$comment->setContent($data['content']);
@@ -174,7 +174,7 @@ class AjaxController extends Base\BaseUserController
 
 		$data['object']->setLikesCount($data['object']->getLikesCount() + 1);
 
-		$like = new \mh\BTBundle\Entity\ContentObjectLike();
+		$like = new Entity\ContentObjectLike();
 		$like->setUser($data['user']);
 		$like->setTarget($data['object']);
 
@@ -201,7 +201,7 @@ class AjaxController extends Base\BaseUserController
 
 		$data['object']->setComplaintsCount($data['object']->getComplaintsCount() + 1);
 
-		$complaint = new \mh\BTBundle\Entity\ContentObjectComplaint();
+		$complaint = new Entity\ContentObjectComplaint();
 		$complaint->setUser($data['user']);
 		$complaint->setTarget($data['object']);
 
@@ -315,6 +315,7 @@ class AjaxController extends Base\BaseUserController
 	
 	public function userUploadAction($mode)
 	{
+		$em = $this->getEM();
 		$request = $this->getRequest();
 		$url = '';
 		$status = 400;
@@ -339,13 +340,11 @@ class AjaxController extends Base\BaseUserController
 					break;
 				}
 				
-				$name = $this->generateName($uploadFile);
-				$path = sprintf("%s/../web%s",
-					$this->get('kernel')->getRootDir(),
-					$this->container->getParameter('post_attachment_image_dir'));
-				$uploadFile->move($path, $name);
+				$attachment = new Entity\PostAttachmentImage($uploadFile);
+				$em->persist($attachment);
+				$em->flush();
 				
-				$url = $this->container->getParameter('post_attachment_image_dir') . $name;
+				$url = $attachment->getBrowserPath();
 				$avalancheService = $this->get('imagine.cache.path.resolver');
 				$url = $avalancheService->getBrowserPath($url, 'image_in_post');
 				
@@ -386,16 +385,6 @@ class AjaxController extends Base\BaseUserController
 		$response->setStatusCode($status);
 		return $response;
 		
-	}
-	
-	private function generateName($uploadFile)
-	{
-		$name = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_FILENAME);
-		$ext = pathinfo($uploadFile->getClientOriginalName(), PATHINFO_EXTENSION);
-		$name = $this->get('slug')->getSlug($name);
-		$name = sprintf("%s_%s.%s", uniqid(), $name, $ext);
-		
-		return $name;
 	}
 
 	private function checkForm(&$message) {
