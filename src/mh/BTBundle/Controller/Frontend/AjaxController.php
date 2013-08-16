@@ -85,6 +85,7 @@ class AjaxController extends Base\BaseUserController
 		}
 
 		return $this->JSONMessage(array('status' => $status, 'message' => $message));
+	
 	}
 	
 	public function postSearchPromtAction($tag)
