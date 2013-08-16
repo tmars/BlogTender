@@ -21,7 +21,7 @@
                 "shasum": ""
             },
             "require": {
-                "imagine/imagine": "v0.3.0",
+                "imagine/Imagine": "v0.3.0",
                 "symfony/framework-bundle": "2.*"
             },
             "suggest": {
@@ -1912,7 +1912,7 @@
             "time": "2012-11-12 09:50:10"
         },
         {
-            "name": "trsteel/ckeditor-bundle",
+            "name": "Trsteel/ckeditor-bundle",
             "version": "v1.1",
             "target-dir": "Trsteel/CkeditorBundle",
             "source": {
