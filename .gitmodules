@@ -122,7 +122,7 @@
 	path = vendor/twitteroauth
 	url = git://github.com/kertz/twitteroauth.git
 	ignore = dirty
-[submodule "vendor/Trsteel/ckeditor-bundle/Trsteel/CkeditorBundle"]
+[submodule "vendor/trsteel/ckeditor-bundle/Trsteel/CkeditorBundle"]
 	path = vendor/trsteel/ckeditor-bundle/Trsteel/CkeditorBundle
 	url = git://github.com/tmars/CkeditorBundle.git
 	ignore = dirty
