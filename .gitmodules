@@ -123,14 +123,14 @@
 	url = git://github.com/kertz/twitteroauth.git
 	ignore = dirty
 [submodule "vendor/Trsteel/ckeditor-bundle/Trsteel/CkeditorBundle"]
-	path = vendor/Trsteel/ckeditor-bundle/Trsteel/CkeditorBundle
+	path = vendor/trsteel/ckeditor-bundle/Trsteel/CkeditorBundle
 	url = git://github.com/tmars/CkeditorBundle.git
 	ignore = dirty
 [submodule "vendor/avalanche123/imagine-bundle/Avalanche/Bundle/ImagineBundle"]
 	path = vendor/avalanche123/imagine-bundle/Avalanche/Bundle/ImagineBundle
 	url = git://github.com/avalanche123/AvalancheImagineBundle.git
 	ignore = dirty
-[submodule "vendor/imagine/Imagine"]
-	path = vendor/imagine/Imagine
+[submodule "vendor/imagine/imagine"]
+	path = vendor/imagine/imagine
 	url = git://github.com/avalanche123/Imagine.git
 	ignore = dirty
