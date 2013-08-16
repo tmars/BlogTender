@@ -48,37 +48,13 @@ abstract class File
 
     abstract public function getFilename();
 	
-	public static function generateUniqueFilename($originalName, $template = 'R:length=8|S:v=_|N:length=12|S:v=.|E')
+	protected function generateUniqueFilename($originalName)
 	{
-		$filename = '';
+		$prefix = Random::generate(array('length' => 8));
+		$name = Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
+		$ext = pathinfo($originalName, PATHINFO_EXTENSION);
 		
-		foreach (explode('|', $template) as $t) {
-			if (strpos($t, ':')) {
-				list($mode, $parameters_str) = explode(':', $t);
-			
-				$parameters = array();
-				foreach (explode(',', $parameters_str) as $p) {
-					list($k, $v) = explode('=', $p);
-					$parameters[$k] = $v;
-				}	
-			} else {
-				$mode = $t;	
-			}
-			
-			if ($mode == 'R') {
-				$filename .= Random::generate($parameters);
-			} else if ($mode == 'S') {
-				$filename .= $parameters['v'];
-			} else if ($mode == 'N') {
-				$name = Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
-				if (array_key_exists('length', $parameters)) {
-					$name = substr($name, 0, $parameters['length']);
-				}
-				$filename .= $name;
-			} else if ($mode == 'E') {
-				$filename .= pathinfo($originalName, PATHINFO_EXTENSION);
-			}
-		}
+		$filename = sprintf("%s_%s.%s", $prefix, $name, $ext);
 		
 		return $filename;
 	}
@@ -87,7 +63,7 @@ abstract class File
     {
 		if (null !== $this->file) {
             // генерируем любое уникальное имя
-            $this->setFilename(self::generateUniqueFilename($this->file->getClientOriginalName(), $this->filenameTemplate));
+            $this->setFilename($this->generateUniqueFilename($this->file->getClientOriginalName()));
         }
     }
 

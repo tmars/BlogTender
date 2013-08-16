@@ -3,12 +3,12 @@
 namespace mh\BTBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use mh\Common\Image;
+use mh\Common\File;
 
 /**
  * PostImage
  */
-class UserFoto extends Image
+class UserFoto extends File
 {
     protected $formats = array(
 		'original' => array(
