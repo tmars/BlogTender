@@ -128,7 +128,9 @@
 	ignore = dirty
 [submodule "vendor/avalanche123/imagine-bundle/Avalanche/Bundle/ImagineBundle"]
 	path = vendor/avalanche123/imagine-bundle/Avalanche/Bundle/ImagineBundle
-	url = https://github.com/avalanche123/Imagine
+	url = https://github.com/avalanche123/AvalancheImagineBundle
+	ignore = dirty
 [submodule "vendor/imagine/Imagine"]
 	path = vendor/imagine/Imagine
 	url = https://github.com/avalanche123/Imagine
+	ignore = dirty
