@@ -7,7 +7,7 @@
 <div id="fast_reg_info" class="igor_info_window">{{ forms.all_messages(fast_reg_form) }}</div>
 
 <div id="right_top_form">
-    <p>принять участие <span>Прямо сейчас!</span></p>
+    <p>принять участие <span>Прямо<br>сейчас!</span></p>
 
     {{ forms.widget(fast_reg_form._token) }}
 	  <script>
@@ -17,7 +17,7 @@
 
 
     <input class="circle" type="submit" value="" />
-    <p class="soc_ent_text">ИЛИ войдите через:</p>
+    <p class="soc_ent_text">ИЛИ войти через:</p>
     <a href="{{ env.socnetOAuthLink('fb') }}" rel="facebox" id="fb"></a>
 	<a href="{{ env.socnetOAuthLink('vk') }}" rel="facebox" id="vk"></a>
 	<a href="{{ env.socnetOAuthLink('tw') }}" rel="facebox" id="tw"></a>
