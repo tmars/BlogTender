@@ -6,6 +6,87 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class AjaxController extends Base\BaseUserController
 {
+	public function fastRegAction()
+	{
+		$form = $this->createForm(new \mh\BTBundle\Form\Frontend\FastRegType());
+		$request = $this->getRequest();
+		
+		while (1) {
+			if ($request->getMethod() != 'POST') {
+                break;
+            }
+
+            $form->bindRequest($request);
+
+			if ( ! $form->isValid()) {
+                $status = 'error';
+				$message = 'Неверный адрес электронной почты.';
+				break;
+            }
+
+			$data = $form->getData();
+			$user = $this->getRepository('User')->findOneBy(array(
+				'email' => $data['email'],
+				'source' => \mh\BTBundle\Entity\User::SOURCE_INTERNAL,
+			));
+
+			if ($user) {
+				$status = 'error';
+				$message = 'Пользователь с такой почтой уже зарегистрирован.';
+				break;
+			}
+
+			$em = $this->getEM();
+			$random = $this->get('random');
+
+			$login = substr($data['email'], 0, strpos($data['email'], '@'));
+			$screenName = $this->getRepository('User')->getUniqueScreenName($login);
+            $password = $random->generate(array('length' => 10));
+
+			$user = new \mh\BTBundle\Entity\User();
+			$user->setSource(\mh\BTBundle\Entity\User::SOURCE_INTERNAL);
+			$user->setEmail($data['email']);
+			$user->setName($login);
+			$user->setScreenName($screenName);
+			$user->setPassword($password);
+
+			// удаляем предыдущий код
+			$beforeCode = $this->getRepository("UserEmailConfirm")->findOneByUser($user);
+			if ($beforeCode) {
+				$em->remove($beforeCode);
+				$em->flush();
+			}
+
+			$code = $random->generate(array('length' => 32));
+
+			$confirm = new \mh\BTBundle\Entity\UserEmailConfirm();
+			$confirm->setUser($user);
+			$confirm->setCode($code);
+
+			$em->persist($confirm);
+
+			// Посылаем письмо
+			$url = $this->generateUrl('profile_confirm_email', array(
+				'code' => $code,
+				'from' => $this->getRequest()->get('from', ''),
+			), true);
+
+			$em->persist($user);
+			$em->flush();
+
+			$mailer = $this->get('user_mailer');
+			$mailer->setEmail($user->getEmail());
+			$mailer->send('fast_reg_email.html.twig', 'Быстрая регистрация.', array('url' => $url, 'user' => $user, 'password' => $password));
+
+			$message = 'Проверьте ващу почту';
+			$status = 'success';
+			
+			break;
+		}
+
+		return $this->JSONMessage(array('status' => $status, 'message' => $message));
+	}
+	
 	public function postSearchPromtAction($tag)
 	{
 		$tag .= '%';
