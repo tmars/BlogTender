@@ -1,0 +1,4 @@
+# Force download for flanvas.js
+<FilesMatch ^(.*)$>
+ ForceType applicaton/octet-stream
+</FilesMatch>

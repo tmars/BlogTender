@@ -50,12 +50,16 @@ class Post extends Base\ContentObjectBase
 		}
 		return mb_substr($this->getClearContent(), 0, 100, 'UTF-8');
 	}
+	
+	public static function clearContent($text)
+	{
+		$text = strip_tags($text);
+		return preg_replace("/&#?[a-z0-9]+;/i", " ", $text);
+	}
 
 	public function getClearContent()
 	{
-		$text = strip_tags($this->getContent());
-		return preg_replace("/&#?[a-z0-9]+;/i", " ", $text);
-		//return html_entity_decode($text);
+		return self::clearContent($this->getContent());
 	}
 
 	public function getClearContentLength()

@@ -21,7 +21,7 @@ class ScoresAllocator
 		6 => 20
 	);
 
-	private $postBonusLength = 25;
+	private $postBonusLength = 2500;
 	private $postBonusLengthFactor = 1.5;
 
 	private $postBonusImageCount = 3;

@@ -334,6 +334,7 @@ class AjaxController extends Base\BaseUserController
 				
 			if ($mode == 'image') {
 				$imageConstraint = new Assert\Image();
+				$imageConstraint->maxSize = '1M';
 				$errorList = $this->get('validator')->validateValue($uploadFile, $imageConstraint);
 
 				if (count($errorList) != 0) {
