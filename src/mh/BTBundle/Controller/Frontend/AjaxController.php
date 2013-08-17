@@ -362,13 +362,12 @@ class AjaxController extends Base\BaseUserController
 					break;
 				}
 				
-				$name = $this->generateName($uploadFile);
-				$path = sprintf("%s/../web%s",
-					$this->get('kernel')->getRootDir(),
-					$this->container->getParameter('post_attachment_file_dir'));
-				$uploadFile->move($path, $name);
+				$attachment = new Entity\PostAttachmentFile($uploadFile);
+				$em->persist($attachment);
+				$em->flush();
 				
-				$url = $this->container->getParameter('post_attachment_file_dir') . $name;
+				$url = $attachment->getBrowserPath();
+				
 				$message = '"New file uploaded"';
 				$status = 200;
 			}
