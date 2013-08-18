@@ -121,7 +121,7 @@ class ProfileController extends Base\SocnetLoginController
 			if ($errorListEmail == 0) {
 				$user = $this->getRepository('User')->findOneBy(array(
 					'email' => $data['email'],
-					'source' => User::SOURCE_INTERNAL,
+					'source' => Entity\User::SOURCE_INTERNAL,
 				));
 			} else if ($errorListLogin == 0){
 				$user = $this->getRepository('User')->findOneByLogin($data['email']);
@@ -198,7 +198,7 @@ class ProfileController extends Base\SocnetLoginController
 
 	}
 
-    private function createNewUserSession(User $user)
+    private function createNewUserSession(Entity\User $user)
     {
         // Генерируем хэш авторизации
         $request = $this->getRequest();
