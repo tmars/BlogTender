@@ -1,23 +1,23 @@
 profile_admin_list_post:
-    pattern:  /list
+    pattern:  /profile/posts/
     defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:list }
     
 profile_admin_new_post:
-    pattern:  /new
+    pattern:  /post/new/
     defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:new }
     
 profile_admin_edit_post:
-    pattern:  /{id}/edit
+    pattern:  /post/{id}/edit/
     defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:edit }
     requirements:
         id: "[0-9]+"
         
 profile_admin_delete_post:
-    pattern:  /{id}/delete
+    pattern:  /post/{id}/delete/
     defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:delete }
     requirements:
         id: "[0-9]+"
         
 profile_admin_list_foreign_link:
-    pattern:  /foreign_link
+    pattern:  /profile/foreign_links
     defaults: { _controller: BTBundle:Frontend\ProfileAdminPost:listForeignLink }
