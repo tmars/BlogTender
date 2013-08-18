@@ -59,25 +59,10 @@ class PostController extends Base\BaseUserController
         ));
 	}
 
-	public function showAction($login, $post_slug)
+	public function showAction($id)
     {
-		//$user = $this->getCached('user_'.$login);
-
-		//if (!$user) {
-			$user = $this->getRepository('User')->findOneByLogin($login);
-		//	$this->setCached('user_'.$login, $user);
-		//}
-
-		if (!$user) {
-			throw $this->createNotFoundException('Пользователя такого нет.');
-		}
-
-		//$post = $this->getCached('post_show_'.$login.'_'.$post_slug);
-		//if (!$post) {
-			$post = $this->getRepository('Post')->getPost($user, $post_slug);
-		//	$this->setCached('post_show_'.$login.'_'.$post_slug, $post);
-		//}
-
+		$post = $this->getRepository('Post')->find($id);
+		
 		if (!$post) {
 			throw $this->createNotFoundException('Пост отсутствует.');
 		}

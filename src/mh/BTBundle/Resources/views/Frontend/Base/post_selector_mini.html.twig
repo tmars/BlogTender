@@ -7,11 +7,11 @@
         <div class="box{% if loop.first %} visible{% endif %}">
             <div>
                 <span>
-                    <img style="cursor:pointer;" alt="{{ post.title }}" src="{{ post.preview | apply_filter('post_image') }}" onclick="window.location.href='{{ path('show_post', {login: post.user.login, post_slug: post.slug}) }}'"/>
+                    <img style="cursor:pointer;" alt="{{ post.title }}" src="{{ post.preview | apply_filter('post_image') }}" onclick="window.location.href='{{ env.genUrl('show_post', post) }}'"/>
                     <div id="tab_cont" class="mini_tit_post"><p>{{ post.title }}</p></div>
                 </span>
                 <p style="padding:3px 9px;">{{ post.textPreview }}</p>
-               <a class="but-yellow" style="margin:10px;"  href="{{ path('show_post', {login: post.user.login, post_slug: post.slug}) }}">прочитать</a>
+               <a class="but-yellow" style="margin:10px;"  href="{{ env.genUrl('show_post', post) }}">прочитать</a>
                 <div class="clear"></div>
             </div>
         </div>

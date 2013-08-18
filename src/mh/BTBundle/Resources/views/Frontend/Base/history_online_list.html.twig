@@ -5,7 +5,7 @@
     <div id="story">
         <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
         понравилась статья
-        <a href="{{ path('show_post', {login: h.login, post_slug: h.post_slug}) }}"><span>{{ h.post_title }}</span></a>
+        <a href="{#{ env.genUrl('show_post', {login: h.login, post_slug: h.post_slug}) }#}"><span>{{ h.post_title }}</span></a>
     </div>
 </div>
 
@@ -37,7 +37,7 @@
     <div id="story">
         <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.post_scores }} баллов за опубликование статьи
-        <a href="{{ path('show_post', {login: h.login, post_slug: h.post_slug}) }}"><span>{{ h.post_title }}</span></a>
+        <a href="{#{ path('show_post', {login: h.login, post_slug: h.post_slug}) }#}"><span>{{ h.post_title }}</span></a>
     </div>
 </div>
 
@@ -69,7 +69,7 @@
     <div id="story">
         <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.link_scores }} баллов за размещение ссылки на статью
-        <a href="{{ path('show_post', {login: h.login, post_slug: h.post_slug}) }}"><span>{{ h.post_title }}</span></a>
+        <a href="{#{ path('show_post', {login: h.login, post_slug: h.post_slug}) }#}"><span>{{ h.post_title }}</span></a>
     </div>
 </div>
 {% endif %}

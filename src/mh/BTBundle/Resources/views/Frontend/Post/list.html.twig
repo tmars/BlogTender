@@ -3,6 +3,7 @@
 {% block title %}Список постов{% endblock %}
 
 {% block content %}
+{#
 <div class="content-wiev_item">
   <div class="breadcrumbs">
     <a href="{{ path('homepage') }}">Главная</a>
@@ -32,7 +33,7 @@
   Зарегистрирован: {{ russian_date(profile.createdDate) }} через {{ profile.sourceText }}
  </div>
 </div>
-
+#}
  <div class="content-wiev_more">
   {% include 'BTBundle:Frontend/Post:list_post.html.twig' %}
  </div>

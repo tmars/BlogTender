@@ -1,25 +1,24 @@
 list_post:
-    pattern:  /
+    pattern:  /posts/
     defaults: { _controller: BTBundle:Frontend\Post:list }
-    
+
+show_post:
+    pattern:  /post/{id}/
+    defaults: { _controller: BTBundle:Frontend\Post:show }
+    requirements:
+        id: "[0-9]+"
+
 list_post_by_category:
-    pattern:  /category/{category_id}
+    pattern:  /post/category/{category_id}
     defaults: { _controller: BTBundle:Frontend\Post:listByCategory }
 
 list_post_by_tag:
-    pattern:  /tag/{tag}
+    pattern:  /post/tag/{tag}
     defaults: { _controller: BTBundle:Frontend\Post:listByTag, tag: '' }
 
 list_post_by_login:
-    pattern:  /{login}/
+    pattern:  /post/{login}/
     defaults: { _controller: BTBundle:Frontend\Post:listByLogin}
     requirements:
         login: "[0-9a-zA-Z_]+"
-
-show_post:
-    pattern:  /{login}/{post_slug}
-    defaults: { _controller: BTBundle:Frontend\Post:show }
-    requirements:
-        login: "[0-9a-zA-Z_]+"
-        post_slug: "[a-z0-9_]+"
         

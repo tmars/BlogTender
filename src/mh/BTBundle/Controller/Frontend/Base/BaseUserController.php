@@ -476,6 +476,16 @@ class BaseUserController extends BaseController
 		}
 		return $form;
 	}
+	
+	public function genUrl($mode, $obj)
+	{
+		$url = '';
+		if($mode == 'show_post') {
+			$url = $this->generateUrl('show_post', array('id' => $obj->getId()));
+		}
+		
+		return $url;
+	}
 
 	protected function preRenderAction()
     {
