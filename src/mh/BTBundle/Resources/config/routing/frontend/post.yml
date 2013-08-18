@@ -13,7 +13,7 @@ list_post_by_category:
     defaults: { _controller: BTBundle:Frontend\Post:listByCategory }
 
 list_post_by_tag:
-    pattern:  /post/tag/{tag}
+    pattern:  /tag/{tag}/
     defaults: { _controller: BTBundle:Frontend\Post:listByTag, tag: '' }
 
 list_post_by_login:
