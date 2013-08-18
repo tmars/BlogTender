@@ -146,7 +146,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 			throw $this->createNotFoundException('Доступа нет.');
 		}
 
-		$form = $this->createForm(new Entity\PostType());
+		$form = $this->createForm(new PostType());
         $request = $this->getRequest();
 
 		while (1) {
@@ -306,7 +306,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		// заполняем новые теги
 		$newTags = array();
 		foreach (explode(',', $data['tags']) as $tag_label) {
-			Tag::formatLabel($tag_label);
+			Entity\Tag::formatLabel($tag_label);
 
 			if (!$tag_label) {
 				continue;
