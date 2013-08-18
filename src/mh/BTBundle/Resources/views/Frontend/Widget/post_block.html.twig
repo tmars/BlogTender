@@ -8,7 +8,7 @@
        <img src="{{ post.preview | apply_filter('post_image_micro') }}"/><p>{{ post.title }}</p>
       </a>
 	  <div class="author">
-       <a href="{{ path('list_post_by_login', {login: post.user.login}) }}">{{ post.user.name }}</a><br />
+       <a href="{{ path('user_info', {login: post.user.login}) }}">{{ post.user.name }}</a><br />
 	  </div>
       <span>{{ post.likesCount }}</span>
 	  <div class="clear"></div>

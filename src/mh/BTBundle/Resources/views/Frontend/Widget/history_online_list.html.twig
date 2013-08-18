@@ -3,7 +3,7 @@
 <div class="post_story">
     <div class="date"><span id="like"></span>{# russian_date(h.created_date) #}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         понравилась статья
         <a href="{#{ env.genUrl('show_post', {login: h.login, post_slug: h.post_slug}) }#}"><span>{{ h.post_title }}</span></a>
     </div>
@@ -13,7 +13,7 @@
 <div class="post_story">
     <div class="date"><span id="like"></span>{# russian_date(h.created_date) #}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         понравился вопрос
         <a href="{{ path('show_question', {id: h.question_id}) }}"><span>{{ h.question_title }}</span></a>
     </div>
@@ -23,7 +23,7 @@
 <div class="post_story">
     <div class="date"><span id="like"></span>{# russian_date(h.created_date) #}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         понравился
         <a href="{{ path('show_answer', {qid: h.question_id, aid: h.answer_id}) }}"><span>ответ</span></a>
         на вопрос
@@ -35,7 +35,7 @@
 <div class="post_story">
     <div class="date"><span id="dialog"></span>{# russian_date(h.created_date) #}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.post_scores }} баллов за опубликование статьи
         <a href="{#{ path('show_post', {login: h.login, post_slug: h.post_slug}) }#}"><span>{{ h.post_title }}</span></a>
     </div>
@@ -45,7 +45,7 @@
 <div class="post_story">
     <div class="date"><span id="dialog"></span>{# russian_date(h.created_date) #}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.question_scores }} баллов за вопрос
         <a href="{{ path('show_question', {id: h.question_id}) }}"><span>{{ h.question_title }}</span></a>
     </div>
@@ -55,7 +55,7 @@
 <div class="post_story">
     <div class="date"><span id="dialog"></span>{# russian_date(h.created_date) #}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.answer_scores }} баллов за
         <a href="{{ path('show_answer', {qid: h.question_id, aid: h.answer_id}) }}"><span>ответ</span></a>
         на вопрос
@@ -67,7 +67,7 @@
 <div class="post_story">
     <div class="date"><span id="star"></span>{# russian_date(h.created_date) #}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.login}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.link_scores }} баллов за размещение ссылки на статью
         <a href="{#{ path('show_post', {login: h.login, post_slug: h.post_slug}) }#}"><span>{{ h.post_title }}</span></a>
     </div>

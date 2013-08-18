@@ -8,7 +8,7 @@
 
 	{% endif %}
    <div class="author">
-	 <a href="{{ path('list_post_by_login', {login: post.user.login}) }}" class="igor_auth_url">{{ post.user.name }}</a> 
+	 <a href="{{ path('user_info', {login: post.user.login}) }}" class="igor_auth_url">{{ post.user.name }}</a> 
 	 <noindex><a href="{{ env.genUrl('show_post', post) }}" class="igor_no_a"><span>{{ post.likesCount|number_format() }}</span></a></noindex>
 	</div>
 	  <div class="date">{{ russian_date(post.createdDate) }}</div>

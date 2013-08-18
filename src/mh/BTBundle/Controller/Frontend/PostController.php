@@ -54,11 +54,10 @@ class PostController extends Base\BaseUserController
 		$posts = $this->getRepository('Post')
 			->getListByUser($user, $this->container->getParameter('count_post_per_page'), $this->getRequest()->get('page', 1));
 
-		return $this->render('Post:list.html.twig', array(
+		return $this->render('Post:list_by_login.html.twig', array(
             'posts' => $posts,
 			'profile' => $user,
-			'profile_categories' => $this->getRepository('User')->getUserCategories($user),
-        ));
+		));
 	}
 
 	public function showAction($id)

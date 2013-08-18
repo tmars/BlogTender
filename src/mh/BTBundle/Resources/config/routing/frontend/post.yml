@@ -17,10 +17,4 @@ list_post_by_category:
 list_post_by_tag:
     pattern:  /tag/{tag}/
     defaults: { _controller: BTBundle:Frontend\Post:listByTag, tag: '' }
-
-list_post_by_login:
-    pattern:  /user/{login}/post/
-    defaults: { _controller: BTBundle:Frontend\Post:listByLogin}
-    requirements:
-        login: "[0-9a-zA-Z_]+"
         

@@ -17,23 +17,22 @@ _question:
 
 _post:
     resource: "post.yml"
+    
+_user:
+    resource: "user.yml"
 
 homepage:
     pattern:  /
     defaults: { _controller: BTBundle:Frontend\Default:index }
     
-users_rating:
-    pattern:  /rating
-    defaults: { _controller: BTBundle:Frontend\Default:rating }
-    
 feedback:
-    pattern:  /feedback
+    pattern:  /feedback/
     defaults: { _controller: BTBundle:Frontend\Default:feedback }
 
 reg_from_invite:
-    pattern:  /from_invite/{code}
+    pattern:  /from_invite/{code}/
     defaults: { _controller: BTBundle:Frontend\Default:regFromInvite }
     
 static_page:
-    pattern:  /page/{page}/{subpage}
+    pattern:  /page/{page}/{subpage}/
     defaults: { _controller: BTBundle:Frontend\Default:staticPage, subpage: '' }
