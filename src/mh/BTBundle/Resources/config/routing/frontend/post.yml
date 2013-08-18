@@ -9,7 +9,7 @@ show_post:
         id: "[0-9]+"
 
 list_post_by_category:
-    pattern:  /post/category/{category_id}
+    pattern:  /category/{slug}/
     defaults: { _controller: BTBundle:Frontend\Post:listByCategory }
 
 list_post_by_tag:

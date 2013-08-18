@@ -15,3 +15,5 @@ web/media/p/a/f/*
 !web/media/p/a/f/.htaccess
 
 web/cache/*
+
+src/mh/BTBundle/Entity/*.php~

@@ -25,16 +25,18 @@ class PostController extends Base\BaseUserController
         ));
 	}
 
-	public function listByCategoryAction($category_id)
+	public function listByCategoryAction($slug)
 	{
-		$category = $this->getRepository('Category')->find($category_id);
+		$category = $this->getRepository('Category')->findOneBySlug($slug);
 
 		if (!$category) {
 			throw $this->createNotFoundException('Нет категории.');
 		}
 
-		$posts = $this->getRepository('Post')
-			->getListByCategory($category_id, $this->container->getParameter('count_post_per_page'), $this->getRequest()->get('page', 1));
+		$posts = $this->getRepository('Post')->getListByCategory(
+				$category,
+				$this->container->getParameter('count_post_per_page'),
+				$this->getRequest()->get('page', 1));
 
 		return $this->render('Post:list_by_category.html.twig', array(
             'posts' => $posts,

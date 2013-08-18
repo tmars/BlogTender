@@ -61,15 +61,15 @@ class PostRepository extends BaseRepository
 		return $this->getPaginated($query, $count, $page);
     }
 
-    public function getListByCategory($cat_id, $count, $page)
+    public function getListByCategory($category, $count, $page)
     {
         $query = $this->createQueryBuilder('p')
 			->select(array('p', 'u', 'o'))
             ->innerJoin('p.contentObject', 'o')
-            ->innerJoin('p.categories', 'c', 'WITH', 'c.id = :id')
+            ->innerJoin('p.categories', 'c', 'WITH', 'c.slug = :slug')
             ->innerJoin('p.user', 'u')
             ->where('p.isPublished = true')
-            ->setParameter(':id', $cat_id)
+            ->setParameter(':slug', $category->getSlug())
 			->orderBy('p.createdDate', 'DESC')
             ->getQuery()
 		;

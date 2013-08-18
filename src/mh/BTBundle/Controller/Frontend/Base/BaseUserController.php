@@ -307,7 +307,7 @@ class BaseUserController extends BaseController
 					'label' => $category->getLabel(),
 					'uri' => $this->generateUrl(
 						'list_post_by_category',
-						array('category_id' => $category->getId())),
+						array('slug' => $category->getSlug())),
 				));
 			}
 			$topMenu->addChild($postMenu);
