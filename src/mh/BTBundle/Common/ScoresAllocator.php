@@ -44,6 +44,8 @@ class ScoresAllocator
 		5 => 3,
 		6 => 0,
 	);
+	
+	private $forInnerLike = 1;
 
 	private function evaluate(array $scores, $number)
 	{
@@ -97,5 +99,21 @@ class ScoresAllocator
 
 	public function forAnswer(Entity\Answer $object)
 	{
+	}
+	
+	public function getTypes($user)
+	{
+		return array(
+			'Посты' => "SELECT SUM(scores) as scores, COUNT(scores) as count FROM  post__post t WHERE user_id=".$user->getId()." AND is_published = 1",
+			'Вопросы' => "SELECT SUM(scores) as scores, COUNT(scores) as count FROM question__question t WHERE user_id=".$user->getId()." AND is_published = 1",
+			'Ответы' => "SELECT SUM(scores) as scores, COUNT(scores) as count FROM  answer__answer t WHERE user_id=".$user->getId()." AND is_published = 1",
+
+			'Лайки за посты' => "SELECT COUNT(l.id)*{$this->forInnerLike} as scores, COUNT(l.id) as count FROM content_object__like l JOIN post__post t ON (l.content_object_id = t.content_object_id) WHERE t.user_id=".$user->getId()." AND t.is_published = 1",
+			'Лайки за вопросы' => "SELECT COUNT(l.id)*{$this->forInnerLike} as scores, COUNT(l.id) as count FROM content_object__like l JOIN question__question t ON (l.content_object_id = t.content_object_id) WHERE t.user_id=".$user->getId()." AND t.is_published = 1",
+			'Лайки за ответы' => "SELECT COUNT(l.id)*{$this->forInnerLike} as scores, COUNT(l.id) as count FROM content_object__like l JOIN answer__answer t ON (l.content_object_id = t.content_object_id) WHERE t.user_id=".$user->getId()." AND t.is_published = 1",
+			'Внешние ссылки' => "SELECT SUM(l.scores) as scores, COUNT(l.scores) as count  FROM post__foreign_link l JOIN post__post t ON (t.id = l.post_id) WHERE t.user_id=".$user->getId()." AND t.is_published = 1",
+
+			'Жалобы' => "SELECT SUM(scores) as scores, COUNT(scores) as count FROM  content_object__complaint t WHERE t.user_id=".$user->getId(),
+		);
 	}
 }
