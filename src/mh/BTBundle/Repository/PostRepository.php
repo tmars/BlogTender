@@ -197,4 +197,15 @@ class PostRepository extends BaseRepository
 
         return $query->getResult();
     }
+	
+	public function getComments($post, $count, $first = 0)
+	{
+		$query = $this->_em->createQuery(
+			'SELECT c FROM BTBundle:PostComment c WHERE c.post = :post ORDER BY c.createdDate DESC')
+			->setParameter('post', $post)
+			->setFirstResult($first)
+			->setMaxResults($count);
+			
+		return $query->getResult();
+	}
 }

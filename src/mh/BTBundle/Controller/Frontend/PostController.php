@@ -74,10 +74,7 @@ class PostController extends Base\BaseUserController
 		$form = $this->createForm(new \mh\BTBundle\Form\Frontend\CommentType());
 		$form->setData(array('post_id' => $post->getId()));
 
-		$query = $this->getEM()->createQuery(
-			'SELECT c FROM BTBundle:PostComment c WHERE c.post = :post ORDER BY c.createdDate DESC'
-		)->setParameter('post', $post)->setMaxResults(5);
-		$comments = $query->getResult();
+		$comments = $this->getRepository('Post')->getComments($post, 5);
 
 		return $this->render('Post:show.html.twig', array(
             'post' => $post,
