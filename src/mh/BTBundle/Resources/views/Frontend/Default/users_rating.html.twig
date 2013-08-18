@@ -14,7 +14,7 @@
 {% for user in users %}
 
 <tr>
- <td><a href="{{ path('list_post_by_login', {login: user.screenName}) }}">{{ user.name }}</a></td>
+ <td><a href="{{ path('list_post_by_login', {login: user.login}) }}">{{ user.name }}</a></td>
  <td>{{ user.scores }}</td>
 </tr>
 {% endfor %}

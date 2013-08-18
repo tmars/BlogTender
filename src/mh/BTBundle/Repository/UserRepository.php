@@ -7,30 +7,30 @@ use Doctrine\ORM\Query\ResultSetMapping;
 
 class UserRepository extends BaseRepository
 {
-	public function getUniqueScreenName($screenName)
+	public function getUniqueLogin($login)
 	{
-        if (strlen($screenName) > 28) {
-            $screenName = substr($screenName, 28);
-        } else if (strlen($screenName) < 6) {
-            $screenName = 'login_';
+        if (strlen($login) > 28) {
+            $login = substr($login, 28);
+        } else if (strlen($login) < 6) {
+            $login = 'login_';
         }
 
 		$postfix = '';
-        $screenName = $this->getFormatedScreenName($screenName);
-        while ($this->findOneByScreenName($screenName.$postfix)) {
+        $login = $this->getFormatedLogin($login);
+        while ($this->findOneByLogin($login.$postfix)) {
             $postfix = $postfix ? $postfix + 1 : 2;
         }
-        return $screenName.$postfix;
+        return $login.$postfix;
 	}
 
-    public function getFormatedScreenName($screenName)
+    public function getFormatedLogin($login)
     {
-        $screenName = preg_replace('/\W/', '_', $screenName);
-        $screenName = preg_replace('/_+/', '_', $screenName);
-        $screenName = preg_replace('/^_+/', '', $screenName);
-        $screenName = preg_replace('/_+$/', '', $screenName);
+        $login = preg_replace('/\W/', '_', $login);
+        $login = preg_replace('/_+/', '_', $login);
+        $login = preg_replace('/^_+/', '', $login);
+        $login = preg_replace('/_+$/', '', $login);
 
-        return $screenName;
+        return $login;
     }
 
 	public function getUserCategories($user)

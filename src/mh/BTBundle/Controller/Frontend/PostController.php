@@ -44,7 +44,7 @@ class PostController extends Base\BaseUserController
 
     public function listByLoginAction($login)
 	{
-		$user = $this->getRepository('User')->findOneByScreenName($login);
+		$user = $this->getRepository('User')->findOneByLogin($login);
 		if ( ! $user) {
 			throw $this->createNotFoundException('Такой пользователь не зарегистрирован.');
 		}
@@ -64,7 +64,7 @@ class PostController extends Base\BaseUserController
 		//$user = $this->getCached('user_'.$login);
 
 		//if (!$user) {
-			$user = $this->getRepository('User')->findOneByScreenName($login);
+			$user = $this->getRepository('User')->findOneByLogin($login);
 		//	$this->setCached('user_'.$login, $user);
 		//}
 

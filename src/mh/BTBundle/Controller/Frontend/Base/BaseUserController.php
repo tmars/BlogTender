@@ -78,7 +78,7 @@ class BaseUserController extends BaseController
             CONCAT(l.created_date, 'pl', l.id) hash,
 			'post_like' type,
 			l.created_date created_date,
-			u.screen_name screen_name,
+			u.login login,
 			u.name user_name,
 			p.title p1,
 			p.slug p2,
@@ -95,7 +95,7 @@ class BaseUserController extends BaseController
             CONCAT(l.created_date, 'ql', l.id),
 			'question_like',
 			l.created_date,
-			u.screen_name,
+			u.login,
 			u.name user_name,
 			q.id,
 			q.title,
@@ -112,7 +112,7 @@ class BaseUserController extends BaseController
             CONCAT(l.created_date, 'al', l.id),
 			'answer_like',
 			l.created_date,
-			u.screen_name,
+			u.login,
 			u.name user_name,
 			q.id,
 			q.title,
@@ -130,7 +130,7 @@ class BaseUserController extends BaseController
             CONCAT(p.created_date, 'np', p.id),
 			'new_post',
 			p.created_date,
-			u.screen_name,
+			u.login,
 			u.name user_name,
 			p.title,
 			p.slug,
@@ -146,7 +146,7 @@ class BaseUserController extends BaseController
             CONCAT(q.created_date, 'nq', q.id),
 			'new_question',
 			q.created_date,
-			u.screen_name,
+			u.login,
 			u.name user_name,
 			q.id,
 			q.title,
@@ -162,7 +162,7 @@ class BaseUserController extends BaseController
             CONCAT(a.created_date, 'na', a.id),
 			'new_answer',
 			a.created_date,
-			u.screen_name,
+			u.login,
 			u.name user_name,
 			q.id,
 			q.title,
@@ -179,7 +179,7 @@ class BaseUserController extends BaseController
             CONCAT(l.created_date, 'fl', l.id),
 			'foreign_link',
 			l.created_date,
-			u.screen_name,
+			u.login,
 			u.name user_name,
 			p.title,
 			p.slug,
@@ -207,7 +207,7 @@ class BaseUserController extends BaseController
 			$h['hash'] = array_shift($r);
 			$h['type'] = array_shift($r);
 			$h['created_date'] = array_shift($r);
-			$h['screen_name'] = array_shift($r);
+			$h['login'] = array_shift($r);
 			$h['user_name'] = array_shift($r);
 
 			switch($h['type']) {

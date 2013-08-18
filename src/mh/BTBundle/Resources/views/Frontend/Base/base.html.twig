@@ -80,7 +80,7 @@
 	 <div class="right_top">
       {% if env.user %}
        <div class="right_post">
-		<h3>Меню [{{ env.user.screenName }}]</h3>
+		<h3>Меню [{{ env.user.login }}]</h3>
         {{ env.userMenu|raw }}
        </div>
       {% else %}

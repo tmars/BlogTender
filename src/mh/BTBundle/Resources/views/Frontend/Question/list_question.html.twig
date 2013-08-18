@@ -3,7 +3,7 @@
     <div class="answer">
         <h3 class="answer_title">{{ question.title }}</h3>
         <div class="author">
-            <a href="{{ path('list_post_by_login', {login: question.user.screenName}) }}">{{ question.user.name }}</a>
+            <a href="{{ path('list_post_by_login', {login: question.user.login}) }}">{{ question.user.name }}</a>
             <div class="date">
              <span id="clock">Опубликовано: </span>{{ russian_date(question.createdDate) }}
              <span id="dialog">Ответов: <a href="{{ path('show_question', {id: question.id}) }}">{{ question.answerCount }}</a></span>

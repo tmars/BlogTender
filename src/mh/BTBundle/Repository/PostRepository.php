@@ -168,7 +168,7 @@ class PostRepository extends BaseRepository
         $rsm->addFieldResult('p', 'title', 'title');
         $rsm->addJoinedEntityResult('mh\BTBundle\Entity\User', 'u', 'p', 'user');
         $rsm->addFieldResult('u', 'user_id', 'id');
-        $rsm->addFieldResult('u', 'screen_name', 'screenName');
+        $rsm->addFieldResult('u', 'login', 'login');
         $rsm->addJoinedEntityResult('mh\BTBundle\Entity\ContentObject', 'o', 'p', 'contentObject');
         $rsm->addFieldResult('o', 'content_object_id', 'id');
         //$rsm->addFieldResult('o', 'likes_count', 'likes_count');
@@ -178,7 +178,7 @@ class PostRepository extends BaseRepository
         $query = $this->_em
             ->createNativeQuery('SELECT
                 p.id, p.slug, p.title, p.content, p.user_id, p.content_object_id,
-                u.screen_name
+                u.login
                 FROM post__post p
                 INNER JOIN content_object__object o ON p.content_object_id = o.id
                 INNER JOIN user__user u ON p.user_id = u.id
@@ -188,7 +188,7 @@ class PostRepository extends BaseRepository
             ->createNativeQuery('SELECT
                 p.id, p.slug, p.title, p.content, p.user_id, p.content_object_id,
                 o.likes_count,
-                u.screen_name
+                u.login
                 FROM post__post p
                 INNER JOIN content_object__object o ON p.content_object_id = o.id
                 INNER JOIN user__user u ON p.user_id = u.id

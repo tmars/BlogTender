@@ -39,7 +39,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$posts = array();
 			$urls = array();
 			foreach ($this->getRepository("Post")->findBy(array('user' => $user, 'isPublished' => true)) as $post) {
-				$urls[$post->getId()] = $this->generateUrl('show_post', array('login' => $user->getScreenName(), 'post_slug' => $post->getSlug()), true);
+				$urls[$post->getId()] = $this->generateUrl('show_post', array('login' => $user->getLogin(), 'post_slug' => $post->getSlug()), true);
 				$posts[$post->getId()] = $post;
 			}
 

@@ -4,11 +4,11 @@
 <ul>
  {% for post in posts %}
   <li>
-	  <a href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}">
+	  <a href="{{ path('show_post', {login: post.user.login, post_slug: post.slug}) }}">
        <img src="{{ post.preview | apply_filter('post_image_micro') }}"/><p>{{ post.title }}</p>
       </a>
 	  <div class="author">
-       <a href="{{ path('list_post_by_login', {login: post.user.screenName}) }}">{{ post.user.name }}</a><br />
+       <a href="{{ path('list_post_by_login', {login: post.user.login}) }}">{{ post.user.name }}</a><br />
 	  </div>
       <span>{{ post.likesCount }}</span>
 	  <div class="clear"></div>

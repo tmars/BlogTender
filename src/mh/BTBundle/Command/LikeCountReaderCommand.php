@@ -29,7 +29,7 @@ class LikeCountReaderCommand extends DoctrineCommand
 			
 		foreach ($posts as $post) {
 			$url = $router->generate('show_post', array(
-				'login' => $post->getUser()->getScreenName(),
+				'login' => $post->getUser()->getLogin(),
 				'post_slug' => $post->getSlug(),
 			), true);
 			

@@ -1,24 +1,24 @@
 <div class="row-cell float-left">
 
   <div class="spacer">
-   <a class="itm_title" href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}">{{ post.title }}</a>
+   <a class="itm_title" href="{{ path('show_post', {login: post.user.login, post_slug: post.slug}) }}">{{ post.title }}</a>
    	{% if env.user and env.user.id == post.user.id %}
 	 <img src="/bundles/bt/images/igor/delete.png" class="post_edit_but" onclick="if (confirm('Точно удалить?')) window.location.href='{{ path('profile_admin_delete_post', {id: post.id}) }}';" />
 	 <img src="/bundles/bt/images/igor/edit16.png" class="post_edit_but" onclick="window.location.href='{{ path('profile_admin_edit_post', {id: post.id}) }}'" />
 
 	{% endif %}
    <div class="author">
-	 <a href="{{ path('list_post_by_login', {login: post.user.screenName}) }}" class="igor_auth_url">{{ post.user.name }}</a> 
-	 <noindex><a href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}" class="igor_no_a"><span>{{ post.likesCount|number_format() }}</span></a></noindex>
+	 <a href="{{ path('list_post_by_login', {login: post.user.login}) }}" class="igor_auth_url">{{ post.user.name }}</a> 
+	 <noindex><a href="{{ path('show_post', {login: post.user.login, post_slug: post.slug}) }}" class="igor_no_a"><span>{{ post.likesCount|number_format() }}</span></a></noindex>
 	</div>
 	  <div class="date">{{ russian_date(post.createdDate) }}</div>
 
-   <a href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}"><img src="{{ post.preview | apply_filter('post_image_mini') }}"/></a><br>
+   <a href="{{ path('show_post', {login: post.user.login, post_slug: post.slug}) }}"><img src="{{ post.preview | apply_filter('post_image_mini') }}"/></a><br>
 	
 	<p>{{ post.textPreview }}</p>
 	<div class="clear"></div>
    </div>
-    <noindex><a href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}" class="but-yellow post_prev">подробнее</a></noindex>
+    <noindex><a href="{{ path('show_post', {login: post.user.login, post_slug: post.slug}) }}" class="but-yellow post_prev">подробнее</a></noindex>
 
  
   </div>

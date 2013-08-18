@@ -26,7 +26,7 @@
 	<tr><!-- <th width="55">Дата</th> --><th>Ссылка</th><th>Страница</th><!-- <th width="60">Результат</th> -->
 	<th width="50">Баллы</th><!-- <th width="80">Комментарий</th> --></tr>
 	{% for link in links %}
-	<tr><td><a href="{{ path('show_post', {login: link.post.user.screenName, post_slug: link.post.slug}) }}">{{ link.post.title }}</a></td>
+	<tr><td><a href="{{ path('show_post', {login: link.post.user.login, post_slug: link.post.slug}) }}">{{ link.post.title }}</a></td>
 	<td><a href="{{ link.url }}">ссылка</a></td><td>{{ link.scores }}</td></tr>
 	{% else %}
 	{% endfor %}

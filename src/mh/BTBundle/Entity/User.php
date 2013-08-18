@@ -44,7 +44,7 @@ class User
 
     public function __toString()
     {
-        return $this->getScreenName();
+        return $this->getLogin();
     }
 
     /**
@@ -97,9 +97,9 @@ class User
 		return $image->getBrowserPath();
     }
 
-	public function setScreenName($screenName)
+	public function setLogin($login)
     {
-        $this->screenName = strtolower($screenName);
+        $this->login = strtolower($login);
 
         return $this;
     }
@@ -114,6 +114,11 @@ class User
      * @var string
      */
     private $salt;
+
+    /**
+     * @var string
+     */
+    private $inviteCode;
 
     /**
      * @var string
@@ -138,7 +143,7 @@ class User
     /**
      * @var string
      */
-    private $screenName;
+    private $login;
 
     /**
      * @var boolean
@@ -231,14 +236,26 @@ class User
     private $currentSession;
 
     /**
+     * @var \mh\BTBundle\Entity\User
+     */
+    private $invitingUser;
+
+    /**
      * Constructor
      */
-
-
+    public function __construct()
+    {
+        $this->sessions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->postComments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -254,14 +271,14 @@ class User
     public function setSalt($salt)
     {
         $this->salt = $salt;
-
+    
         return $this;
     }
 
     /**
      * Get salt
      *
-     * @return string
+     * @return string 
      */
     public function getSalt()
     {
@@ -269,9 +286,45 @@ class User
     }
 
     /**
+     * Set inviteCode
+     *
+     * @param string $inviteCode
+     * @return User
+     */
+    public function setInviteCode($inviteCode)
+    {
+        $this->inviteCode = $inviteCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get inviteCode
+     *
+     * @return string 
+     */
+    public function getInviteCode()
+    {
+        return $this->inviteCode;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    
+        return $this;
+    }
+
+    /**
      * Get password
      *
-     * @return string
+     * @return string 
      */
     public function getPassword()
     {
@@ -287,14 +340,14 @@ class User
     public function setName($name)
     {
         $this->name = $name;
-
+    
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -310,14 +363,14 @@ class User
     public function setAbout($about)
     {
         $this->about = $about;
-
+    
         return $this;
     }
 
     /**
      * Get about
      *
-     * @return string
+     * @return string 
      */
     public function getAbout()
     {
@@ -333,14 +386,14 @@ class User
     public function setEmail($email)
     {
         $this->email = $email;
-
+    
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string
+     * @return string 
      */
     public function getEmail()
     {
@@ -348,13 +401,13 @@ class User
     }
 
     /**
-     * Get screenName
+     * Get login
      *
-     * @return string
+     * @return string 
      */
-    public function getScreenName()
+    public function getLogin()
     {
-        return $this->screenName;
+        return $this->login;
     }
 
     /**
@@ -366,14 +419,14 @@ class User
     public function setEmailConfirmed($emailConfirmed)
     {
         $this->emailConfirmed = $emailConfirmed;
-
+    
         return $this;
     }
 
     /**
      * Get emailConfirmed
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getEmailConfirmed()
     {
@@ -389,14 +442,14 @@ class User
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
-
+    
         return $this;
     }
 
     /**
      * Get createdDate
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getCreatedDate()
     {
@@ -412,14 +465,14 @@ class User
     public function setSource($source)
     {
         $this->source = $source;
-
+    
         return $this;
     }
 
     /**
      * Get source
      *
-     * @return integer
+     * @return integer 
      */
     public function getSource()
     {
@@ -435,14 +488,14 @@ class User
     public function setIdInSource($idInSource)
     {
         $this->idInSource = $idInSource;
-
+    
         return $this;
     }
 
     /**
      * Get idInSource
      *
-     * @return string
+     * @return string 
      */
     public function getIdInSource()
     {
@@ -458,14 +511,14 @@ class User
     public function setSocnetInfo($socnetInfo)
     {
         $this->socnetInfo = $socnetInfo;
-
+    
         return $this;
     }
 
     /**
      * Get socnetInfo
      *
-     * @return string
+     * @return string 
      */
     public function getSocnetInfo()
     {
@@ -481,14 +534,14 @@ class User
     public function setScores($scores)
     {
         $this->scores = $scores;
-
+    
         return $this;
     }
 
     /**
      * Get scores
      *
-     * @return integer
+     * @return integer 
      */
     public function getScores()
     {
@@ -504,14 +557,14 @@ class User
     public function setCountersDay($countersDay)
     {
         $this->countersDay = $countersDay;
-
+    
         return $this;
     }
 
     /**
      * Get countersDay
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getCountersDay()
     {
@@ -527,14 +580,14 @@ class User
     public function setCountQuestionAtDay($countQuestionAtDay)
     {
         $this->countQuestionAtDay = $countQuestionAtDay;
-
+    
         return $this;
     }
 
     /**
      * Get countQuestionAtDay
      *
-     * @return integer
+     * @return integer 
      */
     public function getCountQuestionAtDay()
     {
@@ -550,14 +603,14 @@ class User
     public function setCountAnswerAtDay($countAnswerAtDay)
     {
         $this->countAnswerAtDay = $countAnswerAtDay;
-
+    
         return $this;
     }
 
     /**
      * Get countAnswerAtDay
      *
-     * @return integer
+     * @return integer 
      */
     public function getCountAnswerAtDay()
     {
@@ -573,14 +626,14 @@ class User
     public function setCountPostForeignLinkAtDay($countPostForeignLinkAtDay)
     {
         $this->countPostForeignLinkAtDay = $countPostForeignLinkAtDay;
-
+    
         return $this;
     }
 
     /**
      * Get countPostForeignLinkAtDay
      *
-     * @return integer
+     * @return integer 
      */
     public function getCountPostForeignLinkAtDay()
     {
@@ -596,14 +649,14 @@ class User
     public function setCountPostForeignLinkOnTrustedSiteAtDay($countPostForeignLinkOnTrustedSiteAtDay)
     {
         $this->countPostForeignLinkOnTrustedSiteAtDay = $countPostForeignLinkOnTrustedSiteAtDay;
-
+    
         return $this;
     }
 
     /**
      * Get countPostForeignLinkOnTrustedSiteAtDay
      *
-     * @return integer
+     * @return integer 
      */
     public function getCountPostForeignLinkOnTrustedSiteAtDay()
     {
@@ -619,14 +672,14 @@ class User
     public function setFoto(\mh\BTBundle\Entity\UserFoto $foto = null)
     {
         $this->foto = $foto;
-
+    
         return $this;
     }
 
     /**
      * Get foto
      *
-     * @return \mh\BTBundle\Entity\UserFoto
+     * @return \mh\BTBundle\Entity\UserFoto 
      */
     public function getFoto()
     {
@@ -642,7 +695,7 @@ class User
     public function addSession(\mh\BTBundle\Entity\UserSession $sessions)
     {
         $this->sessions[] = $sessions;
-
+    
         return $this;
     }
 
@@ -659,7 +712,7 @@ class User
     /**
      * Get sessions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getSessions()
     {
@@ -675,7 +728,7 @@ class User
     public function addPost(\mh\BTBundle\Entity\Post $posts)
     {
         $this->posts[] = $posts;
-
+    
         return $this;
     }
 
@@ -692,7 +745,7 @@ class User
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPosts()
     {
@@ -708,7 +761,7 @@ class User
     public function addAnswer(\mh\BTBundle\Entity\Answer $answers)
     {
         $this->answers[] = $answers;
-
+    
         return $this;
     }
 
@@ -725,7 +778,7 @@ class User
     /**
      * Get answers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getAnswers()
     {
@@ -741,7 +794,7 @@ class User
     public function addQuestion(\mh\BTBundle\Entity\Question $questions)
     {
         $this->questions[] = $questions;
-
+    
         return $this;
     }
 
@@ -758,7 +811,7 @@ class User
     /**
      * Get questions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getQuestions()
     {
@@ -774,7 +827,7 @@ class User
     public function addPostComment(\mh\BTBundle\Entity\PostComment $postComments)
     {
         $this->postComments[] = $postComments;
-
+    
         return $this;
     }
 
@@ -791,7 +844,7 @@ class User
     /**
      * Get postComments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPostComments()
     {
@@ -807,76 +860,19 @@ class User
     public function setCurrentSession(\mh\BTBundle\Entity\UserSession $currentSession = null)
     {
         $this->currentSession = $currentSession;
-
+    
         return $this;
     }
 
     /**
      * Get currentSession
      *
-     * @return \mh\BTBundle\Entity\UserSession
+     * @return \mh\BTBundle\Entity\UserSession 
      */
     public function getCurrentSession()
     {
         return $this->currentSession;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->sessions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->postComments = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-    /**
-     * @var string
-     */
-    private $inviteCode;
-
-
-    /**
-     * Set inviteCode
-     *
-     * @param string $inviteCode
-     * @return User
-     */
-    public function setInviteCode($inviteCode)
-    {
-        $this->inviteCode = $inviteCode;
-
-        return $this;
-    }
-
-    /**
-     * Get inviteCode
-     *
-     * @return string
-     */
-    public function getInviteCode()
-    {
-        return $this->inviteCode;
-    }
-    /**
-     * @var \mh\BTBundle\Entity\User
-     */
-    private $invitingUser;
-
 
     /**
      * Set invitingUser
@@ -887,14 +883,14 @@ class User
     public function setInvitingUser(\mh\BTBundle\Entity\User $invitingUser = null)
     {
         $this->invitingUser = $invitingUser;
-
+    
         return $this;
     }
 
     /**
      * Get invitingUser
      *
-     * @return \mh\BTBundle\Entity\User
+     * @return \mh\BTBundle\Entity\User 
      */
     public function getInvitingUser()
     {
