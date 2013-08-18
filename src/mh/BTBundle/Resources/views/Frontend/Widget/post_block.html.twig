@@ -4,7 +4,7 @@
 <ul>
  {% for post in posts %}
   <li>
-	  <a href="{{ env.genUrl('show_post', post) }}">
+	  <a href="{{ path('show_post', {id: post.id}) }}">
        <img src="{{ post.preview | apply_filter('post_image_micro') }}"/><p>{{ post.title }}</p>
       </a>
 	  <div class="author">

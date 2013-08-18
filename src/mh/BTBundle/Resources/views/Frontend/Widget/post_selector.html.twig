@@ -5,12 +5,12 @@
   {% for mypost in posts %}
   <div class="box" style="display:{% if loop.first %}block;{% else %}none;{% endif %}">
     <div>
-      <img alt="{{ mypost.title }}" style="max-width: 636px; cursor:pointer;" src="{{ mypost.preview | apply_filter('post_image') }}" onclick="window.location.href='{{ env.genUrl('show_post', mypost) }}'"/>
+      <img alt="{{ mypost.title }}" style="max-width: 636px; cursor:pointer;" src="{{ mypost.preview | apply_filter('post_image') }}" onclick="window.location.href='{{ path('show_post', {id: mypost.id}) }}'"/>
       <div id="tab_cont" class="long_post">
-        <a href="{{ env.genUrl('show_post', mypost) }}"><h3>{{ mypost.title }}</h3></a>
+        <a href="{{ path('show_post', {id: mypost.id}) }}"><h3>{{ mypost.title }}</h3></a>
 		<a href="" style="font-size:10px;">Как сюда попасть?</a>
         <p>{{ mypost.textPreview }}</p>
-     <noindex> <!--   <a class="but-yellow" href="{{ env.genUrl('show_post', mypost) }}">прочитать</a> --> </noindex>
+     <noindex> <!--   <a class="but-yellow" href="{{ path('show_post', {id: mypost.id}) }}">прочитать</a> --> </noindex>
       </div>
     </div>
   </div>
