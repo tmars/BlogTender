@@ -477,11 +477,11 @@ class BaseUserController extends BaseController
 		return $form;
 	}
 	
-	public function genUrl($mode, $obj)
+	public function genUrl($mode, $obj, $flag = false)
 	{
 		$url = '';
 		if($mode == 'show_post') {
-			$url = $this->generateUrl('show_post', array('id' => $obj->getId()));
+			$url = $this->generateUrl('show_post', array('id' => $obj->getId()), $flag);
 		}
 		
 		return $url;
