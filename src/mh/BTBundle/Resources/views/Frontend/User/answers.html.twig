@@ -1,0 +1,38 @@
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block title %}Ответы пользователя {{ profile.login }}{% endblock %}
+
+{% block content %}
+<div class="content-wiev_item">
+  <div class="breadcrumbs">
+    <a href="{{ path('homepage') }}">Главная</a>
+    <a href="{{ path('user_info', {login: profile.login}) }}">{{ profile.login }}</a>
+    <span>Ответы</span>
+  </div>
+ <h2>Ответы пользователя {{ profile.login }}</h2>
+</div>
+
+<div class="content-wiev_answer">
+  
+  {% for answer in answers %}
+     <div class="content-wiev_answer-item">
+         <a href="{{ path('show_answer', {qid: answer.question.id, aid: answer.id}) }}">Ответ </a>
+         на вопрос: {{answer.question.title}}
+         <div class="answer">
+             <div class="author">
+                 <div class="date">
+                  <span id="clock">Опубликовано: </span>
+                  {{ russian_date(answer.createdDate) }}
+                 </div>
+             </div>
+             <p>{% if answer.isBest %}ЛУЧШИЙ ОТВЕТ{% endif %}{{ answer.content }}</p>
+         </div>
+     </div>
+ {% else %}
+ <h3>Вопросы отсутствуют</h3>
+ {% endfor %}
+ 
+ {{ pagerfanta(answers, 'default_2') }}
+ 
+</div>
+{% endblock %}

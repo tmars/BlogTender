@@ -44,22 +44,6 @@ class PostController extends Base\BaseUserController
         ));
 	}
 
-    public function listByLoginAction($login)
-	{
-		$user = $this->getRepository('User')->findOneByLogin($login);
-		if ( ! $user) {
-			throw $this->createNotFoundException('Такой пользователь не зарегистрирован.');
-		}
-
-		$posts = $this->getRepository('Post')
-			->getListByUser($user, $this->container->getParameter('count_post_per_page'), $this->getRequest()->get('page', 1));
-
-		return $this->render('Post:list_by_login.html.twig', array(
-            'posts' => $posts,
-			'profile' => $user,
-		));
-	}
-
 	public function showAction($id)
     {
 		$post = $this->getRepository('Post')->find($id);

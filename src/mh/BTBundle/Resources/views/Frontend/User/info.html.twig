@@ -30,6 +30,11 @@
   {% endif %}
 
   Зарегистрирован: {{ russian_date(profile.createdDate) }} через {{ profile.sourceText }}
+  </br>
+   
+  <a href="{{ path('user_posts', {login: profile.login}) }}">Посты пользователя</a></br>
+  <a href="{{ path('user_questions', {login: profile.login }) }}">Вопросы пользователя</a></br>
+  <a href="{{ path('user_answers', {login: profile.login }) }}">Ответы пользователя</a></br>
  </div>
 </div>
 {% endblock %}

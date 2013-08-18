@@ -1,10 +1,22 @@
 users_rating:
-    pattern:  /users/rating
+    pattern:  /users/rating/
     defaults: { _controller: BTBundle:Frontend\User:rating }
     
-list_post_by_login:
+user_posts:
     pattern:  /user/{login}/posts/
-    defaults: { _controller: BTBundle:Frontend\Post:listByLogin}
+    defaults: { _controller: BTBundle:Frontend\User:posts}
+    requirements:
+        login: "[0-9a-zA-Z_]+"
+        
+user_questions:
+    pattern:  /user/{login}/qa/questions/
+    defaults: { _controller: BTBundle:Frontend\User:questions}
+    requirements:
+        login: "[0-9a-zA-Z_]+"
+
+user_answers:
+    pattern:  /user/{login}/qa/answers/
+    defaults: { _controller: BTBundle:Frontend\User:answers}
     requirements:
         login: "[0-9a-zA-Z_]+"
         
