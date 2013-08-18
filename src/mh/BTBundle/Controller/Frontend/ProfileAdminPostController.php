@@ -129,6 +129,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		return $this->render('ProfileAdminPost:new.html.twig', array(
             'form' => $form->createView(),
 			'themes_for_post' => $themes,
+			'tags' => $this->getRepository('Tag')->findAll(),
         ));
     }
 
@@ -201,6 +202,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		return $this->render('ProfileAdminPost:edit.html.twig', array(
             'form' => $form->createView(),
 			'post' => $post,
+			'tags' => $this->getRepository('Tag')->findAll(),
 		));
 
 	}

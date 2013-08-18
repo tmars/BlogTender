@@ -17,11 +17,7 @@ jQuery(document).ready(function($) {
         },
         multiple: true,
         width: 'element',
-        data: [
-            {% for tag in env.tags %}
-            {id: '{{ tag.label }}', text: '{{ tag.label }}'}{% if not loop.last %},{% endif %}
-            {% endfor %}
-        ]
+        data: [{% spaceless %}{% for tag in tags %}{id: '{{ tag.label }}', text: '{{ tag.label }}'}{% if not loop.last %},{% endif %}{% endfor %}{% endspaceless %}]
     });
     $("#post_tags")
         .on("change", function(e) { console.log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})) } );
