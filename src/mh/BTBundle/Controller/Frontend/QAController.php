@@ -8,11 +8,11 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 
-class QuestionController extends Base\BaseUserController
+class QAController extends Base\BaseUserController
 {
-	public function listByCategoryAction($category_id)
+	public function listByCategoryAction($slug)
 	{
-		$category = $this->getRepository('Category')->find($category_id);
+		$category = $this->getRepository('Category')->findOneBySlug($slug);
 
 		if (!$category) {
 			throw $this->createNotFoundException('Нет категории.');
@@ -21,7 +21,7 @@ class QuestionController extends Base\BaseUserController
 		$query = $this->getRepository('Question')->createQueryBuilder('q')
 			->select('q')
 			->where('q.category = :category AND q.isPublished = true')
-			->setParameter(':category', $category_id)
+			->setParameter(':category', $category->getId())
 		;
 
 		$questions = $this->getPaginated($query);

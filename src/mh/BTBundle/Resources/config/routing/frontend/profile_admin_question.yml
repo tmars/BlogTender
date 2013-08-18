@@ -1,20 +1,20 @@
 profile_admin_list_question:
     pattern:  /list
-    defaults: { _controller: BTBundle:Frontend\ProfileAdminQuestion:list }
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminQA:list }
 
 profile_admin_new_question:
     pattern:  /new
-    defaults: { _controller: BTBundle:Frontend\ProfileAdminQuestion:new }
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminQA:new }
 
 profile_admin_delete_question:
     pattern:  /{id}/delete
-    defaults: { _controller: BTBundle:Frontend\ProfileAdminQuestion:delete }
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminQA:delete }
     requirements:
         id: "[0-9]+"
 
 profile_admin_new_answer:
     pattern:  /{id}/answers/new
-    defaults: { _controller: BTBundle:Frontend\ProfileAdminQuestion:answer }
+    defaults: { _controller: BTBundle:Frontend\ProfileAdminQA:answer }
     requirements:
         id: "[0-9]+"
         

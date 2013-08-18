@@ -2,7 +2,7 @@
 
 namespace mh\BTBundle\Controller\Frontend;
 
-class ProfileAdminQuestionController extends Base\BaseUserController
+class ProfileAdminQAController extends Base\BaseUserController
 {
 
 	public function listAction()

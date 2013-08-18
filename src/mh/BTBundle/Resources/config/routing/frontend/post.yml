@@ -11,7 +11,9 @@ show_post:
 list_post_by_category:
     pattern:  /category/{slug}/
     defaults: { _controller: BTBundle:Frontend\Post:listByCategory }
-
+    requirements:
+        slug: "[0-9a-zA-Z_]+"
+        
 list_post_by_tag:
     pattern:  /tag/{tag}/
     defaults: { _controller: BTBundle:Frontend\Post:listByTag, tag: '' }

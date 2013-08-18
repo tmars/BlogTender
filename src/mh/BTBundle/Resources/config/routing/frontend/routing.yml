@@ -16,11 +16,9 @@ _ajax:
 
 _question:
     resource: "question.yml"
-    prefix:   /question
 
 _post:
     resource: "post.yml"
-
 
 homepage:
     pattern:  /
