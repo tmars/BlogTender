@@ -17,7 +17,7 @@ class WidgetController extends Base\BaseUserController
 			u.login login,
 			u.name user_name,
 			p.title p1,
-			p.slug p2,
+			p.id p2,
 			NULL p3,
 			NULL p4
 			FROM content_object__like l
@@ -69,7 +69,7 @@ class WidgetController extends Base\BaseUserController
 			u.login,
 			u.name user_name,
 			p.title,
-			p.slug,
+			p.id,
 			p.scores,
 			NULL
 			FROM post__post p
@@ -118,7 +118,7 @@ class WidgetController extends Base\BaseUserController
 			u.login,
 			u.name user_name,
 			p.title,
-			p.slug,
+			p.id,
 			l.scores,
 			NULL
 			FROM post__foreign_link l
@@ -142,14 +142,14 @@ class WidgetController extends Base\BaseUserController
 
 			$h['hash'] = array_shift($r);
 			$h['type'] = array_shift($r);
-			$h['created_date'] = array_shift($r);
+			$h['created_date'] = new \DateTime(array_shift($r));
 			$h['login'] = array_shift($r);
 			$h['user_name'] = array_shift($r);
 
 			switch($h['type']) {
 				case 'post_like':
 					$h['post_title'] = array_shift($r);
-					$h['post_slug'] = array_shift($r);
+					$h['post_id'] = array_shift($r);
 					break;
 
 				case 'question_like':
@@ -165,7 +165,7 @@ class WidgetController extends Base\BaseUserController
 
 				case 'new_post':
 					$h['post_title'] = array_shift($r);
-					$h['post_slug'] = array_shift($r);
+					$h['post_id'] = array_shift($r);
 					$h['post_scores'] = array_shift($r);
 					break;
 
@@ -184,7 +184,7 @@ class WidgetController extends Base\BaseUserController
 
 				case 'foreign_link':
 					$h['post_title'] = array_shift($r);
-					$h['post_slug'] = array_shift($r);
+					$h['post_id'] = array_shift($r);
 					$h['link_scores'] = array_shift($r);
 					break;
 			}
