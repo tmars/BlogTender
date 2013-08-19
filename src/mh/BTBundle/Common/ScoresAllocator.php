@@ -45,6 +45,15 @@ class ScoresAllocator
 		6 => 0,
 	);
 	
+	private $forAnswer = array(
+		1 => 3,
+		2 => 3,
+		3 => 3,
+		4 => 3,
+		5 => 3,
+		6 => 0,
+	);
+	
 	private $forInnerLike = 1;
 
 	private function evaluate(array $scores, $number)
@@ -99,6 +108,9 @@ class ScoresAllocator
 
 	public function forAnswer(Entity\Answer $object)
 	{
+		$num = $this->em->getRepository('BTBundle:EventCounter')->incCounter($object->getUser(), EventCounterType::MAKE_ANSWER);
+		$scores = $this->evaluate($this->forAnswer, $num);
+		$object->setScores($scores);
 	}
 	
 	public function getTypes($user)
