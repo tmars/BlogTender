@@ -24,7 +24,7 @@
         "sonata-project/block-bundle": "dev-master",
 	"doctrine/doctrine-fixtures-bundle": "dev-master",
 	"friendsofsymfony/user-bundle": "*",
-	"Trsteel/ckeditor-bundle": "1.1.*@dev",
+	"trsteel/ckeditor-bundle": "1.1.*@dev",
 	"avalanche123/imagine-bundle": "v2.1"
     },
     "scripts": {
