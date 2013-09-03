@@ -30,7 +30,7 @@ class UserGeneratorCommand extends DoctrineCommand
 		$em = $this->getEntityManager(null);
 
 		foreach ($users as $user) {
-			$output->writeln($user->getScreenName());
+			$output->writeln($user->getLogin());
 			$em->persist($user);
 		}
 
@@ -59,14 +59,14 @@ class UserGeneratorCommand extends DoctrineCommand
                 $sname = Random::getArrayElement($f_second_names);
             }
 
-            $screenName = Random::popArrayElement($nicknames);
+            $login = Random::popArrayElement($login);
 
             $user = new Entity\User();
             $user->setSource(Entity\User::SOURCE_INTERNAL);
             $user->setName(sprintf("%s %s", $name, $sname));
-            $user->setEmail(sprintf("%s@mail.ru", $screenName));
+            $user->setEmail(sprintf("%s@mail.ru", $login));
             $user->setEmailConfirmed(true);
-            $user->setScreenName($screenName);
+            $user->setLogin($login);
             $user->setPassword('password');
 
             $users[] = $user;

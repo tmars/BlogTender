@@ -6,7 +6,7 @@ class SocnetLoginController extends BaseUserController
 {
 	protected $params = array(
 		'vk' => array(
-			'get_data_url_pattern' => 'https://api.vk.com/method/users.get?uid={user_id}&fields=uid,home_phone,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,email,photo_big&access_token={access_token}',
+			'get_data_url_pattern' => 'https://api.vk.com/method/users.get?uid={user_id}&fields=uid,home_phone,first_name,last_name,nickname,login,sex,bdate,city,country,timezone,email,photo_big&access_token={access_token}',
 			'get_access_token_url' => 'https://oauth.vk.com/access_token',
 			'default_foto_url' => 'https://vk.com/images/camera_a.gif',
 		),
@@ -72,7 +72,7 @@ class SocnetLoginController extends BaseUserController
 
 			$data = $data['response'][0];
 			$userData['id'] = $data['uid'];
-			$userData['screen_name'] = $data['screen_name'];
+			$userData['login'] = $data['screen_name'];
 			$userData['photo'] = $data['photo_big'] == $this->getP('default_foto_url') ? '' : $data['photo_big'];
 			$userData['name'] = sprintf("%s %s", $data['first_name'], $data['last_name']);
 			$userData['socnet_info'] = $content;
@@ -93,7 +93,7 @@ class SocnetLoginController extends BaseUserController
 			$data = $this->unpackData($content);
 
 			$userData['id'] = $data['id'];
-			$userData['screen_name'] = $data['username'];
+			$userData['login'] = $data['username'];
 			$userData['name'] = $data['name'];
 			$userData['email'] = $data['email'];
 			$userData['photo'] = $data['picture']['data']['is_silhouette'] == true ? '' : $data['picture']['data']['url'];
@@ -119,7 +119,7 @@ class SocnetLoginController extends BaseUserController
 			$data = $this->unpackData($content);
 			
 			$userData['id'] = $data['uid'];
-			$userData['screen_name'] = $data['name'];
+			$userData['login'] = $data['name'];
 			$userData['name'] = $data['name'];
 			$userData['photo'] = $data['pic_2'];
 			$userData['socnet_info'] = $content;
@@ -140,7 +140,7 @@ class SocnetLoginController extends BaseUserController
 			$data = $this->unpackData($content);
 
 			$userData['id'] = $data['id'];
-			$userData['screen_name'] = $data['verified_email'] == true ? substr($data['email'], 0, strpos($data['email'], '@')) : $data['name'];
+			$userData['login'] = $data['verified_email'] == true ? substr($data['email'], 0, strpos($data['email'], '@')) : $data['name'];
 			$userData['name'] = $data['name'];
 			$userData['email'] = $data['verified_email'] == true ? $data['email'] : '';
 			$userData['photo'] = $data['picture'] ? $data['picture'] : '';
@@ -166,7 +166,7 @@ class SocnetLoginController extends BaseUserController
 
 			$data = $data[0];
 			$userData['id'] = $data['uid'];
-			$userData['screen_name'] = substr($data['email'], 0, strpos($data['email'], '@'));
+			$userData['login'] = substr($data['email'], 0, strpos($data['email'], '@'));
 			$userData['name'] = $data['nick'];
 			$userData['email'] = $data['email'];
 			$userData['photo'] = $data['has_pic'] ? $data['pic_190'] : '';
@@ -193,7 +193,7 @@ class SocnetLoginController extends BaseUserController
 			}
 
 			$userData['id'] = $data->id;
-			$userData['screen_name'] = $data->screen_name;
+			$userData['login'] = $data->screen_name;
 			$userData['name'] = $data->name;
 			$userData['photo'] = $data->profile_image_url;
 			$userData['socnet_info'] = var_dump($data);

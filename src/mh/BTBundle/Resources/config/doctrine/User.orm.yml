@@ -3,8 +3,8 @@ mh\BTBundle\Entity\User:
     table: user__user
     repositoryClass: mh\BTBundle\Repository\UserRepository
     uniqueConstraints:
-        user_screen_name_idx:
-            columns: screen_name
+        user_login_idx:
+            columns: login
         user_socnet_id_idx:
             columns: id_in_source
     fields:
@@ -45,12 +45,12 @@ mh\BTBundle\Entity\User:
             length: 50
             fixed: false
             nullable: true
-        screenName:
+        login:
             type: string
             length: 30
             fixed: false
             nullable: true
-            column: screen_name
+            column: login
         emailConfirmed:
             type: boolean
             nullable: true

@@ -19,17 +19,22 @@ class Category
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $label;
+    private $slug;
+
+    /**
+     * @var string
+     */
+    private $label;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $posts;
+    private $posts;
 
     /**
      * Constructor
@@ -38,15 +43,38 @@ class Category
     {
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -58,14 +86,14 @@ class Category
     public function setLabel($label)
     {
         $this->label = $label;
-
+    
         return $this;
     }
 
     /**
      * Get label
      *
-     * @return string
+     * @return string 
      */
     public function getLabel()
     {
@@ -81,7 +109,7 @@ class Category
     public function addPost(\mh\BTBundle\Entity\Post $posts)
     {
         $this->posts[] = $posts;
-
+    
         return $this;
     }
 
@@ -98,7 +126,7 @@ class Category
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPosts()
     {

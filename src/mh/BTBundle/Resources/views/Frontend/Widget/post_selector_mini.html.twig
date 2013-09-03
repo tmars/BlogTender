@@ -2,16 +2,15 @@
 <h3>статьи</h3>
 <div class="content-wiev_tab">
     <div class="section">
-        {% set posts = env.randomMarkedPosts(3) %}
         {% for post in posts %}
         <div class="box{% if loop.first %} visible{% endif %}">
             <div>
                 <span>
-                    <img style="cursor:pointer;" alt="{{ post.title }}" src="{{ post.preview | apply_filter('post_image') }}" onclick="window.location.href='{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}'"/>
+                    <img style="cursor:pointer;" alt="{{ post.title }}" src="{{ post.preview | apply_filter('post_image') }}" onclick="window.location.href='{{ path('show_post', {id: post.id}) }}'"/>
                     <div id="tab_cont" class="mini_tit_post"><p>{{ post.title }}</p></div>
                 </span>
                 <p style="padding:3px 9px;">{{ post.textPreview }}</p>
-               <a class="but-yellow" style="margin:10px;"  href="{{ path('show_post', {login: post.user.screenName, post_slug: post.slug}) }}">прочитать</a>
+               <a class="but-yellow" style="margin:10px;"  href="{{ path('show_post', {id: post.id}) }}">прочитать</a>
                 <div class="clear"></div>
             </div>
         </div>

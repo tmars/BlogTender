@@ -12,5 +12,8 @@ web/media/p/i/*
 !web/media/p/i/unknow.jpg
 web/media/p/a/i/*
 web/media/p/a/f/*
+!web/media/p/a/f/.htaccess
 
 web/cache/*
+
+src/mh/BTBundle/Entity/*.php~

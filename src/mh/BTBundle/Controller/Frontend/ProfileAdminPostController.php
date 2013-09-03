@@ -4,8 +4,7 @@ namespace mh\BTBundle\Controller\Frontend;
 
 use Symfony\Component\Form as Form;
 use mh\BTBundle\Form\Frontend\PostType;
-use mh\BTBundle\Entity\Post;
-use mh\BTBundle\Entity\Tag;
+use mh\BTBundle\Entity as Entity;
 use mh\BTBundle\DBAL\ModerationStatusType;
 
 class ProfileAdminPostController extends Base\BaseUserController
@@ -40,7 +39,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$posts = array();
 			$urls = array();
 			foreach ($this->getRepository("Post")->findBy(array('user' => $user, 'isPublished' => true)) as $post) {
-				$urls[$post->getId()] = $this->generateUrl('show_post', array('login' => $user->getScreenName(), 'post_slug' => $post->getSlug()), true);
+				$urls[$post->getId()] = $this->generateUrl('show_post', array('id' => $post->getId()), true);
 				$posts[$post->getId()] = $post;
 			}
 
@@ -57,7 +56,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$allocator = $this->get('scores_allocator');
 			foreach ($postIds as $postId) {
 				if (!$this->getRepository("PostForeignLink")->findOneBy(array('url' => $target_url, 'post' => $posts[$postId]))) {
-					$link = new \mh\BTBundle\Entity\PostForeignLink();
+					$link = new Entity\PostForeignLink();
 					$link->setPost($posts[$postId]);
 					$link->setUrl($target_url);
 
@@ -112,11 +111,9 @@ class ProfileAdminPostController extends Base\BaseUserController
                 break;
             }
 
-			$post = new Post();
+			$post = new Entity\Post();
 			$post->setUser($user);
 			$this->updatePost($form, $post);
-
-
 
 			$em = $this->getEM();
 			$em->persist($post);
@@ -132,6 +129,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		return $this->render('ProfileAdminPost:new.html.twig', array(
             'form' => $form->createView(),
 			'themes_for_post' => $themes,
+			'tags' => $this->getRepository('Tag')->findAll(),
         ));
     }
 
@@ -204,6 +202,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		return $this->render('ProfileAdminPost:edit.html.twig', array(
             'form' => $form->createView(),
 			'post' => $post,
+			'tags' => $this->getRepository('Tag')->findAll(),
 		));
 
 	}
@@ -236,6 +235,8 @@ class ProfileAdminPostController extends Base\BaseUserController
         }
 
 		$data = $form->getData();
+		
+		// Проверка уникальности
 		$uniqueChecker = $this->get('unique_checker');
 		if (!$uniqueChecker->isUnique($data['content'])) {
 			$form->addError(new
@@ -243,15 +244,25 @@ class ProfileAdminPostController extends Base\BaseUserController
 			return false;
 		}
 
+		// Проверка количества категорий
 		if (count($data['categories']) == 0 || count($data['categories']) > 3) {
 			$form->get('categories')->addError(new
 				Form\FormError('количество категорий от 1 до 3'));
 			return false;
 		}
 
+		// Проверка количества тегов
 		if (count($data['tags']) == 0 || count($data['tags']) > 10) {
 			$form->get('tags')->addError(new
 				Form\FormError('количество тегов от 1 до 10'));
+			return false;
+		}
+		
+		// Проверка длины поста
+		$text = Entity\Post::clearContent($data['content']);
+		if (mb_strlen($text) < 700) {
+			$form->addError(new
+				Form\FormError('Пост должен содержать как минимум 700 символов'));
 			return false;
 		}
 
@@ -267,7 +278,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		$post->setSubtitle($data['subtitle']);
 		$post->setContent($data['content']);
 		if ($data['image']) {
-			$post->setImage(new \mh\BTBundle\Entity\PostImage($data['image']));
+			$post->setImage(new Entity\PostImage($data['image']));
 		}
 
 		// заполняем новые категории
@@ -295,7 +306,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		// заполняем новые теги
 		$newTags = array();
 		foreach (explode(',', $data['tags']) as $tag_label) {
-			Tag::formatLabel($tag_label);
+			Entity\Tag::formatLabel($tag_label);
 
 			if (!$tag_label) {
 				continue;
@@ -303,7 +314,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 
 			$tag = $this->getRepository('Tag')->findOneByLabel($tag_label);
 			if (!$tag) {
-				$tag = new \mh\BTBundle\Entity\Tag();
+				$tag = new Entity\Tag();
 				$tag->setLabel($tag_label);
 			}
 

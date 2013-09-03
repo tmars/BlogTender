@@ -11,7 +11,7 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('screen_name', 'text', array(
+            ->add('login', 'text', array(
                 'label' => 'Логин',
                 'required' => true
             ))
@@ -59,7 +59,7 @@ class ProfileType extends AbstractType
                         'checkMX' => true,
                     ))
                 ),
-                'screen_name' => array(
+                'login' => array(
                     new Assert\NotBlank(array('message' => 'необходимо заполнить')),
                     new Assert\MaxLength(array(
                         'message' => 'макимум 30 символов.',

@@ -25,16 +25,18 @@ class PostController extends Base\BaseUserController
         ));
 	}
 
-	public function listByCategoryAction($category_id)
+	public function listByCategoryAction($slug)
 	{
-		$category = $this->getRepository('Category')->find($category_id);
+		$category = $this->getRepository('Category')->findOneBySlug($slug);
 
 		if (!$category) {
 			throw $this->createNotFoundException('Нет категории.');
 		}
 
-		$posts = $this->getRepository('Post')
-			->getListByCategory($category_id, $this->container->getParameter('count_post_per_page'), $this->getRequest()->get('page', 1));
+		$posts = $this->getRepository('Post')->getListByCategory(
+				$category,
+				$this->container->getParameter('count_post_per_page'),
+				$this->getRequest()->get('page', 1));
 
 		return $this->render('Post:list_by_category.html.twig', array(
             'posts' => $posts,
@@ -42,42 +44,10 @@ class PostController extends Base\BaseUserController
         ));
 	}
 
-    public function listByLoginAction($login)
-	{
-		$user = $this->getRepository('User')->findOneByScreenName($login);
-		if ( ! $user) {
-			throw $this->createNotFoundException('Такой пользователь не зарегистрирован.');
-		}
-
-		$posts = $this->getRepository('Post')
-			->getListByUser($user, $this->container->getParameter('count_post_per_page'), $this->getRequest()->get('page', 1));
-
-		return $this->render('Post:list.html.twig', array(
-            'posts' => $posts,
-			'profile' => $user,
-			'profile_categories' => $this->getRepository('User')->getUserCategories($user),
-        ));
-	}
-
-	public function showAction($login, $post_slug)
+	public function showAction($id)
     {
-		//$user = $this->getCached('user_'.$login);
-
-		//if (!$user) {
-			$user = $this->getRepository('User')->findOneByScreenName($login);
-		//	$this->setCached('user_'.$login, $user);
-		//}
-
-		if (!$user) {
-			throw $this->createNotFoundException('Пользователя такого нет.');
-		}
-
-		//$post = $this->getCached('post_show_'.$login.'_'.$post_slug);
-		//if (!$post) {
-			$post = $this->getRepository('Post')->getPost($user, $post_slug);
-		//	$this->setCached('post_show_'.$login.'_'.$post_slug, $post);
-		//}
-
+		$post = $this->getRepository('Post')->find($id);
+		
 		if (!$post) {
 			throw $this->createNotFoundException('Пост отсутствует.');
 		}
@@ -89,10 +59,7 @@ class PostController extends Base\BaseUserController
 		$form = $this->createForm(new \mh\BTBundle\Form\Frontend\CommentType());
 		$form->setData(array('post_id' => $post->getId()));
 
-		$query = $this->getEM()->createQuery(
-			'SELECT c FROM BTBundle:PostComment c WHERE c.post = :post ORDER BY c.createdDate DESC'
-		)->setParameter('post', $post)->setMaxResults(5);
-		$comments = $query->getResult();
+		$comments = $this->getRepository('Post')->getComments($post, 5);
 
 		return $this->render('Post:show.html.twig', array(
             'post' => $post,

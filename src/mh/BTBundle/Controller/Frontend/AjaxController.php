@@ -40,14 +40,14 @@ class AjaxController extends Base\BaseUserController
 			$random = $this->get('random');
 
 			$login = substr($data['email'], 0, strpos($data['email'], '@'));
-			$screenName = $this->getRepository('User')->getUniqueScreenName($login);
+			$login = $this->getRepository('User')->getUniqueLogin($login);
             $password = $random->generate(array('length' => 10));
 
 			$user = new Entity\User();
 			$user->setSource(Entity\User::SOURCE_INTERNAL);
 			$user->setEmail($data['email']);
 			$user->setName($login);
-			$user->setScreenName($screenName);
+			$user->setLogin($login);
 			$user->setPassword($password);
 
 			// удаляем предыдущий код
@@ -163,7 +163,7 @@ class AjaxController extends Base\BaseUserController
 
 		/*// Увеличиваем счетчик в кеше
 		switch ($data['class']) {
-		case 'Post': $cacheName = 'post_show_'.$data['object']->getUser()->getScreenName().'_'.$data['object']->getSlug();break;
+		case 'Post': $cacheName = 'post_show_'.$data['object']->getUser()->getLogin().'_'.$data['object']->getSlug();break;
 		}
 
 		$object = $this->getCached($cacheName);
@@ -334,6 +334,7 @@ class AjaxController extends Base\BaseUserController
 				
 			if ($mode == 'image') {
 				$imageConstraint = new Assert\Image();
+				$imageConstraint->maxSize = '1M';
 				$errorList = $this->get('validator')->validateValue($uploadFile, $imageConstraint);
 
 				if (count($errorList) != 0) {
@@ -362,13 +363,12 @@ class AjaxController extends Base\BaseUserController
 					break;
 				}
 				
-				$name = $this->generateName($uploadFile);
-				$path = sprintf("%s/../web%s",
-					$this->get('kernel')->getRootDir(),
-					$this->container->getParameter('post_attachment_file_dir'));
-				$uploadFile->move($path, $name);
+				$attachment = new Entity\PostAttachmentFile($uploadFile);
+				$em->persist($attachment);
+				$em->flush();
 				
-				$url = $this->container->getParameter('post_attachment_file_dir') . $name;
+				$url = $attachment->getBrowserPath();
+				
 				$message = '"New file uploaded"';
 				$status = 200;
 			}

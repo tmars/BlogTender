@@ -18,7 +18,7 @@
 <h2>{{ question.title }}</h2>
     <div class="vopros">
         <div class="author">
-            <a href="{{ path('list_post_by_login', {login: question.user.screenName}) }}">{{ question.user.name }}</a>
+            <a href="{{ path('user_info', {login: question.user.login}) }}">{{ question.user.name }}</a>
             <div class="date">
              <span id="clock">Опубликовано: </span>
              {{ russian_date(question.createdDate) }}
@@ -45,7 +45,7 @@
      <div class="content-wiev_answer-item">
          <div class="answer">
              <div class="author">
-                 <a href="{{ path('list_post_by_login', {login: answer.user.screenName}) }}">{{ answer.user.name }}</a>
+                 <a href="{{ path('user_info', {login: answer.user.login}) }}">{{ answer.user.name }}</a>
                  <div class="date">
                   <span id="clock">Опубликовано: </span>
                   {{ russian_date(answer.createdDate) }}
@@ -60,7 +60,7 @@
          </div>
      </div>
  {% endfor %}
-
+	
  {{ pagerfanta(answers, 'default_2') }}
 </div>
 
