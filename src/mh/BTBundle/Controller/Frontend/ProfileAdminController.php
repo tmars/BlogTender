@@ -3,6 +3,7 @@
 namespace mh\BTBundle\Controller\Frontend;
 use mh\BTBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form as Form;
 
 class ProfileAdminController extends Base\BaseUserController
 {
@@ -16,7 +17,7 @@ class ProfileAdminController extends Base\BaseUserController
 		while (1) {
 			if ($request->getMethod() != 'POST') {
 				$form->setData(array(
-					'screen_name' => $user->getScreenName(),
+					'login' => $user->getLogin(),
 					'about' => $user->getAbout(),
 					'email' => $user->getEmail(),
 					'name' => $user->getName(),
@@ -32,10 +33,10 @@ class ProfileAdminController extends Base\BaseUserController
 
 			$data = $form->getData();
 
-			// Проверяем уникальность screen_name
-			if ($data['screen_name'] != $user->getScreenName()) {
-				if ($this->getRepository("User")->findOneByScreenName($data['screen_name'])) {
-					$form->get('screen_name')->addError(new \Symfony\Component\Form\FormError('уже занят.'));
+			// Проверяем уникальность login
+			if ($data['login'] != $user->getLogin()) {
+				if ($this->getRepository("User")->findOneByLogin($data['login'])) {
+					$form->get('login')->addError(new Form\FormError('уже занят.'));
 					break;
 				}
 			}
@@ -50,7 +51,7 @@ class ProfileAdminController extends Base\BaseUserController
 				}
 			}
 
-			$user->setScreenName($data['screen_name']);
+			$user->setLogin($data['login']);
 			$user->setAbout($data['about']);
 			$user->setName($data['name']);
 
@@ -173,7 +174,7 @@ class ProfileAdminController extends Base\BaseUserController
 				$mailer = $this->get('user_mailer');
 				$mailer->setEmail($email);
 				$mailer->send('invite.html.twig', 'Приглашение.', array(
-					'screen_name' => $user->getScreenName(),
+					'login' => $user->getLogin(),
 					'invite_url' => $inviteUrl,
 					'message' => $data['message'],
 				));

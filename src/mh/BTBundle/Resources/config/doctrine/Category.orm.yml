@@ -9,6 +9,17 @@ mh\BTBundle\Entity\Category:
             nullable: false
             generator:
                 strategy: IDENTITY
+        slug:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+            gedmo:
+                slug:
+                    separator: _
+                    style: default
+                    fields:
+                      - label
         label:
             type: string
             length: 255

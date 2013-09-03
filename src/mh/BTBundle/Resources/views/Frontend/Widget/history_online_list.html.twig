@@ -1,19 +1,19 @@
 {% for h in history_online %}
 {% if h.type == 'post_like' %}
 <div class="post_story">
-    <div class="date"><span id="like"></span>{# russian_date(h.created_date) #}</div>
+    <div class="date"><span id="like"></span>{{ russian_date(h.created_date) }}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.screen_name}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         понравилась статья
-        <a href="{{ path('show_post', {login: h.screen_name, post_slug: h.post_slug}) }}"><span>{{ h.post_title }}</span></a>
+        <a href="{{ path('show_post', {id: h.post_id}) }}"><span>{{ h.post_title }}</span></a>
     </div>
 </div>
 
 {% elseif h.type == 'question_like' %}
 <div class="post_story">
-    <div class="date"><span id="like"></span>{# russian_date(h.created_date) #}</div>
+    <div class="date"><span id="like"></span>{{ russian_date(h.created_date) }}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.screen_name}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         понравился вопрос
         <a href="{{ path('show_question', {id: h.question_id}) }}"><span>{{ h.question_title }}</span></a>
     </div>
@@ -21,9 +21,9 @@
 
 {% elseif h.type == 'answer_like' %}
 <div class="post_story">
-    <div class="date"><span id="like"></span>{# russian_date(h.created_date) #}</div>
+    <div class="date"><span id="like"></span>{{ russian_date(h.created_date) }}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.screen_name}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         понравился
         <a href="{{ path('show_answer', {qid: h.question_id, aid: h.answer_id}) }}"><span>ответ</span></a>
         на вопрос
@@ -33,19 +33,19 @@
 
 {% elseif h.type == 'new_post' %}
 <div class="post_story">
-    <div class="date"><span id="dialog"></span>{# russian_date(h.created_date) #}</div>
+    <div class="date"><span id="dialog"></span>{{ russian_date(h.created_date) }}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.screen_name}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.post_scores }} баллов за опубликование статьи
-        <a href="{{ path('show_post', {login: h.screen_name, post_slug: h.post_slug}) }}"><span>{{ h.post_title }}</span></a>
+        <a href="{{ path('show_post', {id: h.post_id}) }}"><span>{{ h.post_title }}</span></a>
     </div>
 </div>
 
 {% elseif h.type == 'new_question' %}
 <div class="post_story">
-    <div class="date"><span id="dialog"></span>{# russian_date(h.created_date) #}</div>
+    <div class="date"><span id="dialog"></span>{{ russian_date(h.created_date) }}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.screen_name}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.question_scores }} баллов за вопрос
         <a href="{{ path('show_question', {id: h.question_id}) }}"><span>{{ h.question_title }}</span></a>
     </div>
@@ -53,9 +53,9 @@
 
 {% elseif h.type == 'new_answer' %}
 <div class="post_story">
-    <div class="date"><span id="dialog"></span>{# russian_date(h.created_date) #}</div>
+    <div class="date"><span id="dialog"></span>{{ russian_date(h.created_date) }}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.screen_name}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.answer_scores }} баллов за
         <a href="{{ path('show_answer', {qid: h.question_id, aid: h.answer_id}) }}"><span>ответ</span></a>
         на вопрос
@@ -65,11 +65,11 @@
 
 {% elseif h.type == 'new_answer' %}
 <div class="post_story">
-    <div class="date"><span id="star"></span>{# russian_date(h.created_date) #}</div>
+    <div class="date"><span id="star"></span>{{ russian_date(h.created_date) }}</div>
     <div id="story">
-        <a href="{{ path('list_post_by_login', {login: h.screen_name}) }}">{{ h.user_name }}</a>
+        <a href="{{ path('user_info', {login: h.login}) }}">{{ h.user_name }}</a>
         получил {{ h.link_scores }} баллов за размещение ссылки на статью
-        <a href="{{ path('show_post', {login: h.screen_name, post_slug: h.post_slug}) }}"><span>{{ h.post_title }}</span></a>
+        <a href="{{ path('show_post', {id: h.post_id}) }}"><span>{{ h.post_title }}</span></a>
     </div>
 </div>
 {% endif %}

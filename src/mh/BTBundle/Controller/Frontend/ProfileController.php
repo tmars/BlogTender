@@ -1,14 +1,12 @@
 <?php
 
 namespace mh\BTBundle\Controller\Frontend;
-use mh\BTBundle\Form\Frontend\EnterScreenNameType;
-use mh\BTBundle\Form\Frontend\EnterEmailType;
-use mh\BTBundle\Form\Frontend\RegistrationType;
-use mh\BTBundle\Form\Frontend\LoginType;
-use mh\BTBundle\Entity\User;
-use mh\BTBundle\Entity\UserSession;
+
+use mh\BTBundle\Form\Frontend as FrontendForm;
+use mh\BTBundle\Entity as Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form as Form;
+use Symfony\Component\HttpFoundation\File as File;
 
 class ProfileController extends Base\SocnetLoginController
 {
@@ -43,7 +41,7 @@ class ProfileController extends Base\SocnetLoginController
 
 		if (!$user) {
 
-            $user = new User();
+            $user = new Entity\User();
             $user->setSource(User::getSourceByMode($mode));
             $user->setIdInSource($mode.'.'.$userData['id']);
 			$user->setSocnetInfo($userData['socnet_info']);
@@ -67,12 +65,11 @@ class ProfileController extends Base\SocnetLoginController
 
 				file_put_contents($filepath, $content);
 
-				$user->setFoto(new \mh\BTBundle\Entity\UserFoto(
-					new \Symfony\Component\HttpFoundation\File\UploadedFile($filepath, $filename)
-				));
+				$user->setFoto(new Entity\UserFoto(
+					new File\UploadedFile($filepath, $filename)));
 			}
 
-			$user->setScreenName($this->getRepository('User')->getUniqueScreenName($userData['screen_name']));
+			$user->setLogin($this->getRepository('User')->getUniqueLogin($userData['login']));
 
 			$em = $this->getEM();
             $em->persist($user);
@@ -87,7 +84,7 @@ class ProfileController extends Base\SocnetLoginController
     {
         $this->createExceptionIfAuthorized();
 
-        $form = $this->createForm(new LoginType());
+        $form = $this->createForm(new FrontendForm\LoginType());
         $request = $this->getRequest();
 
         while(1) {
@@ -124,10 +121,10 @@ class ProfileController extends Base\SocnetLoginController
 			if ($errorListEmail == 0) {
 				$user = $this->getRepository('User')->findOneBy(array(
 					'email' => $data['email'],
-					'source' => User::SOURCE_INTERNAL,
+					'source' => Entity\User::SOURCE_INTERNAL,
 				));
 			} else if ($errorListLogin == 0){
-				$user = $this->getRepository('User')->findOneByScreenName($data['email']);
+				$user = $this->getRepository('User')->findOneByLogin($data['email']);
 			} else {
 				$form->get('email')->addError(new
                     Form\FormError('нет такого логина и email.'));
@@ -201,7 +198,7 @@ class ProfileController extends Base\SocnetLoginController
 
 	}
 
-    private function createNewUserSession(User $user)
+    private function createNewUserSession(Entity\User $user)
     {
         // Генерируем хэш авторизации
         $request = $this->getRequest();
@@ -209,7 +206,7 @@ class ProfileController extends Base\SocnetLoginController
         $hash = $random->generate(array('length' => 32));
 
         // Создаём сессию
-        $session = new UserSession();
+        $session = new Entity\UserSession();
         $session->setHash($hash);
         $session->setIp($request->getClientIp());
         $session->setUser($user);

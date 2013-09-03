@@ -3,7 +3,7 @@
   <div id="tab_comments_item">
    <div id="tab_comments_top">
     <div class="author">
-     <a href="{{ path('list_post_by_login', {'login': comment.user.screenName}) }}">{{ comment.user.name }}</a>
+     <a href="{{ path('user_info', {'login': comment.user.login}) }}">{{ comment.user.name }}</a>
     </div>
     <div class="date">
      {{ russian_date(comment.createdDate) }}

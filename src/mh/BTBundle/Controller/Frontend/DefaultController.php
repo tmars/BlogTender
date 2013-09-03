@@ -72,20 +72,6 @@ class DefaultController extends Base\BaseUserController
         ));
 	}
 
-    public function ratingAction()
-    {
-        $query = $this->getRepository('User')->createQueryBuilder('u')
-			->select('u')
-            ->orderBy('u.scores', 'DESC')
-        ;
-
-		$users = $this->getPaginated($query, 10);
-
-		return $this->render('Default:users_rating.html.twig', array(
-            'users' => $users,
-        ));
-    }
-
 	public function staticPageAction($page, $subpage)
     {
 		$pages = array('conditions', 'how_it_work', 'prizes');

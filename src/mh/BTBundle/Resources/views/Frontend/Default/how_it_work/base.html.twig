@@ -9,7 +9,7 @@
  <div class="how_work">
 
   <div class="how_work-menu">
-   {{ env.renderedMenu(env.topMenu.child('how_it_work'))|raw }}
+   {% render 'BTBundle:Frontend/Widget:topMenu' with {'child': 'how_it_work'} %}
   </div>
 
   <h3>{% block title %}{% endblock %}</h3>

@@ -1,20 +1,22 @@
 list_question:
-    pattern:  /
-    defaults: { _controller: BTBundle:Frontend\Question:list }
+    pattern:  /qa/
+    defaults: { _controller: BTBundle:Frontend\QA:list }
 
 list_question_by_category:
-    pattern:  /category/{category_id}
-    defaults: { _controller: BTBundle:Frontend\Question:listByCategory }
-    
+    pattern:  /category/{slug}/qa/
+    defaults: { _controller: BTBundle:Frontend\QA:listByCategory }
+    requirements:
+        slug: "[0-9a-zA-Z_]+"
+        
 show_question:
-    pattern:  /{id}
-    defaults: { _controller: BTBundle:Frontend\Question:show }
+    pattern:  /qa/{id}/
+    defaults: { _controller: BTBundle:Frontend\QA:show }
     requirements:
         id: "[0-9]+"
 
 show_answer:
-    pattern:  /{qid}#answer{aid}
-    defaults: { _controller: BTBundle:Frontend\Question:show }
+    pattern:  /qa/{qid}/#answer{aid}
+    defaults: { _controller: BTBundle:Frontend\QA:show }
     requirements:
         qid: "[0-9]+"
         aid: "[0-9]+"

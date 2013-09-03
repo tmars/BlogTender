@@ -1,15 +1,15 @@
 {% extends 'BTBundle:Frontend/Base:base.html.twig'%}
 
-{% block title %}Список постов{% endblock %}
+{% block title %}{{ profile.name }}{% endblock %}
 
 {% block content %}
+
 <div class="content-wiev_item">
   <div class="breadcrumbs">
     <a href="{{ path('homepage') }}">Главная</a>
-    <a href="{{ path('list_post') }}">Посты</a>
     <span>{{ profile.name }}</span>
   </div>
- <h2>Посты</h2>
+ <h2>{{ profile.name }}</h2>
 </div>
 
 <div class="content-wiev_item">
@@ -23,18 +23,18 @@
   {% if profile_categories %}
       Категории:
    {% for category in profile_categories %}
-       <a href="{{ path('list_post_by_category', {category_id: category.id}) }}">{{ category.label }}</a>
+       <a href="{{ path('list_post_by_category', {slug: category.slug}) }}">{{ category.label }}</a>
        {% if loop.last == false %},{% endif %}
    {% endfor %}
    <br>
   {% endif %}
 
   Зарегистрирован: {{ russian_date(profile.createdDate) }} через {{ profile.sourceText }}
+  </br>
+   
+  <a href="{{ path('user_posts', {login: profile.login}) }}">Посты пользователя</a></br>
+  <a href="{{ path('user_questions', {login: profile.login }) }}">Вопросы пользователя</a></br>
+  <a href="{{ path('user_answers', {login: profile.login }) }}">Ответы пользователя</a></br>
  </div>
 </div>
-
- <div class="content-wiev_more">
-  {% include 'BTBundle:Frontend/Post:list_post.html.twig' %}
- </div>
-
 {% endblock %}

@@ -61,15 +61,15 @@ class PostRepository extends BaseRepository
 		return $this->getPaginated($query, $count, $page);
     }
 
-    public function getListByCategory($cat_id, $count, $page)
+    public function getListByCategory($category, $count, $page)
     {
         $query = $this->createQueryBuilder('p')
 			->select(array('p', 'u', 'o'))
             ->innerJoin('p.contentObject', 'o')
-            ->innerJoin('p.categories', 'c', 'WITH', 'c.id = :id')
+            ->innerJoin('p.categories', 'c', 'WITH', 'c.slug = :slug')
             ->innerJoin('p.user', 'u')
             ->where('p.isPublished = true')
-            ->setParameter(':id', $cat_id)
+            ->setParameter(':slug', $category->getSlug())
 			->orderBy('p.createdDate', 'DESC')
             ->getQuery()
 		;
@@ -168,7 +168,7 @@ class PostRepository extends BaseRepository
         $rsm->addFieldResult('p', 'title', 'title');
         $rsm->addJoinedEntityResult('mh\BTBundle\Entity\User', 'u', 'p', 'user');
         $rsm->addFieldResult('u', 'user_id', 'id');
-        $rsm->addFieldResult('u', 'screen_name', 'screenName');
+        $rsm->addFieldResult('u', 'login', 'login');
         $rsm->addJoinedEntityResult('mh\BTBundle\Entity\ContentObject', 'o', 'p', 'contentObject');
         $rsm->addFieldResult('o', 'content_object_id', 'id');
         //$rsm->addFieldResult('o', 'likes_count', 'likes_count');
@@ -178,7 +178,7 @@ class PostRepository extends BaseRepository
         $query = $this->_em
             ->createNativeQuery('SELECT
                 p.id, p.slug, p.title, p.content, p.user_id, p.content_object_id,
-                u.screen_name
+                u.login
                 FROM post__post p
                 INNER JOIN content_object__object o ON p.content_object_id = o.id
                 INNER JOIN user__user u ON p.user_id = u.id
@@ -188,7 +188,7 @@ class PostRepository extends BaseRepository
             ->createNativeQuery('SELECT
                 p.id, p.slug, p.title, p.content, p.user_id, p.content_object_id,
                 o.likes_count,
-                u.screen_name
+                u.login
                 FROM post__post p
                 INNER JOIN content_object__object o ON p.content_object_id = o.id
                 INNER JOIN user__user u ON p.user_id = u.id
@@ -197,4 +197,15 @@ class PostRepository extends BaseRepository
 
         return $query->getResult();
     }
+	
+	public function getComments($post, $count, $first = 0)
+	{
+		$query = $this->_em->createQuery(
+			'SELECT c FROM BTBundle:PostComment c WHERE c.post = :post ORDER BY c.createdDate DESC')
+			->setParameter('post', $post)
+			->setFirstResult($first)
+			->setMaxResults($count);
+			
+		return $query->getResult();
+	}
 }

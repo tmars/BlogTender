@@ -80,8 +80,8 @@
 	 <div class="right_top">
       {% if env.user %}
        <div class="right_post">
-		<h3>Меню [{{ env.user.screenName }}]</h3>
-        {{ env.userMenu|raw }}
+		<h3>Меню [{{ env.user.login }}]</h3>
+        {% render 'BTBundle:Frontend/Widget:userMenu' %}
        </div>
       {% else %}
 	   {% include 'BTBundle:Frontend/Base:counter.html.twig' %}
@@ -89,14 +89,14 @@
 	  {% endif %}
      </div>
 
-	 {% include 'BTBundle:Frontend/Post:post_block.html.twig' with {posts: env.getLastPosts(5), title: 'последние'} %}
-
-     {% include 'BTBundle:Frontend/Post:post_block.html.twig' with {posts: env.getRandomPosts(5), title: 'случайные'} %}
-
-     {% include 'BTBundle:Frontend/Base:history_online_block.html.twig' with {history_online: env.historyOnline} %}
-
-	 {% include 'BTBundle:Frontend/Base:post_selector_mini.html.twig' %}
-
+	 {% render 'BTBundle:Frontend/Widget:lastPosts' %}
+	 
+     {% render 'BTBundle:Frontend/Widget:randomPosts' %}
+	 
+     {% render 'BTBundle:Frontend/Widget:historyOnline' %}
+	 
+	 {% render 'BTBundle:Frontend/Widget:postSelectorMini' %}
+	 
      <div class="right_baner"></div>
 
 	</div>
