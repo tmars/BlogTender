@@ -1914,7 +1914,7 @@
         {
             "name": "trsteel/ckeditor-bundle",
             "version": "v1.1",
-            "target-dir": "Trsteel/CkeditorBundle",
+            "target-dir": "trsteel/CkeditorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trsteel88/TrsteelCkeditorBundle.git",
