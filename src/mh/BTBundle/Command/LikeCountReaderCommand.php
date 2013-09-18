@@ -2,6 +2,8 @@
 
 namespace mh\BTBundle\Command;
 
+define('STDIN',fopen("php://stdin","r"));
+
 use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,21 +35,13 @@ class LikeCountReaderCommand extends DoctrineCommand
 				'post_slug' => $post->getSlug(),
 			), true);
 			
-			//$facebook 		= $countReader->facebook($url);
-			$vk 			= $countReader->vk($url);
-			$twitter 		= $countReader->twitter($url);
-			$odn 			= $countReader->odn($url);
-			$mail 			= $countReader->mail($url);
-			$gp 			= $countReader->gp($url);
+			$facebook 		= $countReader::facebook($url);
+			$vk 			= $countReader::vk($url);
+			$twitter 		= $countReader::twitter($url);
+			$odn 			= $countReader::odn($url);
+			$mail 			= $countReader::mail($url);
+			$gp 			= $countReader::gp($url);
 			
-			echo $url."\r\n";
-			//echo $facebook."\r\n";
-			echo $vk."\r\n";
-			echo $twitter."\r\n";
-			echo $odn."\r\n";
-			echo $mail."\r\n";
-			echo $gp."\r\n";
-			echo "\r\n";
 		}
 	}
 
