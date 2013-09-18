@@ -10,10 +10,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use mh\Common\Random;
 use mh\BTBundle\Entity as Entity;
 
-define('DATA_DIR', __DIR__.'/Data/');
-
 class UserGeneratorCommand extends DoctrineCommand
 {
+	const DATA_DIR = '/Data/';
 
 	protected function configure()
     {
@@ -41,13 +40,13 @@ class UserGeneratorCommand extends DoctrineCommand
     {
         $users = array();
 
-        $m_names = file(DATA_DIR."m_names.txt", FILE_IGNORE_NEW_LINES);
-        $m_second_names = file(DATA_DIR."m_second_names.txt", FILE_IGNORE_NEW_LINES);
+        $m_names = file(__DIR__.self::DATA_DIR."m_names.txt", FILE_IGNORE_NEW_LINES);
+        $m_second_names = file(__DIR__.self::DATA_DIR."m_second_names.txt", FILE_IGNORE_NEW_LINES);
 
-        $f_names = file(DATA_DIR."f_names.txt");
-        $f_second_names = file(DATA_DIR."f_second_names.txt", FILE_IGNORE_NEW_LINES);
+        $f_names = file(__DIR__.self::DATA_DIR."f_names.txt");
+        $f_second_names = file(__DIR__.self::DATA_DIR."f_second_names.txt", FILE_IGNORE_NEW_LINES);
 
-        $nicknames = file(DATA_DIR."nicknames.txt", FILE_IGNORE_NEW_LINES);
+        $nicknames = file(__DIR__.self::DATA_DIR."nicknames.txt", FILE_IGNORE_NEW_LINES);
 
         for ($i = 0; $i < $count; $i++) {
 
@@ -59,7 +58,7 @@ class UserGeneratorCommand extends DoctrineCommand
                 $sname = Random::getArrayElement($f_second_names);
             }
 
-            $login = Random::popArrayElement($login);
+            $login = Random::popArrayElement($nicknames);
 
             $user = new Entity\User();
             $user->setSource(Entity\User::SOURCE_INTERNAL);
