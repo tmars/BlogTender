@@ -41,15 +41,26 @@ class API {
      * @return array массив с двумя ключами:<br><b>text</b> - туда кладется текст с замененными ссылками на картинки
      * <br><b>files</b> - массив картинок
      */
-    public static function prepare_content_for_download($text, $img_name = "tmp_") {
-        preg_match_all('/\<(.*)img(.*)src(.*)=(.*)\>/isU', $text, $result);
-        foreach ($result[4] as $cnt => $_img) {
+    public static function prepare_content_for_download($text, $imgResolver) {
+        preg_match_all('/<img .*?(?=src)src=\"([^\"]+)\"/si', $text, $result);
+        //print_r($result[1]); 
+        
+		$imgArray = array();
+		foreach ($result[1] as $ind => $imgSrc) {
+			$newSrc = $imgResolver($imgSrc);
+			$text = str_replace($imgSrc, $newSrc, $text);
+		}
+		
+		/*foreach ($result[1] as $cnt => $_img) {
             $f_name = str_replace(Array("'", '"'), "", $_img);
-            $ext = end(explode(".", $f_name));
+			break;
+			$ext = end(explode(".", $f_name));
 
             $cnt = str_replace("/", "_", $cnt);
             $ext = str_replace("/", "_", $ext);
-            $new_name = $img_name . $cnt . "." . $ext;
+            echo $cnt . "." . $ext;
+			
+			$new_name = $img_name . $cnt . "." . $ext;
             $new_name = explode(" ", $new_name);
             $new_name = $new_name[0];
             $f_name = explode(" ", $f_name);
@@ -61,8 +72,8 @@ class API {
                     $text = str_replace($f_name, $new_name, $text);
                 };
             };
-        }
-        $full_result['files'] = $img_array;
+        }*/
+        //$full_result['files'] = $img_array;
         $full_result['text'] = $text;
         return $full_result;
     }

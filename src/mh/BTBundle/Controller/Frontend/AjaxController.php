@@ -341,6 +341,7 @@ class AjaxController extends Base\BaseUserController
 					break;
 				}
 				
+				// @fix add post relation!
 				$attachment = new Entity\PostAttachmentImage($uploadFile);
 				$em->persist($attachment);
 				$em->flush();
