@@ -2,8 +2,9 @@
 
 namespace mh\BTBundle\Command;
 
-define('STDIN',fopen("php://stdin","r"));
-
+if ( ! defined('STDIN')) {
+	define('STDIN',fopen("php://stdin","r"));
+}
 use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
