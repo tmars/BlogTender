@@ -30,8 +30,18 @@ class PostGeneratorCommand extends DoctrineCommand
 		$categories = $em->getRepository('BTBundle:Category')->findAll();
 		$allocator = $this->getApplication()->getKernel()->getContainer()->get('scores_allocator');
 		$avalancheService = $this->getApplication()->getKernel()->getContainer()->get('imagine.cache.path.resolver');
+		$cacheDir = $this->getApplication()->getKernel()->getCacheDir();
 		$API = new HabraAPI();
 
+		if (count($users) == 0) {
+			$output->writeln("Users not exist.");
+			return;
+		}
+		if (count($categories) == 0) {
+			$output->writeln("Categories not exist.");
+			return;
+		}
+		
 		//var_dump($items);
 		$currentCount = 0;
 		$items = 0;
@@ -49,27 +59,47 @@ class PostGeneratorCommand extends DoctrineCommand
 			$post->setUser(Random::getArrayElement($users));
 			$post->setTitle($item['title']);
 			$post->setSubtitle($item['content']);
+			$em->persist($post);
 			
 			// Извлекаем содержимое
 			$cont = $API->get_article($item['id'], array('content'));
-			$API->prepare_content_for_download($cont['content'], function($imgSrc) use ($post, $em, $avalancheService) {
-				$local = __DIR__.'\file.jpg';
-				echo $local;
-				file_put_contents($local, file_get_contents($imgSrc));
-				$file = new UploadedFile($local, 'new_file.jpg');
+			$content = $cont['content'];
+			$imgArray = $API->prepare_content_for_download($content);
+			
+			foreach ($imgArray as $ind => $imgSrc) {
+				$pathParts = pathinfo($imgSrc);
+				
+				$local = $cacheDir."/".$pathParts['basename'];
+				if (($c = file_put_contents($local, file_get_contents($imgSrc))) === false) {
+					continue;
+				}
+				var_dump(file_exists($local));
+				
+				
+				$cachedImages[] = $local;
+				$file = new UploadedFile($local, $pathParts['basename'], null, null, null, true);
+				
+				
+				// Делаем первое фото превьющкой
+				if ($ind == 0) {
+					$postImage = new Entity\PostImage($file);
+					$post->setImage($postImage);
+				}
 				
 				$attachment = new Entity\PostAttachmentImage($file);
 				$attachment->setPost($post);
 				$em->persist($attachment);
 				
-				$url = $attachment->getBrowserPath();
-				$url = $avalancheService->getBrowserPath($url, 'image_in_post');
-
-				//unlink($local);
 				
-				return $url;
-			});
-			$post->setContent($cont['content']);
+				
+				$newSrc = $attachment->getBrowserPath();
+				$newSrc = $avalancheService->getBrowserPath($newSrc, 'image_in_post');
+
+				$content = str_replace($imgSrc, $newSrc, $content);
+				$output->writeln("\t".$local);
+			}
+			
+			$post->setContent($content);
 			
 			// Извлекаем комментарии
 			$commentItems = $API->get_comments($item['id'], $params = array("text", "time"));
@@ -112,10 +142,17 @@ class PostGeneratorCommand extends DoctrineCommand
 				$tag->addPost($post);
 			}
 			
+			
+			
 			$allocator->forPost($post);
-			$em->persist($post);
 			$em->flush();
 			++$currentCount;
+			// Удаляем картинки 
+			foreach ($cachedImages as $i) {
+				var_dump($i);
+				var_dump(file_exists($i));
+				//unlink($i);
+			}
 		}
 		
 		

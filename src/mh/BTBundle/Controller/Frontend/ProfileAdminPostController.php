@@ -277,6 +277,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 		$post->setTitle($data['title']);
 		$post->setSubtitle($data['subtitle']);
 		$post->setContent($data['content']);
+		//@todo сделать удаление фото
 		if ($data['image']) {
 			$post->setImage(new Entity\PostImage($data['image']));
 		}

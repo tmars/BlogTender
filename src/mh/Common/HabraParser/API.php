@@ -41,15 +41,15 @@ class API {
      * @return array массив с двумя ключами:<br><b>text</b> - туда кладется текст с замененными ссылками на картинки
      * <br><b>files</b> - массив картинок
      */
-    public static function prepare_content_for_download($text, $imgResolver) {
+    public static function prepare_content_for_download($text) {
         preg_match_all('/<img .*?(?=src)src=\"([^\"]+)\"/si', $text, $result);
         //print_r($result[1]); 
         
 		$imgArray = array();
 		foreach ($result[1] as $ind => $imgSrc) {
-			$newSrc = $imgResolver($imgSrc);
-			$text = str_replace($imgSrc, $newSrc, $text);
+			$imgArray[] = $imgSrc;
 		}
+		return $imgArray;
 		
 		/*foreach ($result[1] as $cnt => $_img) {
             $f_name = str_replace(Array("'", '"'), "", $_img);
