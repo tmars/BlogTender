@@ -13,6 +13,8 @@ web/media/p/i/*
 web/media/p/a/i/*
 web/media/p/a/f/*
 !web/media/p/a/f/.htaccess
+web/media/u/*
+!web/media/u/no-avatar.jpg
 
 web/cache/*
 
