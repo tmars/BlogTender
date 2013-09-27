@@ -60,7 +60,7 @@ class UserGeneratorCommand extends DoctrineCommand
 			}
 			closedir($handle);
 		}
-        
+		
 		for ($i = 0; $i < $count; $i++) {
 
             if (mt_rand(0, 1) == 0) {
