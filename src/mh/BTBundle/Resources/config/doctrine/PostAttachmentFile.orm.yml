@@ -21,6 +21,7 @@ mh\BTBundle\Entity\PostAttachmentFile:
                 post_id:
                     referencedColumnName: id
                     nullable: true
+                    onDelete: CASCADE
     lifecycleCallbacks: 
         prePersist: [ preUpload ]
         preUpdate: [ preUpload ]
