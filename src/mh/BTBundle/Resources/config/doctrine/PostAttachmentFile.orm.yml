@@ -11,7 +11,7 @@ mh\BTBundle\Entity\PostAttachmentFile:
               strategy: IDENTITY
         filename:
             type: string
-            length: 30
+            length: 32
             fixed: false
             nullable: false
     manyToOne:

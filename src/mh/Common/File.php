@@ -48,6 +48,7 @@ abstract class File
 
     abstract public function getFilename();
 	
+	// @todo refactoring
 	protected function generateUniqueFilename($originalName)
 	{
 		$filename = '';
@@ -63,16 +64,15 @@ abstract class File
 			}
 			
 			if ($mode == 'R') {
-				$filename .= Random::generate(array('length' => 8));
+				$filename .= Random::generate(array('length' => $parameters['length']));
 			} else if ($mode == 'N') {
-				$filename .= Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME));
+				$filename .= substr(Slug::getSlug(pathinfo($originalName, PATHINFO_FILENAME)), 0, $parameters['length']);
 			} else if ($mode == 'E') {
 				$filename .= pathinfo($originalName, PATHINFO_EXTENSION);
 			} else if ($mode == 'S') {
 				$filename .= $parameters['v'];
 			}
  		}
-		
 		return $filename;
 	}
 
