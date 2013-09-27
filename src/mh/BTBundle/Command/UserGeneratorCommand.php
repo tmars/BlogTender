@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use mh\Common\Random;
 use mh\BTBundle\Entity as Entity;
 
@@ -39,7 +40,9 @@ class UserGeneratorCommand extends DoctrineCommand
 	private function generate($count)
     {
         $users = array();
-
+		
+		$cacheDir = $this->getApplication()->getKernel()->getCacheDir();
+		
         $m_names = file(__DIR__.self::DATA_DIR."m_names.txt", FILE_IGNORE_NEW_LINES);
         $m_second_names = file(__DIR__.self::DATA_DIR."m_second_names.txt", FILE_IGNORE_NEW_LINES);
 
@@ -47,8 +50,18 @@ class UserGeneratorCommand extends DoctrineCommand
         $f_second_names = file(__DIR__.self::DATA_DIR."f_second_names.txt", FILE_IGNORE_NEW_LINES);
 
         $nicknames = file(__DIR__.self::DATA_DIR."nicknames.txt", FILE_IGNORE_NEW_LINES);
-
-        for ($i = 0; $i < $count; $i++) {
+		
+		$avatarsDir = __DIR__.self::DATA_DIR."avatars/";
+		if ($handle = opendir($avatarsDir)) {
+			while (false !== ($entry = readdir($handle))) {
+				if (!is_dir($entry)) {
+					$avatars[] = $avatarsDir . $entry;
+				}
+			}
+			closedir($handle);
+		}
+        
+		for ($i = 0; $i < $count; $i++) {
 
             if (mt_rand(0, 1) == 0) {
                 $name = Random::getArrayElement($m_names);
@@ -67,7 +80,17 @@ class UserGeneratorCommand extends DoctrineCommand
             $user->setEmailConfirmed(true);
             $user->setLogin($login);
             $user->setPassword('password');
-
+			
+			if ($avatars) {
+				$avatarSrc = Random::getArrayElement($avatars);
+				$pathParts = pathinfo($avatarSrc);
+				$local = sprintf("%s/%s.%s", $cacheDir, Random::generate(), $pathParts['extension']);
+				file_put_contents($local, file_get_contents($avatarSrc));
+				
+				$avatar = new UploadedFile($local, $pathParts['basename'], null, null, null, true);
+				$user->setFoto(new Entity\UserFoto($avatar));
+			}
+			
             $users[] = $user;
         }
 
