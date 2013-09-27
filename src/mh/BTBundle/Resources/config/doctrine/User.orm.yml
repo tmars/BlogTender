@@ -76,30 +76,6 @@ mh\BTBundle\Entity\User:
             type: integer
             nullable: false
             columnDefinition: SMALLINT NOT NULL DEFAULT '0'
-        countersDay:
-            type: date
-            nullable: false
-            column: counters_date
-        countQuestionAtDay:
-            type: smallint
-            nullable: false
-            column: count_question_at_day
-            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
-        countAnswerAtDay:
-            type: smallint
-            nullable: false
-            column: count_answer_at_day
-            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
-        countPostForeignLinkAtDay:
-            type: smallint
-            nullable: false
-            column: count_post_foreign_link_at_day
-            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
-        countPostForeignLinkOnTrustedSiteAtDay:
-            type: smallint
-            nullable: false
-            column: count_post_foreign_link_on_trusted_site_at_day
-            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
     manyToOne:
         currentSession:
             targetEntity: UserSession
