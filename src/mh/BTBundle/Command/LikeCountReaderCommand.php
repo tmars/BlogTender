@@ -19,6 +19,7 @@ class LikeCountReaderCommand extends DoctrineCommand
         $this
             ->setName('mh:lcr:read')
             ->setDescription('Like count reader.')
+			->addArgument('host', InputArgument::REQUIRED, 'Host for generation urls?')
         ;
     }
 
@@ -27,14 +28,12 @@ class LikeCountReaderCommand extends DoctrineCommand
 		$em = $this->getEntityManager(null);
 		$router = $this->getContainer()->get('router');
 		$countReader = $this->getContainer()->get('like_count_reader');
-		
 		$posts = $em->getRepository('BTBundle:Post')->findAll();
 			
 		foreach ($posts as $post) {
-			$url = $router->generate('show_post', array(
-				'login' => $post->getUser()->getLogin(),
-				'post_slug' => $post->getSlug(),
-			), true);
+			$url = sprintf("%s%s", $input->getArgument('host'), $router->generate('show_post', array('id' => $post->getId())));
+			
+			$output->writeln($url);
 			
 			$facebook 		= $countReader::facebook($url);
 			$vk 			= $countReader::vk($url);
@@ -43,6 +42,14 @@ class LikeCountReaderCommand extends DoctrineCommand
 			$mail 			= $countReader::mail($url);
 			$gp 			= $countReader::gp($url);
 			
+			$output->writeln("facebook=".$facebook);
+			$output->writeln("vk=".$vk);
+			$output->writeln("twitter=".$twitter);
+			$output->writeln("odn=".$odn);
+			$output->writeln("mail=".$mail);
+			$output->writeln("gp=".$gp);
+			$output->writeln("\r\n");
+			break;
 		}
 	}
 

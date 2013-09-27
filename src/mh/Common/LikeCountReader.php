@@ -27,8 +27,11 @@ class LikeCountReader
     
     public static function facebook($url)
     {
-        $facebook_request = file_get_contents('http://graph.facebook.com/'.$url);
-        $fb = json_decode($facebook_request);
+        $facebook_request = @file_get_contents('http://graph.facebook.com/'.$url);
+        if (false === $facebook_request) {
+			return false;
+		}
+		$fb = json_decode($facebook_request);
         $vb_c = 0;
         if(property_exists($fb,'shares'))
         $vb_c =$fb->shares;
@@ -77,7 +80,10 @@ class LikeCountReader
         if(count($mail)>0)
             $mail = $mail[$url];
 		settype($mail, 'array');
-        return $mail["shares"]; // в $mail["shares"] и $mail["clicks"] необходимая инфа
+        if (!$mail) {
+			return false;
+		}
+		return $mail["shares"]; // в $mail["shares"] и $mail["clicks"] необходимая инфа
     }
     
     public static function gp($url)
