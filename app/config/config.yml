@@ -175,10 +175,10 @@ avalanche_imagine:
             options: { size: [100, 100], mode: inset }
         user_foto_micro:
             type:    thumbnail
-            options: { size: [50, 50], mode: inset }
+            options: { size: [50, 50], mode: outbound }
         user_foto_q190:
             type:    thumbnail
-            options: { size: [190, 190], mode: inset }
+            options: { size: [190, 190], mode: outbound }
         user_foto_q122:
             type:    thumbnail
-            options: { size: [122, 122], mode: inset }
+            options: { size: [122, 122], mode: outbound }
