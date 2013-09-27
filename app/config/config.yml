@@ -38,6 +38,7 @@ twig:
         od_app_id:              %od_app_id%
         feedback_receivers:     %feedback_receivers%
         count_post_per_page:    %count_post_per_page%
+        count_events_per_page:  %count_events_per_page%
 
 # Assetic Configuration
 assetic:

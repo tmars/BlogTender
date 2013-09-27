@@ -1,0 +1,8 @@
+<div class="post_story">
+    <div class="date"><span id="dialog"></span>{{ russian_date(e.createdDate) }}</div>
+    <div id="story">
+        <a href="{{ path('user_info', {login: e.data.question.user.login}) }}">{{ e.data.question.user.name }}</a>
+        получил {{ e.data.question.scores }} баллов за вопрос
+        <a href="{{ path('show_question', {id: e.data.question.id}) }}"><span>{{ e.data.question.title }}</span></a>
+    </div>
+</div>

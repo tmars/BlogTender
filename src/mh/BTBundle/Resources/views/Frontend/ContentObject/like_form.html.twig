@@ -9,7 +9,7 @@
  {{ form_errors(form) }}
  {{ form_widget(form._token) }}
  {{ form_widget(form.content_id) }}
- <input type="button" onClick="likeIt(this);" value="Нравится">
+ <a class="but-yellow active" onclick="likeIt(this);">Нравится</a>
 </form>
 
 {% endif %}

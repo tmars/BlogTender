@@ -1,0 +1,25 @@
+mh\BTBundle\Entity\UserEvent:
+    type: entity
+    table: user_event
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        target_id:
+            type: integer
+            unsigned: false
+            nullable: false
+        event_type:
+            type: string
+            length: 32
+            fixed: false
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+    lifecycleCallbacks: 
+        prePersist: [ prePersist ]

@@ -32,17 +32,17 @@ other_themes_for_post:
     pattern:  /other_themes_for_post/
     defaults: { _controller: BTBundle:Frontend\Ajax:otherThemesForPost }
     
-next_history:
-    pattern: /next_history/{hash}
-    defaults: { _controller: BTBundle:Frontend\Ajax:nextHistory, hash: '' }
+next_events:
+    pattern: /next_events/{id}
+    defaults: { _controller: BTBundle:Frontend\Ajax:nextEvents, id: '' }
     requirements:
-        hash: "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9][a-z][a-z][0-9]+"
+        hash: "[0-9]+"
         
-prev_history:
-    pattern: /prev_history/{hash}
-    defaults: { _controller: BTBundle:Frontend\Ajax:prevHistory, hash: '' }
+prev_events:
+    pattern: /prev_events/{id}
+    defaults: { _controller: BTBundle:Frontend\Ajax:prevEvents, id: '' }
     requirements:
-        hash: "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9][a-z][a-z][0-9]+"
+        hash: "[0-9]+"
         
 user_upload:
     pattern: /upload/{mode}

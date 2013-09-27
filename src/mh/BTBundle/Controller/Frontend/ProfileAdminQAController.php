@@ -41,21 +41,24 @@ class ProfileAdminQAController extends Base\BaseUserController
             }
 
 			$data = $form->getData();
+            $em = $this->getEM();
 
-			$question = new \mh\BTBundle\Entity\Question();
-			$question->setUser($user);
-			$question->setTitle($data['title']);
-			$question->setContent($data['content']);
-			$question->setCategory($data['category']);
+            $question = new \mh\BTBundle\Entity\Question();
+            $question->setUser($user);
+            $question->setTitle($data['title']);
+            $question->setContent($data['content']);
+            $question->setCategory($data['category']);
 
-			$allocator = $this->get('scores_allocator');
-			$allocator->forQuestion($question);
+            $allocator = $this->get('scores_allocator');
+            $allocator->forQuestion($question);
 
-			$em = $this->getEM();
-			$em->persist($question);
-			$em->flush();
+            $em->persist($question);
+            $em->flush();
 
-			return $this->redirect($this->generateUrl('list_question'));
+            $eventsList = $this->get('events_list');
+            $eventsList->happened($eventsList::ADDED_QUESTION, $question);
+
+            return $this->redirect($this->generateUrl('list_question'));
 		}
 
         return $this->render('Question:new.html.twig', array(
@@ -105,19 +108,22 @@ class ProfileAdminQAController extends Base\BaseUserController
 			$data = $form->getData();
 
 			$answer = new \mh\BTBundle\Entity\Answer();
-			$answer->setUser($user);
-			$answer->setContent($data['content']);
-			$answer->setQuestion($question);
+            $answer->setUser($user);
+            $answer->setContent($data['content']);
+            $answer->setQuestion($question);
 
-			$allocator = $this->get('scores_allocator');
-			$allocator->forAnswer($answer);
+            $allocator = $this->get('scores_allocator');
+            $allocator->forAnswer($answer);
 
-			$question->setAnswerCount($question->getAnswerCount() + 1);
-			$em = $this->getEM();
-			$em->persist($answer);
-			$em->flush();
+            $question->setAnswerCount($question->getAnswerCount() + 1);
+            $em = $this->getEM();
+            $em->persist($answer);
+            $em->flush();
 
-			return $this->redirect($this->generateUrl('show_question', array(
+            $eventsList = $this->get('events_list');
+            $eventsList->happened($eventsList::ADDED_ANSWER, $answer);
+
+            return $this->redirect($this->generateUrl('show_question', array(
 				'id' => $question->getId(),
 			)));
 		}

@@ -8,191 +8,22 @@ use Knp\Menu\Renderer\ListRenderer;
 
 class WidgetController extends Base\BaseUserController
 {
-	public function historyOnlineAction($flag = '', $hash = '')
+	public function eventsListAction($flag = '', $id = '')
 	{
-		$sql = "SELECT * FROM (SELECT
-            CONCAT(l.created_date, 'pl', l.id) hash,
-			'post_like' type,
-			l.created_date created_date,
-			u.login login,
-			u.name user_name,
-			p.title p1,
-			p.id p2,
-			NULL p3,
-			NULL p4
-			FROM content_object__like l
-		INNER JOIN post__post p ON p.content_object_id = l.content_object_id
-		INNER JOIN user__user u ON u.id = l.user_id
-		WHERE p.is_published = 1
+		$eventsList = $this->get('events_list');
 
-		UNION
-
-		SELECT
-            CONCAT(l.created_date, 'ql', l.id),
-			'question_like',
-			l.created_date,
-			u.login,
-			u.name user_name,
-			q.id,
-			q.title,
-			NULL,
-			NULL
-			FROM content_object__like l
-		INNER JOIN question__question q ON q.content_object_id = l.content_object_id
-		INNER JOIN user__user u ON u.id = l.user_id
-		WHERE q.is_published = 1
-
-		UNION
-
-		SELECT
-            CONCAT(l.created_date, 'al', l.id),
-			'answer_like',
-			l.created_date,
-			u.login,
-			u.name user_name,
-			q.id,
-			q.title,
-			a.id,
-			NULL
-			FROM content_object__like l
-		INNER JOIN answer__answer a ON a.content_object_id = l.content_object_id
-		INNER JOIN question__question q ON q.id = a.question_id
-		INNER JOIN user__user u ON u.id = l.user_id
-		WHERE a.is_published = 1
-
-		UNION
-
-		SELECT
-            CONCAT(p.created_date, 'np', p.id),
-			'new_post',
-			p.created_date,
-			u.login,
-			u.name user_name,
-			p.title,
-			p.id,
-			p.scores,
-			NULL
-			FROM post__post p
-		INNER JOIN user__user u ON u.id = p.user_id
-		WHERE p.is_published = 1
-
-		UNION
-
-		SELECT
-            CONCAT(q.created_date, 'nq', q.id),
-			'new_question',
-			q.created_date,
-			u.login,
-			u.name user_name,
-			q.id,
-			q.title,
-			q.scores,
-			NULL
-			FROM question__question q
-		INNER JOIN user__user u ON u.id = q.user_id
-		WHERE q.is_published = 1
-
-		UNION
-
-		SELECT
-            CONCAT(a.created_date, 'na', a.id),
-			'new_answer',
-			a.created_date,
-			u.login,
-			u.name user_name,
-			q.id,
-			q.title,
-			a.id,
-			a.scores
-			FROM answer__answer a
-		INNER JOIN user__user u ON u.id = a.user_id
-		INNER JOIN question__question q ON q.id = a.question_id
-		WHERE a.is_published = 1
-
-		UNION
-
-		SELECT
-            CONCAT(l.created_date, 'fl', l.id),
-			'foreign_link',
-			l.created_date,
-			u.login,
-			u.name user_name,
-			p.title,
-			p.id,
-			l.scores,
-			NULL
-			FROM post__foreign_link l
-		INNER JOIN post__post p ON p.id = l.post_id
-		INNER JOIN user__user u ON u.id = p.user_id
-		WHERE p.is_published = 1) t";
-
-
+		$count = $this->container->getParameter('count_events_per_page');
 		if ($flag == 'next') {
-			$sql .= sprintf(' WHERE t.hash < "%s"', $hash);
+			$events = $eventsList->getNext($id, $count);
 		} else if ($flag == 'prev') {
-			$sql .= sprintf(' WHERE t.hash > "%s"', $hash);
-		}
-		$sql .= " ORDER BY t.hash DESC LIMIT 0, 10";
+			$events = $eventsList->getPrev($id, $count);
+		} else {
+            $events = $eventsList->getLast($count);
+        }
 
-		$stmt = $this->getEM()->getConnection()->prepare($sql);
-		$stmt->execute();
-		$result = $stmt->fetchAll();
 
-		foreach ($result as $k => $r) {
-
-			$h['hash'] = array_shift($r);
-			$h['type'] = array_shift($r);
-			$h['created_date'] = new \DateTime(array_shift($r));
-			$h['login'] = array_shift($r);
-			$h['user_name'] = array_shift($r);
-
-			switch($h['type']) {
-				case 'post_like':
-					$h['post_title'] = array_shift($r);
-					$h['post_id'] = array_shift($r);
-					break;
-
-				case 'question_like':
-					$h['question_id'] = array_shift($r);
-					$h['question_title'] = array_shift($r);
-					break;
-
-				case 'answer_like':
-					$h['question_id'] = array_shift($r);
-					$h['question_title'] = array_shift($r);
-					$h['answer_id'] = array_shift($r);
-					break;
-
-				case 'new_post':
-					$h['post_title'] = array_shift($r);
-					$h['post_id'] = array_shift($r);
-					$h['post_scores'] = array_shift($r);
-					break;
-
-				case 'new_question':
-					$h['question_id'] = array_shift($r);
-					$h['question_title'] = array_shift($r);
-					$h['question_scores'] = array_shift($r);
-					break;
-
-				case 'new_answer':
-					$h['question_id'] = array_shift($r);
-					$h['question_title'] = array_shift($r);
-					$h['answer_id'] = array_shift($r);
-					$h['answer_scores'] = array_shift($r);
-					break;
-
-				case 'foreign_link':
-					$h['post_title'] = array_shift($r);
-					$h['post_id'] = array_shift($r);
-					$h['link_scores'] = array_shift($r);
-					break;
-			}
-			$result[$k] = $h;
-		}
-
-		return $this->render('Widget:history_online_block.html.twig', array(
-            'history_online' => $result,
+		return $this->render('EventsList:block.html.twig', array(
+            'events' => $events,
         ));
 	}
 	

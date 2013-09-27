@@ -30,6 +30,8 @@ parameters:
 
     count_post_per_page: 18
 
+    count_events_per_page: 10
+
     image_cache_dir: 'cache/'
     
     image_in_post_max_width: 600

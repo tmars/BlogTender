@@ -13,6 +13,8 @@ parameters:
     link_checker.class: mh\Common\LinkChecker
     
     scores_allocator.class: mh\BTBundle\Common\ScoresAllocator
+
+    events_list.class: mh\BTBundle\Common\EventsList
     
     like_count_reader.class: mh\Common\LikeCountReader
     
@@ -51,6 +53,9 @@ services:
         class:     %uniquer_checker.class%
     scores_allocator:
         class:     %scores_allocator.class%
+        arguments:    ["@doctrine.orm.entity_manager"]
+    events_list:
+        class:     %events_list.class%
         arguments:    ["@doctrine.orm.entity_manager"]
     twitter_oauth:
         class:     %twitter_oauth.class%

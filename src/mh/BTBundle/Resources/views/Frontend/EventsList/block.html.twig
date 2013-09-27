@@ -1,36 +1,46 @@
 <script>
-next_history_hash = '{% if history_online|length > 0 %}{{ history_online[history_online|length - 1].hash }}{% endif %}';
-prev_history_hash = '{% if history_online|length > 0 %}{{ history_online[0].hash }}{% endif %}';
-function loadNextHistory()
+prev_event_id = '{% if events|length > 0 %}{{ events[events|length - 1].id }}{% endif %}';
+next_event_id = '{% if events|length > 0 %}{{ events[0].id }}{% endif %}';
+loading = false;
+function loadNextEvents()
 {
+    if (loading) return;
+    loading = true;
+    if (next_event_id == -1) return;
     $.ajax({
-        url: '{{ path('next_history') }}/' + next_history_hash,
+        url: '{{ path('next_events') }}/' + next_event_id,
         complete: function(data) {
             data = JSON.parse(data.responseText);
             if (data.status == 'done') {
-                next_history_hash = data.hash;
+                next_event_id = data.id;
                 $('.jspPane').append(data.content);
                 setupScrollActions();
             } else {
-                //alert(data.message);
-
+                next_event_id = -1;
+                alert(data.message);
             }
+            loading = false;
         }
     });
 }
-function loadPrevHistory()
+function loadPrevEvents()
 {
+    if (loading) return;
+    loading = true;
+    if (prev_event_id == -1) return;
     $.ajax({
-        url: '{{ path('prev_history') }}/' + prev_history_hash,
+        url: '{{ path('prev_events') }}/' + prev_event_id,
         complete: function(data) {
             data = JSON.parse(data.responseText);
             if (data.status == 'done') {
-                prev_history_hash = data.hash;
+                prev_event_id = data.id;
                 $('.jspPane').prepend(data.content);
                 setupScrollActions();
             } else {
-               // alert(data.message);
+                prev_event_id = -1;
+                alert(data.message);
             }
+            loading = false;
         }
     });
 }
@@ -40,28 +50,21 @@ function setupScrollActions() {
         'jsp-scroll-y',
         function(event, scrollPositionY, isAtTop, isAtBottom) {
             if (isAtTop) {
-                loadPrevHistory();
+                loadPrevEvents();
             } else if (isAtBottom) {
-                loadNextHistory();
+                loadNextEvents();
             }
         }
     );
-
-    $('.jspPane_gotop').mousedown(function(){
-        $('.jspArrowUp').mousedown();
-    });
-    $('.jspPane_gotop').mouseup(function(){
-        $('.jspArrowUp').mouseup();
-    });
-    $('.jspPane_godown').mousedown(function(){
-        $('.jspArrowDown').mousedown();
-    });
-    $('.jspPane_godown').mouseup(function(){
-        $('.jspArrowDown').mouseup();
-    });
 }
 $(document).ready(function() {
     setupScrollActions();
+    $('.jspPane_gotop').mousedown(function(){
+        loadPrevEvents();
+    });
+    $('.jspPane_godown').mousedown(function(){
+        loadNextEvents();
+    });
 });
 </script>
 
@@ -71,7 +74,7 @@ $(document).ready(function() {
     <span class="jspPane_gotop"></span>
 
     <div class="story_main">
-     {% include 'BTBundle:Frontend/Widget:history_online_list.html.twig' %}
+     {% include 'BTBundle:Frontend/EventsList:list.html.twig' %}
     </div>
 
     <span class="jspPane_godown"></span>

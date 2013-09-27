@@ -280,33 +280,35 @@ class AjaxController extends Base\BaseUserController
         ));
 	}
 
-	public function nextHistoryAction($hash)
+	public function nextEventsAction($id)
 	{
-		$history = $this->getHistoryOnline('next', $hash);
+        $eventsList = $this->get('events_list');
+		$events = $eventsList->getNext($id, $this->container->getParameter('count_events_per_page'));
 
-		if ($history) {
+		if ($events) {
 			return $this->JSONMessage(array(
 				'status' => 'done',
-				'content' => $this->render('Base:history_online_list.html.twig', array('history_online' => $history))->getContent(),
-				'hash' => $history[count($history) - 1]['hash'],
+				'content' => $this->render('EventsList:list.html.twig', array('events' => $events))->getContent(),
+				'id' => $events[count($events) - 1]['id'],
 			));
 		} else {
 			return $this->errorJSONMessage('нет истории');
 		}
 	}
 
-	public function prevHistoryAction($hash)
+	public function prevEventsAction($id)
 	{
 		/*if (@$_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest'){
 			echo 'yes';
 		} */
-		$history = $this->getHistoryOnline('prev', $hash);
+        $eventsList = $this->get('events_list');
+        $events = $eventsList->getPrev($id, $this->container->getParameter('count_events_per_page'));
 
-		if ($history) {
+		if ($events) {
 			return $this->JSONMessage(array(
 				'status' => 'done',
-				'content' => $this->render('Base:history_online_list.html.twig', array('history_online' => $history))->getContent(),
-				'hash' => $history[0]['hash'],
+				'content' => $this->render('EventsList:list.html.twig', array('events' => $events))->getContent(),
+				'id' => $events[0]['id'],
 			));
 		} else {
 			return $this->errorJSONMessage('нет истории');

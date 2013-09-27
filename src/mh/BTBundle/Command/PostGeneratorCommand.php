@@ -29,6 +29,7 @@ class PostGeneratorCommand extends DoctrineCommand
 		$users = $em->getRepository('BTBundle:User')->findAll();
 		$categories = $em->getRepository('BTBundle:Category')->findAll();
 		$allocator = $this->getApplication()->getKernel()->getContainer()->get('scores_allocator');
+		$eventsList = $this->getApplication()->getKernel()->getContainer()->get('events_list');
 		$avalancheService = $this->getApplication()->getKernel()->getContainer()->get('imagine.cache.path.resolver');
 		$cacheDir = $this->getApplication()->getKernel()->getCacheDir();
 		$API = new HabraAPI();
@@ -140,9 +141,8 @@ class PostGeneratorCommand extends DoctrineCommand
 				$tag->addPost($post);
 			}
 			
-			
-			
 			$allocator->forPost($post);
+			$eventsList->happened($eventsList::ADDED_POST, $post);
 			$em->flush();
 			++$currentCount;
 			

@@ -119,6 +119,9 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$em->persist($post);
 			$em->flush();
 
+            $eventsList = $this->get('events_list');
+            $eventsList->happened($eventsList::ADDED_POST, $post);
+
 			return $this->redirect($this->generateUrl('profile_admin_edit_post', array(
 				'id' => $post->getId(),
 			)));
@@ -172,6 +175,8 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$data = $form->getData();
 			$this->updatePost($form, $post);
 
+			$eventsList = $this->get('events_list');
+			//@todo что за херня
 			switch ($data['pub_flag']) {
 			case 1:
 				if ($post->getModerationStatus() == ModerationStatusType::NOT_VALID) {
@@ -181,12 +186,16 @@ class ProfileAdminPostController extends Base\BaseUserController
 				} else {
 					$post->setIsPublished(true);
 					$form->addError(new Form\FormError('Пост опубликован.', array('info' => 1)));
+					$eventsList->happened($eventsList::PUBLISHED_POST, $post);
 				}
 				break;
+				
 			case -1:
 				$post->setIsPublished(false);
 				$form->addError(new Form\FormError('Пост снят с публикации.', array('info' => 1)));
+				$eventsList->happened($eventsList::UNPUBLISHED_POST, $post);
 				break;
+			
 			default:
 				$form->addError(new Form\FormError('Пост сохранен.', array('info' => 1)));
 				break;
