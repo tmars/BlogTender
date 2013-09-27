@@ -63,26 +63,26 @@ class PostGeneratorCommand extends DoctrineCommand
 			
 			// Извлекаем содержимое
 			$cont = $API->get_article($item['id'], array('content'));
-			$content = $cont['content'];
-			$imgArray = $API->prepare_content_for_download($content);
+			$imgArray = $API->prepare_content_for_download($cont['content']);
 			
 			foreach ($imgArray as $ind => $imgSrc) {
 				$pathParts = pathinfo($imgSrc);
 				
-				$local = $cacheDir."/".$pathParts['basename'];
-				if (($c = file_put_contents($local, file_get_contents($imgSrc))) === false) {
-					continue;
-				}
-				var_dump(file_exists($local));
-				
+				$local = sprintf("%s/%s.%s", $cacheDir, Random::generate(), $pathParts['extension']);
+				file_put_contents($local, file_get_contents($imgSrc));
 				
 				$cachedImages[] = $local;
 				$file = new UploadedFile($local, $pathParts['basename'], null, null, null, true);
-				
-				
+
 				// Делаем первое фото превьющкой
 				if ($ind == 0) {
-					$postImage = new Entity\PostImage($file);
+					$localImage = sprintf("%s/%s.%s", $cacheDir, Random::generate(), $pathParts['extension']);
+					file_put_contents($localImage, file_get_contents($imgSrc));
+					
+					$cachedImages[] = $localImage;
+					$fileImage = new UploadedFile($localImage, $pathParts['basename'], null, null, null, true);
+
+					$postImage = new Entity\PostImage($fileImage);
 					$post->setImage($postImage);
 				}
 				
@@ -90,16 +90,14 @@ class PostGeneratorCommand extends DoctrineCommand
 				$attachment->setPost($post);
 				$em->persist($attachment);
 				
-				
-				
 				$newSrc = $attachment->getBrowserPath();
 				$newSrc = $avalancheService->getBrowserPath($newSrc, 'image_in_post');
 
-				$content = str_replace($imgSrc, $newSrc, $content);
+				$cont['content'] = str_replace($imgSrc, $newSrc, $cont['content']);
 				$output->writeln("\t".$local);
 			}
 			
-			$post->setContent($content);
+			$post->setContent($cont['content']);
 			
 			// Извлекаем комментарии
 			$commentItems = $API->get_comments($item['id'], $params = array("text", "time"));
@@ -147,10 +145,9 @@ class PostGeneratorCommand extends DoctrineCommand
 			$allocator->forPost($post);
 			$em->flush();
 			++$currentCount;
+			
 			// Удаляем картинки 
 			foreach ($cachedImages as $i) {
-				var_dump($i);
-				var_dump(file_exists($i));
 				//unlink($i);
 			}
 		}
