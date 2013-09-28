@@ -9,14 +9,16 @@ mh\BTBundle\Entity\UserEvent:
             nullable: false
             generator:
                 strategy: IDENTITY
-        target_id:
+        targetId:
             type: integer
             unsigned: false
             nullable: false
-        event_type:
+            column: target_id
+        eventType:
             type: string
             length: 32
             fixed: false
+            column: event_type
         createdDate:
             type: datetime
             nullable: false

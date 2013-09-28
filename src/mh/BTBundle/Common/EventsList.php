@@ -86,23 +86,23 @@ class EventsList
     {
         //@todo сделать запросы эффективнее
         foreach ($records as &$rec) {
-            switch($rec['event_type']) {
+            switch($rec['eventType']) {
                 case self::ADDED_POST:
                 case self::PUBLISHED_POST:
                 case self::UNPUBLISHED_POST:
                     $rec['data'] = array(
-                        'post' => $this->em->getRepository('BTBundle:Post')->find($rec['target_id'])
+                        'post' => $this->em->getRepository('BTBundle:Post')->find($rec['targetId'])
                     );
                     break;
 
                 case self::ADDED_QUESTION:
                     $rec['data'] = array(
-                        'question' => $this->em->getRepository('BTBundle:Question')->find($rec['target_id'])
+                        'question' => $this->em->getRepository('BTBundle:Question')->find($rec['targetId'])
                     );
                     break;
                 case self::ADDED_ANSWER:
                     $rec['data'] = array(
-                        'answer' => $this->em->getRepository('BTBundle:Answer')->find($rec['target_id'])
+                        'answer' => $this->em->getRepository('BTBundle:Answer')->find($rec['targetId'])
                     );
                     break;
             }

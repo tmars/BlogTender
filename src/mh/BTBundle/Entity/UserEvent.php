@@ -18,7 +18,6 @@ class UserEvent
     }
 
     /*--------------------------------------------------------------------------*/
-	
     /**
      * @var integer
      */
@@ -27,12 +26,12 @@ class UserEvent
     /**
      * @var integer
      */
-    private $target_id;
+    private $targetId;
 
     /**
      * @var string
      */
-    private $event_type;
+    private $eventType;
 
     /**
      * @var \DateTime
@@ -51,49 +50,49 @@ class UserEvent
     }
 
     /**
-     * Set target_id
+     * Set targetId
      *
      * @param integer $targetId
      * @return UserEvent
      */
     public function setTargetId($targetId)
     {
-        $this->target_id = $targetId;
+        $this->targetId = $targetId;
     
         return $this;
     }
 
     /**
-     * Get target_id
+     * Get targetId
      *
      * @return integer 
      */
     public function getTargetId()
     {
-        return $this->target_id;
+        return $this->targetId;
     }
 
     /**
-     * Set event_type
+     * Set eventType
      *
      * @param string $eventType
      * @return UserEvent
      */
     public function setEventType($eventType)
     {
-        $this->event_type = $eventType;
+        $this->eventType = $eventType;
     
         return $this;
     }
 
     /**
-     * Get event_type
+     * Get eventType
      *
      * @return string 
      */
     public function getEventType()
     {
-        return $this->event_type;
+        return $this->eventType;
     }
 
     /**
