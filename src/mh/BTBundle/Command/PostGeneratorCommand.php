@@ -62,7 +62,7 @@ class PostGeneratorCommand extends DoctrineCommand
 			$post->setSubtitle($item['content']);
 			$em->persist($post);
 			
-			// Извлекаем содержимое
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			$cont = $API->get_article($item['id'], array('content'));
 			$imgArray = $API->prepare_content_for_download($cont['content']);
 			
@@ -75,7 +75,7 @@ class PostGeneratorCommand extends DoctrineCommand
 				$cachedImages[] = $local;
 				$file = new UploadedFile($local, $pathParts['basename'], null, null, null, true);
 
-				// Делаем первое фото превьющкой
+				// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				if ($ind == 0) {
 					$localImage = sprintf("%s/%s.%s", $cacheDir, Random::generate(), $pathParts['extension']);
 					file_put_contents($localImage, file_get_contents($imgSrc));
@@ -100,7 +100,7 @@ class PostGeneratorCommand extends DoctrineCommand
 			
 			$post->setContent($cont['content']);
 			
-			// Извлекаем комментарии
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			$commentItems = $API->get_comments($item['id'], $params = array("text", "time"));
 			foreach ($commentItems as $commentItem) {
 				$comment = new Entity\PostComment();
@@ -111,7 +111,7 @@ class PostGeneratorCommand extends DoctrineCommand
 				$em->persist($comment);
 			}
 			
-			// Добавляем категории
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			$catIds = array();
 			for ($i = 0; $i < 3; ++$i) {
 				do {
@@ -122,7 +122,7 @@ class PostGeneratorCommand extends DoctrineCommand
 				$category->addPost($post);
 			}
 			
-			// Добавляем теги
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 			foreach ($item['tags'] as $tagItem) {
 				Entity\Tag::formatLabel($tagItem['name']);
 
@@ -142,14 +142,11 @@ class PostGeneratorCommand extends DoctrineCommand
 			}
 			
 			$allocator->forPost($post);
-			$eventsList->happened($eventsList::ADDED_POST, $post);
 			$em->flush();
-			++$currentCount;
-			
-			// Удаляем картинки 
-			foreach ($cachedImages as $i) {
-				//unlink($i);
-			}
+
+            $eventsList->happened($eventsList::ADDED_POST, $post);
+
+            ++$currentCount;
 		}
 		
 		

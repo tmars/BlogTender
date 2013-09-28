@@ -9,53 +9,76 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ContentObject
 {
-    /**
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * @var integer
-     */
-    protected $complaintsCount;
-
-    /**
-     * @var integer
-     */
-    protected $likesCount;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected $likes;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected $complaints;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->likes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->complaints = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function __toString()
     {
         return 'Объект '.$this->getId();
     }
 
+    /*--------------------------------------------------------------------------*/
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $contentType;
+
+    /**
+     * @var integer
+     */
+    private $complaintsCount;
+
+    /**
+     * @var integer
+     */
+    private $likesCount;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $likes;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $complaints;
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set contentType
+     *
+     * @param string $contentType
+     * @return ContentObject
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
+    
+        return $this;
+    }
+
+    /**
+     * Get contentType
+     *
+     * @return string 
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
     }
 
     /**
@@ -67,14 +90,14 @@ class ContentObject
     public function setComplaintsCount($complaintsCount)
     {
         $this->complaintsCount = $complaintsCount;
-
+    
         return $this;
     }
 
     /**
      * Get complaintsCount
      *
-     * @return integer
+     * @return integer 
      */
     public function getComplaintsCount()
     {
@@ -90,14 +113,14 @@ class ContentObject
     public function setLikesCount($likesCount)
     {
         $this->likesCount = $likesCount;
-
+    
         return $this;
     }
 
     /**
      * Get likesCount
      *
-     * @return integer
+     * @return integer 
      */
     public function getLikesCount()
     {
@@ -113,7 +136,7 @@ class ContentObject
     public function addLike(\mh\BTBundle\Entity\ContentObjectLike $likes)
     {
         $this->likes[] = $likes;
-
+    
         return $this;
     }
 
@@ -130,7 +153,7 @@ class ContentObject
     /**
      * Get likes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getLikes()
     {
@@ -146,7 +169,7 @@ class ContentObject
     public function addComplaint(\mh\BTBundle\Entity\ContentObjectComplaint $complaints)
     {
         $this->complaints[] = $complaints;
-
+    
         return $this;
     }
 
@@ -163,10 +186,19 @@ class ContentObject
     /**
      * Get complaints
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getComplaints()
     {
         return $this->complaints;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->likes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->complaints = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
 }

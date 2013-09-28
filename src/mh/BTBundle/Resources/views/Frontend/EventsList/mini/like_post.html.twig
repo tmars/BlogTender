@@ -1,0 +1,8 @@
+<div class="post_story">
+    <div class="date"><span id="dialog"></span>{{ russian_date(e.createdDate) }}</div>
+    <div id="story">
+        <a href="{{ path('user_info', {login: e.data.like.user.login}) }}">{{ e.data.like.user.name }}</a>
+        понравилась статья
+        <a href="{{ path('show_post', {id: e.data.post.id}) }}"><span>{{ e.data.post.title }}</span></a>
+    </div>
+</div>

@@ -12,6 +12,7 @@ class ContentObjectBase
         $obj = new \mh\BTBundle\Entity\ContentObject();
 	    $obj->setComplaintsCount(0);
 		$obj->setLikesCount(0);
+        $obj->setContentType($this->contentType);
         $this->setContentObject($obj);
 
 		$this->setIsPublished(true);

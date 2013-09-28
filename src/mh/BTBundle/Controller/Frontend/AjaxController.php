@@ -182,6 +182,19 @@ class AjaxController extends Base\BaseUserController
 		$em->persist($like);
 		$em->flush();
 
+        $eventsList = $this->get('events_list');
+        switch($data['object']->getContentType()) {
+            case 'post':
+                $eventsList->happened($eventsList::LIKE_POST, $like);
+                break;
+            case 'question':
+                $eventsList->happened($eventsList::LIKE_QUESTION, $like);
+                break;
+            case 'answer':
+                $eventsList->happened($eventsList::LIKE_ANSWER, $like);
+                break;
+        }
+
 		return $this->doneJSONMessage();
 	}
 

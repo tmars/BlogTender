@@ -100,9 +100,37 @@ class EventsList
                         'question' => $this->em->getRepository('BTBundle:Question')->find($rec['targetId'])
                     );
                     break;
+
                 case self::ADDED_ANSWER:
                     $rec['data'] = array(
                         'answer' => $this->em->getRepository('BTBundle:Answer')->find($rec['targetId'])
+                    );
+                    break;
+
+                case self::LIKE_POST:
+                    $like = $this->em->getRepository('BTBundle:ContentObjectLike')->find($rec['targetId']);
+                    $post = $this->em->getRepository('BTBundle:Post')->findOneByContentObject($like->getTarget());
+                    $rec['data'] = array(
+                        'like' => $like,
+                        'post' => $post,
+                    );
+                    break;
+
+                case self::LIKE_QUESTION:
+                    $like = $this->em->getRepository('BTBundle:ContentObjectLike')->find($rec['targetId']);
+                    $question = $this->em->getRepository('BTBundle:Question')->findOneByContentObject($like->getTarget());
+                    $rec['data'] = array(
+                        'like' => $like,
+                        'question' => $question,
+                    );
+                    break;
+
+                case self::LIKE_ANSWER:
+                    $like = $this->em->getRepository('BTBundle:ContentObjectLike')->find($rec['targetId']);
+                    $answer = $this->em->getRepository('BTBundle:Answer')->findOneByContentObject($like->getTarget());
+                    $rec['data'] = array(
+                        'like' => $like,
+                        'answer' => $answer,
                     );
                     break;
             }

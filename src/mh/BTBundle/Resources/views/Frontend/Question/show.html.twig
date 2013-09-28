@@ -30,6 +30,7 @@
      {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': question} %}
 	 <a href="{{ path('profile_admin_new_answer', {id: question.id}) }}" class="but-yellow active">Ответить</a>
      {% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': question} %}
+     {% include 'BTBundle:Frontend/ContentObject:like_form.html.twig' with {'object': question} %}
 	</div>
 </div>
 
@@ -57,6 +58,7 @@
              {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': answer} %}
              {% include 'BTBundle:Frontend/Question:best_answer_button.html.twig' with {'object': answer} %}
              {% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': answer} %}
+             {% include 'BTBundle:Frontend/ContentObject:like_form.html.twig' with {'object': answer} %}
          </div>
      </div>
  {% endfor %}

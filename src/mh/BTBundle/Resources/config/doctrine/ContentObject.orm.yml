@@ -9,6 +9,11 @@ mh\BTBundle\Entity\ContentObject:
             nullable: false
             generator:
                 strategy: IDENTITY
+        contentType:
+            type: string
+            length: 32
+            fixed: false
+            column: content_type
         complaintsCount:
             type: smallint
             column: complaints_count
