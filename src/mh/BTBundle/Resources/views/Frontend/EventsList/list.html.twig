@@ -1,0 +1,3 @@
+{% for e in events %}
+{% include 'BTBundle:Frontend/EventsList:mini/' ~ e.eventType ~ '.html.twig' %}
+{% endfor %}

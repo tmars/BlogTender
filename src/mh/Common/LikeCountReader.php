@@ -28,7 +28,7 @@ class LikeCountReader
     public static function facebook($url)
     {
         $facebook_request = @file_get_contents('http://graph.facebook.com/'.$url);
-        if (false === $facebook_request) {
+        if (!$facebook_request) {
 			return false;
 		}
 		$fb = json_decode($facebook_request);
@@ -48,7 +48,8 @@ class LikeCountReader
         //echo $vk_request = file_get_contents('http://vk.com/widget_like.php?app='.$id_app.'&url='.$url);
         //$vc_count =  preg_replace('/(.*)var counter = (([0-9])*);(.*)/is','$2',$vk_request );
         //в $vc_count количество лайков в vk
-        $vk_request = file_get_contents('http://vk.com/share.php?act=count&index=1&url='.$url);
+        $vk_request = @file_get_contents('http://vk.com/share.php?act=count&index=1&url='.$url);
+		if (!$vk_request) return false;
         $temp = array();
         preg_match('/^VK.Share.count\(1, (\d+)\);$/i',$vk_request,$temp);
         return $temp[1]; //в $temp[1] количество расшариваний, то есть сколько раз нажали "рассказать друзьям"
@@ -58,7 +59,8 @@ class LikeCountReader
     public static function twitter($url)
     {
         //количество твитов в Twitter
-        $twitter_request = file_get_contents('http://urls.api.twitter.com/1/urls/count.json?url='.$url);
+        $twitter_request = @file_get_contents('http://urls.api.twitter.com/1/urls/count.json?url='.$url);
+		if (!$twitter_request) return false;
         $twitter = json_decode($twitter_request);
         // в $twitter->count число твитов
         return $twitter->count;
@@ -66,7 +68,8 @@ class LikeCountReader
     
     public static function odn($url)
     {
-        $odnoklassniki_request = file_get_contents('http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref='.$url);
+        $odnoklassniki_request = @file_get_contents('http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref='.$url);
+		if (!$odnoklassniki_request) return false;
         $temp = array();
         preg_match("/^ODKL.updateCountOC\('[\d\w]+','(\d+)','(\d+)','(\d+)'\);$/i",$odnoklassniki_request,$temp);
         return $temp[1]; //в $temp[1] количество лайков на odnoklassniki.ru
@@ -74,14 +77,15 @@ class LikeCountReader
     
     public static function mail($url)
     {
-        $mail_request = file_get_contents('http://connect.mail.ru/share_count?url_list='.$url);
+        $mail_request = @file_get_contents('http://connect.mail.ru/share_count?url_list='.$url);
+		if (!$mail_request) return false;
         $mail = json_decode($mail_request);
         settype($mail, 'array');
         if(count($mail)>0)
             $mail = $mail[$url];
 		settype($mail, 'array');
         if (!$mail) {
-			return false;
+			return 0;
 		}
 		return $mail["shares"]; // в $mail["shares"] и $mail["clicks"] необходимая инфа
     }
@@ -94,9 +98,10 @@ class LikeCountReader
 			// echo "Google + =".$plusone_count . "<br>";
             //в $plusone_count количество плюсов
         
-		$html =  file_get_contents( "https://plusone.google.com/_/+1/fastbutton?url=".urlencode($url));
-    $doc = new \DOMDocument();   $doc->loadHTML($html);
-    $counter=$doc->getElementById('aggregateCount');
-    return $counter->nodeValue;
+		$html =  @file_get_contents( "https://plusone.google.com/_/+1/fastbutton?url=".urlencode($url));
+		if (!$html) return false;
+		$doc = new \DOMDocument();   $doc->loadHTML($html);
+		$counter=$doc->getElementById('aggregateCount');
+		return $counter->nodeValue;
     }
 }
