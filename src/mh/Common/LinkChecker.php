@@ -9,7 +9,8 @@ class LinkChecker
 	public function hasLinks($url, array $links)
 	{
 
-		$content = file_get_contents($url);
+		$content = @file_get_contents($url);
+		if (!$content) return false;
 		$do=true;
 		$urls =array(); //тут соберем все ссылки
 		while ($do) {
