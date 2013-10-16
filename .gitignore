@@ -19,3 +19,5 @@ web/media/u/*
 web/cache/*
 
 src/mh/BTBundle/Entity/*.php~
+
+.idea/*

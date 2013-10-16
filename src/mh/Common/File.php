@@ -79,7 +79,7 @@ abstract class File
     public function preUpload()
     {
 		if (null !== $this->file) {
-            // генерируем любое уникальное имя
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
             $this->setFilename($this->generateUniqueFilename($this->file->getClientOriginalName()));
         }
     }
@@ -90,7 +90,7 @@ abstract class File
     	    return;
     	}
         $this->file->move($this->getDir(), $this->getFilename());
-		unset($this->file);
+        unset($this->file);
     }
 
     public function removeUpload()
@@ -102,7 +102,7 @@ abstract class File
 
 	protected function getDir()
     {
-        return '../web' . $this->getBrowserDir();
+        return __DIR__.'/../../../web' . $this->getBrowserDir();
     }
 
     protected function getBrowserDir()

@@ -71,16 +71,13 @@ class PostGeneratorCommand extends DoctrineCommand
 				
 				$local = sprintf("%s/%s.%s", $cacheDir, Random::generate(), $pathParts['extension']);
 				file_put_contents($local, file_get_contents($imgSrc));
-				
-				$cachedImages[] = $local;
 				$file = new UploadedFile($local, $pathParts['basename'], null, null, null, true);
 
-				// ������ ������ ���� ����������
+                // ������ ������ ���� ����������
 				if ($ind == 0) {
 					$localImage = sprintf("%s/%s.%s", $cacheDir, Random::generate(), $pathParts['extension']);
 					file_put_contents($localImage, file_get_contents($imgSrc));
 					
-					$cachedImages[] = $localImage;
 					$fileImage = new UploadedFile($localImage, $pathParts['basename'], null, null, null, true);
 
 					$postImage = new Entity\PostImage($fileImage);

@@ -26,20 +26,7 @@ class UserGeneratorCommand extends DoctrineCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-		$users = $this->generate($input->getArgument('count'));
-		$em = $this->getEntityManager(null);
-
-		foreach ($users as $user) {
-			$output->writeln($user->getLogin());
-			$em->persist($user);
-		}
-
-		$em->flush();
-	}
-
-	private function generate($count)
-    {
-        $users = array();
+		$users = array();
 		
 		$cacheDir = $this->getApplication()->getKernel()->getCacheDir();
 		
@@ -61,9 +48,12 @@ class UserGeneratorCommand extends DoctrineCommand
 			closedir($handle);
 		}
 		
-		for ($i = 0; $i < $count; $i++) {
+		$em = $this->getEntityManager(null);
+		$repo = $em->getRepository('BTBundle:User');
+		$currentCount = 0;
+		while ($currentCount < $input->getArgument('count')) {
 
-            if (mt_rand(0, 1) == 0) {
+			if (mt_rand(0, 1) == 0) {
                 $name = Random::getArrayElement($m_names);
                 $sname = Random::getArrayElement($m_second_names);
             } else {
@@ -71,8 +61,9 @@ class UserGeneratorCommand extends DoctrineCommand
                 $sname = Random::getArrayElement($f_second_names);
             }
 
-            $login = Random::popArrayElement($nicknames);
-
+			
+            $login = $repo->getUniqueLogin(Random::popArrayElement($nicknames));
+			
             $user = new Entity\User();
             $user->setSource(Entity\User::SOURCE_INTERNAL);
             $user->setName(sprintf("%s %s", $name, $sname));
@@ -91,9 +82,11 @@ class UserGeneratorCommand extends DoctrineCommand
 				$user->setFoto(new Entity\UserFoto($avatar));
 			}
 			
-            $users[] = $user;
-        }
-
-        return $users;
-    }
+			$em->persist($user);
+			$em->flush();	
+        
+			$output->writeln($user->getLogin());
+			$currentCount++;
+		}
+	}
 }
