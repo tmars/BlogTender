@@ -8,7 +8,7 @@ class AjaxController extends Base\BaseUserController
 {
 	public function fastRegAction()
 	{
-		$form = $this->createForm(new \mh\BTBundle\Form\Frontend\FastRegType());
+        $form = $this->createForm(new \mh\BTBundle\Form\Frontend\FastRegType());
 		$request = $this->getRequest();
 		
 		while (1) {
@@ -80,7 +80,7 @@ class AjaxController extends Base\BaseUserController
 
 			$message = 'Проверьте ващу почту';
 			$status = 'success';
-			
+
 			break;
 		}
 

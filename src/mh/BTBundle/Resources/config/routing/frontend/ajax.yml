@@ -1,5 +1,5 @@
 fast_reg:
-    pattern: /fast_req
+    pattern: /fast_reg
     defaults: { _controller: BTBundle:Frontend\Ajax:fastReg }
 
 new_comment:

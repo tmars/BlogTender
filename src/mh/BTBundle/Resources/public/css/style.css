@@ -1574,7 +1574,7 @@ ul.expand_cont li.expand_act div{
     behavior:url(PIE.htc);
 }
 
-#right_top_form input[type="submit"]{
+#right_top_form input[type="button"]{
     border: 0;
     background-image: url("../images/top_send.png");
 	background-repeat: no-repeat;
@@ -1587,7 +1587,7 @@ ul.expand_cont li.expand_act div{
     margin-top: -2px;
 }
 
-#right_top_form input[type="submit"]:hover {
+#right_top_form input[type="button"]:hover {
 	background-position: 0px 0px;
 }
 

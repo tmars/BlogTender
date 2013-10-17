@@ -1,9 +1,8 @@
 {% if fast_reg_form is defined %}
+
 {% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
 
-
-
-<form action="{{ path('fast_reg') }}" method="post">
+<form  method="post" id="fast_reg_form">
 <div id="fast_reg_info" class="igor_info_window">{{ forms.all_messages(fast_reg_form) }}</div>
 
 <div id="right_top_form">
@@ -15,8 +14,9 @@
 	  </script>
     {{ forms.widget(fast_reg_form.email, {placeholder: 'Введите свой e-mail...', widget_attr: {class: 'act_mail'}}) }}
 
+    <div class="message"></div>
 
-    <input class="circle" type="submit" value="" />
+    <input class="circle" type="button" value="" onclick="fastReg();"/>
     <p class="soc_ent_text">ИЛИ войти через:</p>
     <a href="{{ env.socnetOAuthLink('fb') }}" rel="facebox" id="fb"></a>
 	<a href="{{ env.socnetOAuthLink('vk') }}" rel="facebox" id="vk"></a>
@@ -26,4 +26,22 @@
 	<a href="{{ env.socnetOAuthLink('ml') }}" rel="facebox" id="ma"></a>
 </div>
 </form>
+<script>
+function fastReg() {
+    alert('sd');
+    $.post(
+        "{{ path('fast_reg') }}",
+        $('#fast_reg_form').serialize(),
+        function(data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            if (data.status == "error") {
+                $('#right_top_form .message').html('<div class="form_error">' + data.message + '</div>');
+            } else {
+                $('#right_top_form .message').html('<div class="form_info">' + data.message + '</div>');
+            }
+        }
+    )
+}
+</script>
 {% endif %}
