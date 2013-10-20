@@ -36,6 +36,11 @@ class Answer extends Base\ContentObjectBase
         return $this->getPreview();
     }
 
+    public function getTextPreview()
+    {
+        return mb_substr($this->getContent(), 0, 100, 'UTF-8');
+    }
+
     /*--------------------------------------------------------------------------*/
 
 

@@ -31,6 +31,11 @@ class Question extends Base\ContentObjectBase
         return $this->getTitle();
     }
 
+    public function getTextPreview()
+    {
+        return mb_substr($this->getContent(), 0, 100, 'UTF-8');
+    }
+
     /*--------------------------------------------------------------------------*/
 
 

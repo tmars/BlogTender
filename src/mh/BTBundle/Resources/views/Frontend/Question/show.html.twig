@@ -27,7 +27,7 @@
         <p>{{ question.content }}</p>
     </div>
     <div class="social">
-     {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': question} %}
+     {% include 'BTBundle:Frontend/Base:like_buttons.html.twig' with {title: question.title, description: question.textPreview} %}
 	 <a href="{{ path('profile_admin_new_answer', {id: question.id}) }}" class="but-yellow active">Ответить</a>
      {% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': question} %}
      {% include 'BTBundle:Frontend/ContentObject:like_form.html.twig' with {'object': question} %}
@@ -55,7 +55,7 @@
              <p>{% if answer.isBest %}ЛУЧШИЙ ОТВЕТ{% endif %}{{ answer.content }}</p>
          </div>
          <div class="social">
-             {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': answer} %}
+             {% include 'BTBundle:Frontend/Base:like_buttons.html.twig' with {title: question.title, description: answer.textPreview, link: path('show_answer', {qid: question.id, aid: answer.id}) }  %}
              {% include 'BTBundle:Frontend/Question:best_answer_button.html.twig' with {'object': answer} %}
              {% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': answer} %}
              {% include 'BTBundle:Frontend/ContentObject:like_form.html.twig' with {'object': answer} %}

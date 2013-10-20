@@ -50,7 +50,7 @@
 	   </div>
 	   <h2>Понравился пост - помоги автору!</h2>
 	   <div class="social">
-        {% include 'BTBundle:Frontend/ContentObject:like_buttons.html.twig' with {'object': post} %}
+        {% include 'BTBundle:Frontend/Base:like_buttons.html.twig' with {title: post.title, image: post.preview | apply_filter('post_image', true), description: post.textPreview} %}
 		{% include 'BTBundle:Frontend/ContentObject:complaint_form.html.twig' with {'object': post} %}
 		{% include 'BTBundle:Frontend/ContentObject:like_form.html.twig' with {'object': post} %}
 	   </div>

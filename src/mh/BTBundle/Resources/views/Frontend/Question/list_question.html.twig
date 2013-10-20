@@ -12,6 +12,9 @@
         <p>{{ question.content }}</p>
     </div>
 
+    {% include 'BTBundle:Frontend/Base:like_buttons.html.twig' with {title: question.title, description: question.textPreview} %}
+
+
     <a href="{{ path('show_question', {id: question.id}) }}" class="but-yellow active" style="margin-top: 10px;">Подробнее</a>
 
     {% if env.user and env.user.id == question.user.id %}

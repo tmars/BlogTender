@@ -1,0 +1,16 @@
+{% if title is defined %}<meta property="og:title" content="{{ title }}"/>{% else %}{% set title = '' %}{% endif %}
+{% if image is defined %}<meta property="og:image" content="{{ image }}"/>{% else %}{% set image = '' %}{% endif %}
+{% if description is defined %}<meta property="og:description" content="{{ description }}"/>{% else %}{% set description = '' %}{% endif %}
+
+{% if link is defined %}
+{% set links = env.getShareLinks({'title': title, 'description': description, 'image': image}, link) %}
+{% else %}
+{% set links = env.getShareLinks({'title': title, 'description': description, 'image': image}) %}
+{% endif %}
+
+<a href="{{ links.fb }}" id="fb" target="_blank">FB</a>
+<a href="{{ links.vk }}" id="vk" target="_blank">VK</a>
+<a href="{{ links.tw }}" id="tw" target="_blank">TW</a>
+<a href="{{ links.od }}" id="od" target="_blank">OD</a>
+<a href="{{ links.gp }}" id="gp" target="_blank">GP</a>
+<a href="{{ links.ml }}" id="ml" target="_blank">ML</a>

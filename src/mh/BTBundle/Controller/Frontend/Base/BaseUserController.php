@@ -14,6 +14,77 @@ class BaseUserController extends BaseController
 {
     private $_container;
 
+    public function getShareLinks($cont, $link = NULL)
+    {
+        $title = @$cont['title'];
+        $description = @$cont['description'];
+        $image = @$cont['image'];
+
+        if (is_null($link)) {
+            $link = $this->generateUrl('homepage', array(), true).substr($this->getRequest()->server->get('PATH_INFO'), 1);
+        }
+        $modes = array(
+            'fb' => array(
+                'cont' => array(
+                    'link' => $link,
+                    'app_id' => $this->container->getParameter('fb_app_id'),
+                    'picture' => $image,
+                    'name' => $title,
+                    'description' => $description,
+                    'redirect_uri' => $link,
+                ),
+                'shareUrl' => "http://www.facebook.com/dialog/feed",
+            ),
+            'vk' => array(
+                'cont' => array(
+                    'url' => $link,
+                    'image' => $image,
+                    'title' => $title,
+                    'description' => $description,
+                    'noparse' => 'true',
+                ),
+                'shareUrl' => 'http://vk.com/share.php',
+            ),
+            'tw' => array(
+                'cont' => array(
+                    'url' => $link,
+                    'text' => $description,
+                ),
+                'shareUrl' => 'https://twitter.com/share',
+            ),
+            'ml' => array(
+                'cont' => array(
+                    'url' => $link,
+                    'title' => $title,
+                    'description' => $description,
+                    'imageurl ' => $image,
+                ),
+                'shareUrl' => "http://connect.mail.ru/share",
+            ),
+            'od' => array(
+                'cont' => array(
+                    'st.cmd' => 'addShare',
+                    'st.s' => '1',
+                    'st.comments' => $description,
+                    'st._surl' => $link,
+                ),
+                'shareUrl' => "http://www.odnoklassniki.ru/dk",
+            ),
+            'gp' => array(
+                'cont' => array(
+                    'url' => $link,
+                ),
+                'shareUrl' => "https://plus.google.com/share",
+            )
+        );
+
+        $links = array();
+        foreach ($modes as $mode => $pack) {
+            $links[$mode] = sprintf("%s?%s", $pack['shareUrl'], http_build_query($pack['cont']));
+        }
+        return $links;
+    }
+
 	public function getSocnetOAuthLink($mode)
 	{
 		switch ($mode) {
