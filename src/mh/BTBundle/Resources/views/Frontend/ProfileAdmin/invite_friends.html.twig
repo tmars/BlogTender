@@ -74,14 +74,8 @@ $(document).ready(function(){
 
 	<div class="social">
 	<h3>Приглашение  через социальные сети</h3>
-	{% set title = 'Сайт конкурс' %}
-	<a href="http://www.facebook.com/sharer.php?u={{ invite_url }}&t={{ title }}" rel="facebox" id="fb" ></a>
-	<a href="http://vkontakte.ru/share.php?url={{ invite_url }}&title={{ title }}" rel="facebox" id="vk"></a>
-	<a href="http://twitter.com/share?url={{ invite_url }}&text={{ title }}" rel="facebox" id="tw"></a>
-	<a href="http://www.odnoklassniki.ru/dk?st.cmd=addShare&st.s=1&st.comments={{ title }}&st._surl={{ invite_url }}" rel="facebox" id="od"></a>
-	<a href="https://plus.google.com/share?url={{ invite_url }}" rel="facebox" id="go"></a>
-	<a href="http://connect.mail.ru/share?share_url={{ invite_url }}&title={{ title }}" rel="facebox" id="ma"></a>
-	</div>
+    {% include 'BTBundle:Frontend/Base:like_buttons.html.twig' with {title: 'Сайт конкурс', description: 'учавствуй в конкурсе!', link: invite_url} %}
+    </div>
 
 </div>
 </div>

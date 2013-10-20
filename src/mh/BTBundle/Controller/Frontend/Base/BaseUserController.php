@@ -14,7 +14,7 @@ class BaseUserController extends BaseController
 {
     private $_container;
 
-    public function getShareLinks($cont, $link = NULL)
+    public function getShareLinks($cont, $link = NULL, $mode = NULL)
     {
         $title = @$cont['title'];
         $description = @$cont['description'];
@@ -48,7 +48,7 @@ class BaseUserController extends BaseController
             'tw' => array(
                 'cont' => array(
                     'url' => $link,
-                    'text' => $description,
+                    'text' => sprintf("%s: %s", $title, $description),
                 ),
                 'shareUrl' => 'https://twitter.com/share',
             ),
@@ -78,9 +78,13 @@ class BaseUserController extends BaseController
             )
         );
 
-        $links = array();
-        foreach ($modes as $mode => $pack) {
-            $links[$mode] = sprintf("%s?%s", $pack['shareUrl'], http_build_query($pack['cont']));
+        if (is_null($mode)) {
+            $links = array();
+            foreach ($modes as $mode => $pack) {
+                $links[$mode] = sprintf("%s?%s", $pack['shareUrl'], http_build_query($pack['cont']));
+            }
+        } else if (array_key_exists($mode, $modes)){
+            $links = sprintf("%s?%s", $modes[$mode]['shareUrl'], http_build_query($modes[$mode]['cont']));
         }
         return $links;
     }
