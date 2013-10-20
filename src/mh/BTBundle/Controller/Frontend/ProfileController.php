@@ -149,7 +149,7 @@ class ProfileController extends Base\SocnetLoginController
                 break;
             }
 
-            $this->createNewUserSession($user);
+            $this->get('user_helper')->createNewUserSession($user);
 
             return $this->redirect($this->generateURL('homepage'));
         }
