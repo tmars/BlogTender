@@ -1,14 +1,21 @@
 {% extends 'BTBundle:Frontend/Base:base.html.twig'%}
 
+{% macro breadcrumbs(items) %}
+    <div class="breadcrumbs">
+    {% for value in items %}
+        {% if loop.last %}
+           <span>{{ value.l }}</span>
+        {% else %}
+            <a href="{{ value.h }}">{{ value.l }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endmacro %}
+
 {% block header %}Мои посты{% endblock %}
 {% block content %}
-
-
 <div class="content-wiev_item">
-<div class="breadcrumbs">
-	<a href="{{ path('homepage') }}">Главная</a>
-	<span>Мои посты</span>
-</div>
+{{ _self.breadcrumbs([{'l': 'Главная', 'h':  path('homepage')}, {'l': 'Мои посты', 'h': ''}]) }}
 <h2>Мои посты</h2>
 </div>
 
