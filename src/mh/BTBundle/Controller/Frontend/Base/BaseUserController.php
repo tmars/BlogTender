@@ -145,14 +145,14 @@ class BaseUserController extends BaseController
 		return $user;
 	}
 
-    protected function errorMessage($message, $data = array())
+    protected function errorMessage($mode, $data = array())
     {
-        return $this->redirect($this->generateUrl('error_message', array('mode' => $message)));
+        return $this->render("Message/Error:$mode.html.twig", $data);
     }
 
     protected function doneMessage($message, $data = array())
     {
-        return $this->redirect($this->generateUrl('done_message', array('mode' => $message)));
+        return $this->render("Message/Done:$mode.html.twig", $data);
     }
 
     protected function createExceptionIfAuthorized()

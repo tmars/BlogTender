@@ -4,10 +4,6 @@ _profile_admin:
 _profile:
     resource: "profile.yml"
     
-_message:
-    resource: "message.yml"
-    prefix:   /message
-    
 _ajax:
     resource: "ajax.yml"
     prefix:   /ajax
@@ -30,7 +26,7 @@ feedback:
     defaults: { _controller: BTBundle:Frontend\Default:feedback }
 
 reg_from_invite:
-    pattern:  /from_invite/{code}/
+    pattern:  /invite/{code}/
     defaults: { _controller: BTBundle:Frontend\Default:regFromInvite }
     
 static_page:
