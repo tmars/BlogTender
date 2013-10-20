@@ -32,10 +32,26 @@ $(document).ready(function(){
 {% block title %}Пригласить друзей{% endblock %}
 
 {% block content %}
- <div class="content-wiev_item">
-<div class="breadcrumbs"><a href="/index.php">Главная</a><span>Пригласить друзей</span></div>
-<h2>Пригласить друзей</h2>
-<div class="inviting">
+
+{% if invited_emails is defined %}
+<div class="content-wiev_item">
+    Вашим друзьям были отправлены приглашения.
+    {% for email in invited_emails %}
+        {{ email }}
+    {% endfor %}
+</div>
+{% endif %}
+
+
+<div class="content-wiev_item">
+
+ <div class="breadcrumbs">
+     <a href="{{ path('homepage') }}">Главная</a>
+     <span>Пригласить друзей</span>
+ </div>
+
+ <h2>Пригласить друзей</h2>
+ <div class="inviting">
 
 	<div>
 		<form action="{{ path('profile_admin_invite_friends') }}" method="post">

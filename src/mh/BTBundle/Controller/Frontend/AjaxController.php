@@ -25,10 +25,7 @@ class AjaxController extends Base\BaseUserController
             }
 
 			$data = $form->getData();
-			$user = $this->getRepository('User')->findOneBy(array(
-				'email' => $data['email'],
-				'source' => Entity\User::SOURCE_INTERNAL,
-			));
+			$user = $this->getRepository('User')->findOneByEmail($data['email']);
 
 			if ($user) {
 				$status = 'error';
@@ -39,8 +36,9 @@ class AjaxController extends Base\BaseUserController
 			$em = $this->getEM();
 			$random = $this->get('random');
 
-			$login = substr($data['email'], 0, strpos($data['email'], '@'));
-			$login = $this->getRepository('User')->getUniqueLogin($login);
+            $userHelper = $this->get('user_helper');
+
+            $login = $userHelper->getUniqueLoginByEmail($data['email']);
             $password = $random->generate(array('length' => 10));
 
 			$user = new Entity\User();
@@ -50,24 +48,11 @@ class AjaxController extends Base\BaseUserController
 			$user->setLogin($login);
 			$user->setPassword($password);
 
-			// удаляем предыдущий код
-			$beforeCode = $this->getRepository("UserEmailConfirm")->findOneByUser($user);
-			if ($beforeCode) {
-				$em->remove($beforeCode);
-				$em->flush();
-			}
-
-			$code = $random->generate(array('length' => 32));
-
-			$confirm = new Entity\UserEmailConfirm();
-			$confirm->setUser($user);
-			$confirm->setCode($code);
-
-			$em->persist($confirm);
+            $confirmCode = $userHelper->getUserEmailConfirmCode($user);
 
 			// Посылаем письмо
 			$url = $this->generateUrl('profile_confirm_email', array(
-				'code' => $code,
+				'code' => $confirmCode,
 				'from' => $this->getRequest()->get('from', ''),
 			), true);
 

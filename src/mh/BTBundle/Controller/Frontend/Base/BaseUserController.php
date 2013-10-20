@@ -150,7 +150,7 @@ class BaseUserController extends BaseController
         return $this->render("Message/Error:$mode.html.twig", $data);
     }
 
-    protected function doneMessage($message, $data = array())
+    protected function doneMessage($mode, $data = array())
     {
         return $this->render("Message/Done:$mode.html.twig", $data);
     }
@@ -159,9 +159,7 @@ class BaseUserController extends BaseController
     {
         $user = $this->getUser();
         if ($user) {
-            throw $this->createRedirectException(
-                $this->generateUrl('error_message', array('mode' => 'already_registered'))
-            );
+            throw $this->createRedirectException($this->generateUrl('homepage'));
         }
     }
 

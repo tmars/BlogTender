@@ -1,8 +1,8 @@
 {% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
 
 <form action="{{ path('profile_reg') }}" method="post">
-{{ forms.errors(form) }}
-{{ forms.row(form._token) }}
+{{ forms.messages(form) }}
+{{ forms.widget(form._token) }}
 
 {{ forms.row(form.email) }}
 {{ forms.row(form.password) }}

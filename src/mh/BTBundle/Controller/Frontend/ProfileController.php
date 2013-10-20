@@ -21,7 +21,9 @@ class ProfileController extends Base\SocnetLoginController
             $em->remove($confirm);
             $em->flush();
 
-			$this->createNewUserSession($user);
+            $userHelper = $this->get('user_helper');
+            $userHelper->createNewUserSession($user);
+
 			return $this->redirect($this->generateUrl('homepage'));
         } else {
             return $this->errorMessage('confirm_code_failed');
@@ -39,7 +41,9 @@ class ProfileController extends Base\SocnetLoginController
             'idInSource' => $mode.'.'.$userData['id'],
         ));
 
-		if (!$user) {
+        $userHelper = $this->get('user_helper');
+
+        if (!$user) {
 
             $user = new Entity\User();
             $user->setSource(User::getSourceByMode($mode));
@@ -52,11 +56,7 @@ class ProfileController extends Base\SocnetLoginController
                 $user->setEmailConfirmed(true);
             }
 
-			$cookie = $this->get('cookie_container');
-			if (	($inviteCode = $cookie->get('invite')) &&
-					($invitingUser = $this->getRepository('User')->findOneByInviteCode($inviteCode))) {
-				$user->setInvitingUser($invitingUser);
-			}
+			$userHelper->setInvitingUserIfExist($user);
 
 			if (	@$userData['photo'] &&
 					($content = @file_get_contents($userData['photo']))) {
@@ -69,14 +69,15 @@ class ProfileController extends Base\SocnetLoginController
 					new File\UploadedFile($filepath, $filename)));
 			}
 
-			$user->setLogin($this->getRepository('User')->getUniqueLogin($userData['login']));
+            $user->setLogin($userHelper->getUniqueLogin($userData['login']));
 
 			$em = $this->getEM();
             $em->persist($user);
             $em->flush();
         }
 
-        $this->createNewUserSession($user);
+        $userHelper->createNewUserSession($user);
+
         return $this->redirect($this->generateURL('homepage'));
     }
 
@@ -138,7 +139,7 @@ class ProfileController extends Base\SocnetLoginController
 			
 			if ($user->getPassword() != $user->passwordEncode($data['password'])) {
                 $form->addError(new
-                    Form\FormError('Неверный пароль. '.$user->getPassword().'.'.$user->passwordEncode($data['password'])));
+                    Form\FormError('Неверный пароль.'));
                 break;
             }
 
@@ -198,27 +199,71 @@ class ProfileController extends Base\SocnetLoginController
 
 	}
 
-    private function createNewUserSession(Entity\User $user)
+    public function regAction()
     {
-        // Генерируем хэш авторизации
+        $this->createExceptionIfAuthorized();
+
+        $form = $this->createForm(new FrontendForm\RegistrationType());
         $request = $this->getRequest();
-        $random = $this->get('random');
-        $hash = $random->generate(array('length' => 32));
 
-        // Создаём сессию
-        $session = new Entity\UserSession();
-        $session->setHash($hash);
-        $session->setIp($request->getClientIp());
-        $session->setUser($user);
-		$session->setUserAgent($_SERVER['HTTP_USER_AGENT']);
-        $this->getEM()->persist($session);
+        while (1) {
 
-        // Сохраняем в бд
-        $user->setCurrentSession($session);
-        $this->getEM()->flush();
+            if ($request->getMethod() != 'POST') {
+                break;
+            }
 
-        // Сохраняем хеш в печеньках
-        $cookie = $this->get('cookie_container');
-        $cookie->set('auth_hash', $session->getHash());
+            $form->bindRequest($request);
+
+            if ( ! $form->isValid()) {
+                break;
+            }
+
+            $data = $form->getData();
+
+            $user = $this->getRepository('User')->findOneByEmail($data['email']);
+
+            if ($user) {
+                $form->get('email')->addError(new Form\FormError("Пользователь с такой почтой уже есть."));
+                break;
+            }
+
+
+            $em = $this->getEM();
+            $userHelper = $this->get('user_helper');
+
+            $login = $userHelper->getUniqueLoginByEmail($data['email']);
+
+            $user = new Entity\User();
+            $user->setSource(Entity\User::SOURCE_INTERNAL);
+            $user->setEmail($data['email']);
+            $user->setName($login);
+            $user->setLogin($login);
+            $user->setPassword($data['password']);
+
+            $confirmCode = $userHelper->getUserEmailConfirmCode($user);
+            $userHelper->setInvitingUserIfExist($user);
+
+            // Посылаем письмо
+            $url = $this->generateUrl('profile_confirm_email', array(
+                'code' => $confirmCode,
+                'from' => $this->getRequest()->get('from', ''),
+            ), true);
+
+            $em->persist($user);
+            $em->flush();
+
+            // Авторизируемся
+            $userHelper->createNewUserSession($user);
+
+            return $this->doneMessage("registration_success", array(
+                'email' => $data['email']
+            ));
+        }
+
+        return $this->render('Profile:reg.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
+
+
 }

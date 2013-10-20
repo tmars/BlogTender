@@ -16,6 +16,5 @@ class BTBundleExceptionListener
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception =  $event->getException();
-        
     }
 }

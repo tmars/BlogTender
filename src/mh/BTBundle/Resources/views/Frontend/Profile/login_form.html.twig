@@ -1,12 +1,19 @@
 {% import 'BTBundle:Frontend/Base:forms.html.twig' as forms %}
-<h2>Заголовок h2</h2>
-<form action="{{ path('profile_login') }}" method="post">
-{{ forms.messages(form) }}
-{{ forms.widget(form._token) }}
 
-{{ forms.row(form.email) }}
-{{ forms.row(form.password) }}
-<input type="submit">
+<div class="social_pop">
+    <a href="https://www.facebook.com/dialog/oauth/?client_id={{ fb_app_id }}&redirect_uri={{ url('profile_socnet_login', {mode: 'fb'}) }}&scope=email" rel="facebox" id="fb"></a>
+    <a href="http://oauth.vk.com/authorize?client_id={{ vk_app_id }}&redirect_uri={{ url('profile_socnet_login', {mode: 'vk'}) }}&response_type=code" rel="facebox" id="vk"></a>
+    <a href="pop-up.html" rel="facebox" id="tw"></a>
+    <a href="pop-up.html" rel="facebox" id="od"></a>
+    <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri={{ url('profile_socnet_login', {mode: 'gl'}) }}&response_type=code&client_id={{ gl_app_id }}&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile" rel="facebox" id="go"></a>
+    <a href="https://connect.mail.ru/oauth/authorize?client_id={{ ml_app_id }}&response_type=code&redirect_uri={{ url('profile_socnet_login', {mode: 'ml'}) }}" rel="facebox" id="ma"></a>
+</div>
+
+<form action="{{ path('profile_login') }}" method="post">
+    {{ forms.messages(form) }}
+    {{ forms.widget(form._token) }}
+
+    {{ forms.row(form.email) }}
+    {{ forms.row(form.password) }}
+    <input type="submit" class="but-yellow active" value="Отправить">
 </form>
-<input type="text" value="поле ввода"/><br /><a class="but-yellow active">отправить</a>
-<input type="checkbox" id="chek"/><label for="chek">checkbox</label><input type="radio" id="rad"/><label for="rad">radiobox</label>

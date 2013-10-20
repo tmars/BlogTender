@@ -1,33 +1,17 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>POP-UP</title>
-	<link rel="stylesheet" href="/bundles/bt/css/style-pop.css" type="text/css" media="screen" />
-	<!-- pop-up -->
+{% extends 'BTBundle:Frontend/Base:base.html.twig'%}
+
+{% block stylies %}
+    <link rel="stylesheet" href="/bundles/bt/css/style-pop.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="/bundles/bt/js/css/facebox.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="/bundles/bt/js/facebox.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function($) {
-             $('a[rel*=facebox]').facebox({
-             loadingImage : '/bundles/bt/js/loading.gif',
-             closeImage : '/bundles/bt/js/closelabel.png'
-             });
-        });
-    </script>
-    <!-- end pop-up -->
-</head>
+{% endblock %}
 
-<body style="font-size: 13px;">
+{% block content %}
 
-<h1>Форма регистрации</h1>
-<div>
- {% include 'BTBundle:Frontend/Profile:reg_form.html.twig' %}
+    <div class="content-wiev_item">
+        <h1>Форма регистрации</h1>
 
-</div>
+        {% include 'BTBundle:Frontend/Profile:reg_form.html.twig' %}
 
+    </div>
 
-
-</body>
-</html>
-
+{% endblock %}

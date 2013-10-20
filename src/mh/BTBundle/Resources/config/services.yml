@@ -19,7 +19,9 @@ parameters:
     like_count_reader.class: mh\Common\LikeCountReader
     
     twitter_oauth.class: mh\Common\Twitter\TwitterOAuth
-    
+
+    user_helper.class: mh\BTBundle\Common\UserHelper
+
 services:
     
     pagerfanta.view.default_2:
@@ -53,14 +55,17 @@ services:
         class:     %uniquer_checker.class%
     scores_allocator:
         class:     %scores_allocator.class%
-        arguments:    ["@doctrine.orm.entity_manager"]
+        arguments:    [@doctrine.orm.entity_manager]
     events_list:
         class:     %events_list.class%
-        arguments:    ["@doctrine.orm.entity_manager"]
+        arguments:    [@doctrine.orm.entity_manager]
     twitter_oauth:
         class:     %twitter_oauth.class%
         arguments: [%tw_app_id%, %tw_secret_key%]
-
+    user_helper:
+        class:     %user_helper.class%
+        arguments: [@doctrine.orm.entity_manager, @cookie_container, @request]
+        scope: request
             
 # Сущности для админки
     admin.post:

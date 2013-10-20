@@ -3,37 +3,12 @@
 namespace mh\BTBundle\Repository;
 
 use mh\BTBundle\Repository\Base\BaseRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
+use mh\Common\Random;
+use mh\BTBundle\Entity as Entity;
 
 class UserRepository extends BaseRepository
 {
-	public function getUniqueLogin($login)
-	{
-        if (strlen($login) > 28) {
-            $login = substr($login, 28);
-        } else if (strlen($login) < 6) {
-            $login = 'login_';
-        }
-
-		$postfix = '';
-        $login = $this->getFormatedLogin($login);
-        while ($this->findOneByLogin($login.$postfix)) {
-            $postfix = $postfix ? $postfix + 1 : 2;
-        }
-        return $login.$postfix;
-	}
-
-    public function getFormatedLogin($login)
-    {
-        $login = preg_replace('/\W/', '_', $login);
-        $login = preg_replace('/_+/', '_', $login);
-        $login = preg_replace('/^_+/', '', $login);
-        $login = preg_replace('/_+$/', '', $login);
-
-        return $login;
-    }
-
-	public function getUserCategories($user)
+    public function getUserCategories($user)
 	{
 		$userCategories = array();
 		foreach ($user->getPosts() as $post) {
@@ -60,7 +35,7 @@ class UserRepository extends BaseRepository
 
 		return $this->createQueryBuilder('u')
 			->select(array('c'))
-            ->innerJoin('p.posts', 'ç')
+            ->innerJoin('p.posts', 'ï¿½')
             ->innerJoin('p.categories', 'c', 'WITH', 'c.id = :id')
             ->innerJoin('p.user', 'u')
             ->where('p.isPublished = true')

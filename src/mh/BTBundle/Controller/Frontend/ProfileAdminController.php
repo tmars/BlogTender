@@ -13,7 +13,8 @@ class ProfileAdminController extends Base\BaseUserController
 		$request = $this->getRequest();
 		$form = $this->createForm(new \mh\BTBundle\Form\Frontend\ProfileType());
 
-		$emailMes = 'для использования всех возможностей подтвердите email адрес';
+        $userHelper = $this->get('user_helper');
+        $emailMes = 'для использования всех возможностей подтвердите email адрес';
 		while (1) {
 			if ($request->getMethod() != 'POST') {
 				$form->setData(array(
@@ -58,7 +59,19 @@ class ProfileAdminController extends Base\BaseUserController
 			if ($data['email'] != $user->getEmail()) {
 				$user->setEmail($data['email']);
 				$user->setEmailConfirmed(false);
-				$this->setEmailConfirmCodeForUser($user);
+
+                $confirmCode = $userHelper->getUserEmailConfirmCode($user);
+
+                // Посылаем письмо
+                $url = $this->generateUrl('profile_confirm_email', array(
+                    'code' => $confirmCode,
+                    'from' => $this->getRequest()->get('from', ''),
+                ), true);
+
+                $mailer = $this->get('user_mailer');
+                $mailer->setEmail($user->getEmail());
+                $mailer->send('confirm_email.html.twig', 'Завершение регистрации.', array('url' => $url, 'user' => $user));
+
 				$emailMes = 'адрес изменен. Проверте почту, чтобы подтвердить его.';
 			}
 
@@ -135,6 +148,7 @@ class ProfileAdminController extends Base\BaseUserController
 				'label' => 'Текст сообщения:',
 			))
 			->getForm();
+        $clearForm = clone $form;
 		$request = $this->getRequest();
 		$inviteUrl = $this->generateUrl('reg_from_invite', array('code' => $user->getInviteCode()), true);
 
@@ -161,63 +175,40 @@ class ProfileAdminController extends Base\BaseUserController
 			foreach ($data['emails'] as $key => $email) {
 				$errorList = $this->get('validator')->validateValue($email, $emailConstraint);
 				if (count($errorList) != 0) {
-					$form->get('emails')->get($key)->addError(new \Symfony\Component\Form\FormError($errorList[0]->getMessage()));
+                    $form->get('emails')->get($key)->addError(new \Symfony\Component\Form\FormError($errorList[0]->getMessage()));
 					$flag = true;
 				}
+
+                if ($this->getRepository("User")->findOneByEmail($email)) {
+                    $form->get('emails')->get($key)->addError(new \Symfony\Component\Form\FormError("Пользователь с таким email уже зарегистрирован."));
+                    $flag = true;
+                }
 			}
 
 			if ($flag == true) {
 				break;
 			}
 
-			foreach ($data['emails'] as $email) {
-				$mailer = $this->get('user_mailer');
-				$mailer->setEmail($email);
-				$mailer->send('invite.html.twig', 'Приглашение.', array(
-					'login' => $user->getLogin(),
-					'invite_url' => $inviteUrl,
-					'message' => $data['message'],
-				));
-			}
+            foreach ($data['emails'] as $email) {
+                $mailer = $this->get('user_mailer');
+                $mailer->setEmail($email);
+                $mailer->send('invite.html.twig', 'Приглашение.', array(
+                    'login' => $user->getLogin(),
+                    'invite_url' => $inviteUrl,
+                    'message' => $data['message'],
+                ));
+            }
 
-			//return $this->doneMessage('invites_sended', array('emails' => $data['emails']));
-			break;
+            return $this->render("ProfileAdmin:invite_friends.html.twig", array(
+                'form' => $clearForm->createView(),
+                'invite_url' => $inviteUrl,
+                'invited_emails' => $data['emails'],
+            ));
 		}
 
 		return $this->render("ProfileAdmin:invite_friends.html.twig", array(
 			'form' => $form->createView(),
 			'invite_url' => $inviteUrl,
-		));
+        ));
 	}
-
-	private function setEmailConfirmCodeForUser($user)
-    {
-		$em = $this->getEM();
-
-		// удаляем предыдущий код
-		$beforeCode = $this->getRepository("UserEmailConfirm")->findOneByUser($user);
-		if ($beforeCode) {
-			$em->remove($beforeCode);
-			$em->flush();
-		}
-
-		$random = $this->get('random');
-        $code = $random->generate(array('length' => 32));
-
-        $confirm = new \mh\BTBundle\Entity\UserEmailConfirm();
-        $confirm->setUser($user);
-        $confirm->setCode($code);
-
-        $em->persist($confirm);
-
-        // Посылаем письмо
-        $url = $this->generateUrl('profile_confirm_email', array(
-			'code' => $code,
-			'from' => $this->getRequest()->get('from', ''),
-		), true);
-
-		$mailer = $this->get('user_mailer');
-        $mailer->setEmail($user->getEmail());
-        $mailer->send('confirm_email.html.twig', 'Завершение регистрации.', array('url' => $url, 'user' => $user));
-    }
 }

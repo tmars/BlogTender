@@ -19,7 +19,11 @@ profile_twitter_oauth:
 profile_logout:
     pattern:  /profile/logout/
     defaults: { _controller: BTBundle:Frontend\Profile:logout }
-    
+
+profile_reg:
+    pattern: /profile/registration/
+    defaults: { _controller: BTBundle:Frontend\Profile:reg }
+
 
  
     

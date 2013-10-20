@@ -5,3 +5,7 @@ services:
             - { name: form.type, alias: moderation_status }
     #cache:
     #    class: Doctrine\Common\Cache\ApcCache
+    kernel.listener.yourlisener:
+        class: mh\BTBundle\BTBundleExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

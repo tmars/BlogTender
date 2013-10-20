@@ -92,6 +92,6 @@ class DefaultController extends Base\BaseUserController
 		$cookie = $this->get('cookie_container');
 		$cookie->set('invite', $code);
 
-		return $this->redirect($this->generateUrl('homepage'));
+		return $this->redirect($this->generateUrl('profile_reg'));
 	}
 }
