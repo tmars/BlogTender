@@ -29,9 +29,6 @@ mh\BTBundle\Entity\Question:
             type: boolean
             nullable: false
             column: is_published
-        scores:
-            type: smallint
-            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
         answerCount:
             type: smallint
             columnDefinition: SMALLINT NOT NULL DEFAULT '0'
@@ -60,6 +57,14 @@ mh\BTBundle\Entity\Question:
                     referencedColumnName: id
                     nullable: false
     oneToOne:
+        scoreObject:
+            cascade: [ persist ]
+            targetEntity: ScoreObject
+            joinColumns:
+                score_object_id:
+                    referencedColumnName: id
+                    nullable: false
+            orphanRemoval: false
         contentObject:
             targetEntity: ContentObject
             cascade: [ persist ]

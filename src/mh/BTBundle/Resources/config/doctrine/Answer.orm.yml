@@ -28,9 +28,6 @@ mh\BTBundle\Entity\Answer:
             type: boolean
             nullable: false
             column: is_best
-        scores:
-            type: smallint
-            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
     manyToOne:
         user:
             targetEntity: User
@@ -50,6 +47,14 @@ mh\BTBundle\Entity\Answer:
                     nullable: false
             orphanRemoval: true
     oneToOne:
+        scoreObject:
+            cascade: [ persist ]
+            targetEntity: ScoreObject
+            joinColumns:
+                score_object_id:
+                    referencedColumnName: id
+                    nullable: false
+            orphanRemoval: false
         contentObject:
             targetEntity: ContentObject
             cascade: [ persist ]

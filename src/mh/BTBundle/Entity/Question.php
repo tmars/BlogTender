@@ -70,11 +70,6 @@ class Question extends Base\ContentObjectBase
     protected $isPublished;
 
     /**
-     * @var integer
-     */
-    protected $scores;
-
-    /**
      * @var \mh\BTBundle\Entity\ContentObject
      */
     protected $contentObject;
@@ -213,29 +208,6 @@ class Question extends Base\ContentObjectBase
     public function getIsPublished()
     {
         return $this->isPublished;
-    }
-
-    /**
-     * Set scores
-     *
-     * @param integer $scores
-     * @return Question
-     */
-    public function setScores($scores)
-    {
-        $this->scores = $scores;
-
-        return $this;
-    }
-
-    /**
-     * Get scores
-     *
-     * @return integer
-     */
-    public function getScores()
-    {
-        return $this->scores;
     }
 
     /**
@@ -378,5 +350,33 @@ class Question extends Base\ContentObjectBase
     public function getAnswers()
     {
         return $this->answers;
+    }
+    /**
+     * @var \mh\BTBundle\Entity\ScoreObject
+     */
+    private $scoreObject;
+
+
+    /**
+     * Set scoreObject
+     *
+     * @param \mh\BTBundle\Entity\ScoreObject $scoreObject
+     * @return Question
+     */
+    public function setScoreObject(\mh\BTBundle\Entity\ScoreObject $scoreObject = null)
+    {
+        $this->scoreObject = $scoreObject;
+    
+        return $this;
+    }
+
+    /**
+     * Get scoreObject
+     *
+     * @return \mh\BTBundle\Entity\ScoreObject 
+     */
+    public function getScoreObject()
+    {
+        return $this->scoreObject;
     }
 }

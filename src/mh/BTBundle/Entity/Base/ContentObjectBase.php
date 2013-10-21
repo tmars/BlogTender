@@ -5,7 +5,7 @@ namespace mh\BTBundle\Entity\Base;
 /**
  * ContentObjectBase
  */
-class ContentObjectBase
+class ContentObjectBase extends ScoreObjectBase
 {
     public function prePersist()
     {

@@ -129,11 +129,6 @@ class Post extends Base\ContentObjectBase
     private $showOnMain;
 
     /**
-     * @var integer
-     */
-    private $scores;
-
-    /**
      * @var \mh\BTBundle\Entity\ContentObject
      */
     private $contentObject;
@@ -402,29 +397,6 @@ class Post extends Base\ContentObjectBase
     }
 
     /**
-     * Set scores
-     *
-     * @param integer $scores
-     * @return Post
-     */
-    public function setScores($scores)
-    {
-        $this->scores = $scores;
-
-        return $this;
-    }
-
-    /**
-     * Get scores
-     *
-     * @return integer
-     */
-    public function getScores()
-    {
-        return $this->scores;
-    }
-
-    /**
      * Set contentObject
      *
      * @param \mh\BTBundle\Entity\ContentObject $contentObject
@@ -646,5 +618,33 @@ class Post extends Base\ContentObjectBase
     public function getCategories()
     {
         return $this->categories;
+    }
+    /**
+     * @var \mh\BTBundle\Entity\ScoreObject
+     */
+    private $scoreObject;
+
+
+    /**
+     * Set scoreObject
+     *
+     * @param \mh\BTBundle\Entity\ScoreObject $scoreObject
+     * @return Post
+     */
+    public function setScoreObject(\mh\BTBundle\Entity\ScoreObject $scoreObject = null)
+    {
+        $this->scoreObject = $scoreObject;
+    
+        return $this;
+    }
+
+    /**
+     * Get scoreObject
+     *
+     * @return \mh\BTBundle\Entity\ScoreObject 
+     */
+    public function getScoreObject()
+    {
+        return $this->scoreObject;
     }
 }

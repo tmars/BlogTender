@@ -75,11 +75,6 @@ class Answer extends Base\ContentObjectBase
     protected $isBest;
 
     /**
-     * @var integer
-     */
-    protected $scores;
-
-    /**
      * @var \mh\BTBundle\Entity\ContentObject
      */
     protected $contentObject;
@@ -221,29 +216,6 @@ class Answer extends Base\ContentObjectBase
     }
 
     /**
-     * Set scores
-     *
-     * @param integer $scores
-     * @return Answer
-     */
-    public function setScores($scores)
-    {
-        $this->scores = $scores;
-
-        return $this;
-    }
-
-    /**
-     * Get scores
-     *
-     * @return integer
-     */
-    public function getScores()
-    {
-        return $this->scores;
-    }
-
-    /**
      * Set contentObject
      *
      * @param \mh\BTBundle\Entity\ContentObject $contentObject
@@ -310,5 +282,33 @@ class Answer extends Base\ContentObjectBase
     public function getQuestion()
     {
         return $this->question;
+    }
+    /**
+     * @var \mh\BTBundle\Entity\ScoreObject
+     */
+    private $scoreObject;
+
+
+    /**
+     * Set scoreObject
+     *
+     * @param \mh\BTBundle\Entity\ScoreObject $scoreObject
+     * @return Answer
+     */
+    public function setScoreObject(\mh\BTBundle\Entity\ScoreObject $scoreObject = null)
+    {
+        $this->scoreObject = $scoreObject;
+    
+        return $this;
+    }
+
+    /**
+     * Get scoreObject
+     *
+     * @return \mh\BTBundle\Entity\ScoreObject 
+     */
+    public function getScoreObject()
+    {
+        return $this->scoreObject;
     }
 }

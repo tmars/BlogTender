@@ -64,8 +64,7 @@ services:
         arguments: [%tw_app_id%, %tw_secret_key%]
     user_helper:
         class:     %user_helper.class%
-        arguments: [@doctrine.orm.entity_manager, @cookie_container, @request]
-        scope: request
+        arguments: [@doctrine.orm.entity_manager]
             
 # Сущности для админки
     admin.post:

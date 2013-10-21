@@ -1,0 +1,33 @@
+mh\BTBundle\Entity\ScoreObject:
+    type: entity
+    table: score_object
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        objectType:
+            type: string
+            length: 32
+            fixed: false
+            column: object_type
+        createdDate:
+            type: datetime
+            nullable: false
+            column: created_date
+        scores:
+            type: smallint
+            columnDefinition: SMALLINT NOT NULL DEFAULT '0'
+    manyToOne:
+        user:
+            targetEntity: User
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+                    nullable: false
+            orphanRemoval: false
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
