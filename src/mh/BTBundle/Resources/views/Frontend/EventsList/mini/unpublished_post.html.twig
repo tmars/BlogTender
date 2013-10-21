@@ -3,7 +3,7 @@
     <div id="story">
         <a href="{{ path('user_info', {login: e.data.post.user.login}) }}">{{ e.data.post.user.name }}</a>
         переместил статью
-        <a href="{{ path('show_post', {id: e.data.post.id}) }}"><span>{{ e.data.post.title }}</span></a>
+        <span>{{ e.data.post.title }}</span>
         в черновики
     </div>
 </div>
