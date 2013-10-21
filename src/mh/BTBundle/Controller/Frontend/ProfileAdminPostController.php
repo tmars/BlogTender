@@ -178,27 +178,33 @@ class ProfileAdminPostController extends Base\BaseUserController
 			$eventsList = $this->get('events_list');
 			//@todo что за херня
 			switch ($data['pub_flag']) {
-			case 1:
-				if ($post->getModerationStatus() == ModerationStatusType::NOT_VALID) {
-					$post->setIsPublished(false);
-					$post->setModerationStatus(ModerationStatusType::NOT_MODERATED);
-					$form->addError(new Form\FormError('Пост отправлен на проверку модератору.', array('info' => 1)));
-				} else {
-					$post->setIsPublished(true);
-					$form->addError(new Form\FormError('Пост опубликован.', array('info' => 1)));
-					$eventsList->happened($eventsList::PUBLISHED_POST, $post);
-				}
-				break;
-				
-			case -1:
-				$post->setIsPublished(false);
-				$form->addError(new Form\FormError('Пост снят с публикации.', array('info' => 1)));
-				$eventsList->happened($eventsList::UNPUBLISHED_POST, $post);
-				break;
-			
-			default:
-				$form->addError(new Form\FormError('Пост сохранен.', array('info' => 1)));
-				break;
+                case 1:
+                    if ($post->getIsPublished() === true) {
+                        $form->addError(new Form\FormError('Пост уже был опубликован.', array('info' => 1)));
+                    } else if ($post->getModerationStatus() == ModerationStatusType::NOT_VALID) {
+                        $post->setIsPublished(false);
+                        $post->setModerationStatus(ModerationStatusType::NOT_MODERATED);
+                        $form->addError(new Form\FormError('Пост отправлен на проверку модератору.', array('info' => 1)));
+                    } else {
+                        $post->setIsPublished(true);
+                        $form->addError(new Form\FormError('Пост опубликован.', array('info' => 1)));
+                        $eventsList->happened($eventsList::PUBLISHED_POST, $post);
+                    }
+                    break;
+
+                case -1:
+                    if ($post->getIsPublished() === false) {
+                        $form->addError(new Form\FormError('Пост уже был снят с опубликован.', array('info' => 1)));
+                    } else {
+                        $post->setIsPublished(false);
+                        $form->addError(new Form\FormError('Пост снят с публикации.', array('info' => 1)));
+                        $eventsList->happened($eventsList::UNPUBLISHED_POST, $post);
+                    }
+                    break;
+
+                default:
+                    $form->addError(new Form\FormError('Пост сохранен.', array('info' => 1)));
+                    break;
 			}
 
 			$this->getEM()->flush();
