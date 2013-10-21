@@ -15,14 +15,10 @@ use mh\BTBundle\Entity as Entity;
 class UserHelper {
 
     private $em;
-    private $cookie;
-    private $request;
 
-    public function __construct($em, $cookie, $request)
+    public function __construct($em)
     {
         $this->em = $em;
-        $this->cookie = $cookie;
-        $this->request = $request;
     }
 
     public function getUniqueLoginByEmail($email)
@@ -77,7 +73,7 @@ class UserHelper {
         return $confirm->getCode();
     }
 
-    public function createNewUserSession(Entity\User &$user)
+    public function createNewUserSession(Entity\User &$user, $cookie, $request)
     {
         // Генерируем хэш авторизации
         $hash = Random::generate(array('length' => 32));
@@ -85,7 +81,7 @@ class UserHelper {
         // Создаём сессию
         $session = new Entity\UserSession();
         $session->setHash($hash);
-        $session->setIp($this->request->getClientIp());
+        $session->setIp($request->getClientIp());
         $session->setUser($user);
         $session->setUserAgent($_SERVER['HTTP_USER_AGENT']);
         $this->em->persist($session);
@@ -95,12 +91,12 @@ class UserHelper {
         $this->em->flush();
 
         // Сохраняем хеш в печеньках
-        $this->cookie->set('auth_hash', $session->getHash());
+        $cookie->set('auth_hash', $session->getHash());
     }
 
-    public function setInvitingUserIfExist(Entity\User &$user)
+    public function setInvitingUserIfExist(Entity\User &$user, $cookie)
     {
-        if (($inviteCode = $this->cookie->get('invite')) &&
+        if (($inviteCode = $cookie->get('invite')) &&
             ($invitingUser = $this->em->getRepository('BTBundle:User')->findOneByInviteCode($inviteCode))) {
             $user->setInvitingUser($invitingUser);
         }

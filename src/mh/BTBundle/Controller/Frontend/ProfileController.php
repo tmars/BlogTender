@@ -22,7 +22,7 @@ class ProfileController extends Base\SocnetLoginController
             $em->flush();
 
             $userHelper = $this->get('user_helper');
-            $userHelper->createNewUserSession($user);
+            $userHelper->createNewUserSession($user, $this->get('cookie_container'), $this->getRequest());
 
 			return $this->redirect($this->generateUrl('homepage'));
         } else {
@@ -56,7 +56,7 @@ class ProfileController extends Base\SocnetLoginController
                 $user->setEmailConfirmed(true);
             }
 
-			$userHelper->setInvitingUserIfExist($user);
+			$userHelper->setInvitingUserIfExist($user, $this->get('cookie_container'));
 
 			if (	@$userData['photo'] &&
 					($content = @file_get_contents($userData['photo']))) {
@@ -76,7 +76,7 @@ class ProfileController extends Base\SocnetLoginController
             $em->flush();
         }
 
-        $userHelper->createNewUserSession($user);
+        $userHelper->createNewUserSession($user, $this->get('cookie_container'), $this->getRequest());
 
         return $this->redirect($this->generateURL('homepage'));
     }
@@ -149,7 +149,7 @@ class ProfileController extends Base\SocnetLoginController
                 break;
             }
 
-            $this->get('user_helper')->createNewUserSession($user);
+            $this->get('user_helper')->createNewUserSession($user, $this->get('cookie_container'), $this->getRequest());
 
             return $this->redirect($this->generateURL('homepage'));
         }
@@ -241,7 +241,7 @@ class ProfileController extends Base\SocnetLoginController
             $user->setPassword($data['password']);
 
             $confirmCode = $userHelper->getUserEmailConfirmCode($user);
-            $userHelper->setInvitingUserIfExist($user);
+            $userHelper->setInvitingUserIfExist($user, $this->get('cookie_container'));
 
             // Посылаем письмо
             $url = $this->generateUrl('profile_confirm_email', array(
@@ -253,7 +253,7 @@ class ProfileController extends Base\SocnetLoginController
             $em->flush();
 
             // Авторизируемся
-            $userHelper->createNewUserSession($user);
+            $userHelper->createNewUserSession($user, $this->get('cookie_container'), $this->getRequest());
 
             return $this->doneMessage("registration_success", array(
                 'email' => $data['email']

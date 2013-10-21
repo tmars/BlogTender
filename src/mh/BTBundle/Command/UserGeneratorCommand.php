@@ -26,9 +26,8 @@ class UserGeneratorCommand extends DoctrineCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-		$users = array();
-		
-		$cacheDir = $this->getApplication()->getKernel()->getCacheDir();
+		$userHelper = $this->getApplication()->getKernel()->getContainer()->get('user_helper');
+        $cacheDir = $this->getApplication()->getKernel()->getCacheDir();
 		
         $m_names = file(__DIR__.self::DATA_DIR."m_names.txt", FILE_IGNORE_NEW_LINES);
         $m_second_names = file(__DIR__.self::DATA_DIR."m_second_names.txt", FILE_IGNORE_NEW_LINES);
@@ -62,7 +61,7 @@ class UserGeneratorCommand extends DoctrineCommand
             }
 
 			
-            $login = $repo->getUniqueLogin(Random::popArrayElement($nicknames));
+            $login = $userHelper->getUniqueLogin(Random::popArrayElement($nicknames));
 			
             $user = new Entity\User();
             $user->setSource(Entity\User::SOURCE_INTERNAL);
