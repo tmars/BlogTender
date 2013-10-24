@@ -168,7 +168,7 @@ class AjaxController extends Base\BaseUserController
 		$em->flush();
 
         $eventsList = $this->get('events_list');
-        switch($data['object']->getContentType()) {
+        switch($data['object']->getObjectType()) {
             case 'post':
                 $eventsList->happened($eventsList::LIKE_POST, $like);
                 break;

@@ -54,9 +54,18 @@
 	  
 	});
 	</script>
+
+    {% for e in events %}
+        {% include 'BTBundle:Frontend/ProfileAdmin:scoresEvents/' ~ e.score.objectType ~ '.html.twig' %}
+    {% endfor %}
+
+
 <!--  <a href="{{ path('profile_admin_scores', {date: prev}) }}" class="but-yellow">Раньше</a>
  <a href="{{ path('profile_admin_scores') }}" class="but-yellow">Сегодня</a>
  <a href="{{ path('profile_admin_scores', {date: next}) }}" class="but-yellow">Позднее</a> -->
  <div class="clear"></div>
 </div>
+
+
+
 {% endblock %}

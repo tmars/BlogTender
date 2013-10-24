@@ -1,6 +1,7 @@
 mh\BTBundle\Entity\ScoreObject:
     type: entity
     table: score_object
+    repositoryClass: mh\BTBundle\Repository\ScoreObjectRepository
     fields:
         id:
             id: true

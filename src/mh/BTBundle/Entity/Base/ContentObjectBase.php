@@ -12,7 +12,7 @@ class ContentObjectBase extends ScoreObjectBase
         $obj = new \mh\BTBundle\Entity\ContentObject();
 	    $obj->setComplaintsCount(0);
 		$obj->setLikesCount(0);
-        $obj->setContentType($this->contentType);
+        $obj->setObjectType($this->objectType);
         $this->setContentObject($obj);
 
 		$this->setIsPublished(true);

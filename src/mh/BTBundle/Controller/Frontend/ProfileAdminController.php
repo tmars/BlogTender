@@ -114,22 +114,15 @@ class ProfileAdminController extends Base\BaseUserController
 
 		$scoreGroups = array();
 
-		$allocator = $this->get('scores_allocator');
-		$types = $allocator->getTypes($user);
-
-		foreach ($types as $type => $query) {
-			$stmt = $this->getEM()->getConnection()->prepare($query. " AND t.created_date >= '{$date}' AND t.created_date < DATE_ADD('{$date}', INTERVAL 1 DAY)");
-			$stmt->execute();
-			$rows = $stmt->fetchAll();
-			$scoreGroups[$type]['scores'] = ($rows[0]['scores'] == null) ? '0' : $rows[0]['scores'];
-			$scoreGroups[$type]['count'] = ($rows[0]['count'] == null) ? '0' : $rows[0]['count'];
-		}
+        $events = $this->getRepository('ScoreObject')->getScoreEvents($user, $date);
+        $scoreGroups = $this->getRepository('ScoreObject')->getScoresByGroups($user, $date);
 
 		return $this->render("ProfileAdmin:scores.html.twig", array(
 			"types" => $scoreGroups,
 			'next' => $next,
 			'prev' => $prev,
 			'date' => $dateObj,
+            'events' => $events,
 		));
 	}
 

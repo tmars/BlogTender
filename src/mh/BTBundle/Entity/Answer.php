@@ -10,7 +10,7 @@ use mh\BTBundle\DBAL\ModerationStatusType;
  */
 class Answer extends Base\ContentObjectBase
 {
-    protected  $contentType = 'answer';
+    protected  $objectType = 'Answer';
 
     /**
      * @ORM\PrePersist

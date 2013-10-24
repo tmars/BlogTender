@@ -1,0 +1,7 @@
+<div>
+{{ russian_date(e.object.createdDate) }}
+вы получили
+{{ e.object.scores }}
+за пост
+<a href="{{ path('show_post', {id: e.object.id}) }}"><span>{{ e.object.title }}</span></a>
+</div>

@@ -236,7 +236,9 @@ class ProfileAdminPostController extends Base\BaseUserController
 		}
 
 		$em = $this->getEM();
-		$em->remove($post->getImage());
+        if ($post->getImage()) {
+            $em->remove($post->getImage());
+        }
 		$em->remove($post);
 		$em->flush();
 

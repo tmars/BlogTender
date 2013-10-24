@@ -10,7 +10,7 @@ class ScoreObjectBase
     private function sd()
     {
         $obj = new \mh\BTBundle\Entity\ScoreObject();
-        $obj->setObjectType($this->contentType);
+        $obj->setObjectType($this->objectType);
         $obj->setUser($this->getUser());
         $obj->setCreatedDate($this->getCreatedDate());
         $this->setScoreObject($obj);

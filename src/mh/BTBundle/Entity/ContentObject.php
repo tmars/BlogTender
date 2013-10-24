@@ -25,7 +25,7 @@ class ContentObject
     /**
      * @var string
      */
-    private $contentType;
+    private $objectType;
 
     /**
      * @var integer
@@ -47,7 +47,15 @@ class ContentObject
      */
     private $complaints;
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->likes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->complaints = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -59,26 +67,26 @@ class ContentObject
     }
 
     /**
-     * Set contentType
+     * Set objectType
      *
-     * @param string $contentType
+     * @param string $objectType
      * @return ContentObject
      */
-    public function setContentType($contentType)
+    public function setObjectType($objectType)
     {
-        $this->contentType = $contentType;
+        $this->objectType = $objectType;
     
         return $this;
     }
 
     /**
-     * Get contentType
+     * Get objectType
      *
      * @return string 
      */
-    public function getContentType()
+    public function getObjectType()
     {
-        return $this->contentType;
+        return $this->objectType;
     }
 
     /**
@@ -192,13 +200,4 @@ class ContentObject
     {
         return $this->complaints;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->likes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->complaints = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
 }
