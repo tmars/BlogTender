@@ -40,6 +40,8 @@
 					<br>
 					
 Статистика за дату: <input  id="datepicker" type="text" />
+<a href="{{ path('profile_admin_scores', {'date' : prev}) }}">назад</a>
+<a href="{{ path('profile_admin_scores', {'date' : next}) }}">вперед</a>
 <script type="text/javascript">
 	$(function(){
 	$.datepicker.setDefaults(
@@ -49,7 +51,7 @@
 	  
 	  $("#datepicker").change(function () {
 		window.location.href="/profile/admin/scores/"+$("#datepicker").val();	
-	  
+          {# Используй {{ path('profile_admin_scores', {'date' : '2013-10-25'}) }} #}
 	  });
 	  
 	});

@@ -1,0 +1,7 @@
+<div>
+{{ russian_date(e.object.createdDate) }}
+вы получили
+{{ e.object.scores }}
+за вопрос
+<a href="{{ path('show_question', {id: e.object.id}) }}"><span>{{ e.object.title }}</span></a>
+</div>

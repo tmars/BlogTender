@@ -112,12 +112,10 @@ class ProfileAdminController extends Base\BaseUserController
 		$prev->modify('-1 day');
 		$prev = $prev->format('Y-m-d');
 
-		$scoreGroups = array();
+        $events = $this->getRepository('ScoreObject')->getScoreEvents($user, $dateObj);
+        $scoreGroups = $this->getRepository('ScoreObject')->getScoresByGroups($user, $dateObj);
 
-        $events = $this->getRepository('ScoreObject')->getScoreEvents($user, $date);
-        $scoreGroups = $this->getRepository('ScoreObject')->getScoresByGroups($user, $date);
-
-		return $this->render("ProfileAdmin:scores.html.twig", array(
+        return $this->render("ProfileAdmin:scores.html.twig", array(
 			"types" => $scoreGroups,
 			'next' => $next,
 			'prev' => $prev,

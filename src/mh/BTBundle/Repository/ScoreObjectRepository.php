@@ -7,16 +7,26 @@ use mh\BTBundle\Entity\EventCounter;
 
 class ScoreObjectRepository extends BaseRepository
 {
-    private function getByUserOnDate($user, $date)
+    private function getByUserOnDate($user, $date = NULL)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $query = $qb->select('s')
+        $qb->select('s')
             ->from('BTBundle:ScoreObject', 's')
             ->where('s.user = ?1')
-            //->andWhere('s.createdDate = ?2')
-            ->setParameters(array(1 => $user, /*2 => $date*/))
-            ->getQuery();
+            ->setParameter(1, $user)
+            ->orderBy('s.id', 'DESC');
 
+        if ($date !== NULL) {
+            $next = new \DateTime($date->format('Y-m-d'));
+            $next->modify('+1 day');
+
+            $qb
+                ->andWhere('s.createdDate >= ?2')
+                ->andWhere('s.createdDate < ?3')
+                ->setParameter(2, $date->format('Y-m-d'))
+                ->setParameter(3, $next->format('Y-m-d'));
+        }
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
@@ -26,7 +36,7 @@ class ScoreObjectRepository extends BaseRepository
     //            'object' => $object
     //      ),
     // ...);
-    public function getScoreEvents($user, $date)
+    public function getScoreEvents($user, $date = NULL)
     {
         $em = $this->getEntityManager();
 
@@ -38,9 +48,9 @@ class ScoreObjectRepository extends BaseRepository
             $events[$so->getId()]['score'] = $so;
         }
 
-        $qb = $em->createQueryBuilder();
         foreach ($objectQueries as $entityName => $scoreObjectIds) {
-           $query = $qb->select('o')
+            $qb = $em->createQueryBuilder();
+            $query = $qb->select('o')
                 ->from('BTBundle:'.$entityName, 'o')
                 ->where('o.scoreObject in (?1)')
                 ->setParameters(array(1 => $scoreObjectIds))
@@ -54,7 +64,7 @@ class ScoreObjectRepository extends BaseRepository
         return $events;
     }
 
-    public function getScoresByGroups($user, $date)
+    public function getScoresByGroups($user, $date = NULL)
     {
         $groups = array();
         foreach ($this->getByUserOnDate($user, $date) as $so) {

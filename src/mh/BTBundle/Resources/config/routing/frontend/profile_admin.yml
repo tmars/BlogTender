@@ -6,9 +6,9 @@ _profile_admin_question:
     
 profile_admin_scores:
     pattern:  /profile/scores/{date}/
-    defaults: { _controller: BTBundle:Frontend\ProfileAdmin:scores, date: 'now' }    
+    defaults: { _controller: BTBundle:Frontend\ProfileAdmin:scores, date: 'today' }
     requirements:
-        date: now|\d\d\d\d-\d\d-\d\d
+        date: today|\d\d\d\d-\d\d-\d\d
         
 profile_admin_edit:
     pattern:  /profile/edit/
