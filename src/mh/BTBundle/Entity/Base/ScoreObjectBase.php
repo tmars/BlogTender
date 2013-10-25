@@ -7,31 +7,36 @@ namespace mh\BTBundle\Entity\Base;
  */
 class ScoreObjectBase
 {
-    private function sd()
-    {
-        $obj = new \mh\BTBundle\Entity\ScoreObject();
-        $obj->setObjectType($this->objectType);
-        $obj->setUser($this->getUser());
-        $obj->setCreatedDate($this->getCreatedDate());
-        $this->setScoreObject($obj);
-    }
-
     public function prePersist()
     {
         $this->sd();
     }
 
+    private function sd()
+    {
+        $className = get_class($this);
+        $className = substr($className, strrpos($className, '\\') + 1);
+
+        $obj = new \mh\BTBundle\Entity\ScoreObject();
+        $obj->setObjectType($className);
+        $obj->setUser($this->getUser());
+        $obj->setCreatedDate($this->getCreatedDate());
+        $obj->setScores(10);
+
+        $this->setScoreObject($obj);
+    }
+
     public function getScores()
     {
         if ($this->getScoreObject() === NULL) {
-            return -1;
+            return 0;
         }
         return $this->getScoreObject()->getScores();
     }
 
     public function setScores($scores)
     {
-        if ( ! $this->getScoreObject()) {
+        if ($this->getScoreObject() === NULL) {
             $this->sd();
         }
         $this->getScoreObject()->setScores($scores);

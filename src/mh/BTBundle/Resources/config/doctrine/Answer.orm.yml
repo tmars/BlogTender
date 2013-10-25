@@ -57,7 +57,7 @@ mh\BTBundle\Entity\Answer:
             orphanRemoval: false
         contentObject:
             targetEntity: ContentObject
-            cascade: [ persist ]
+            cascade: [ persist, remove ]
             joinColumns:
                 content_object_id:
                     referencedColumnName: id

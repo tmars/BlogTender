@@ -9,6 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ScoreObject
 {
+    public static function getTrackedEntityNames()
+    {
+        return array(
+            'Post',
+            'Answer',
+            'Question',
+        );
+    }
+
     /**
      * @ORM\PrePersist
      */
@@ -33,6 +42,11 @@ class ScoreObject
      * @var \DateTime
      */
     private $createdDate;
+
+    /**
+     * @var integer
+     */
+    private $targetId;
 
     /**
      * @var integer
@@ -99,6 +113,29 @@ class ScoreObject
     public function getCreatedDate()
     {
         return $this->createdDate;
+    }
+
+    /**
+     * Set targetId
+     *
+     * @param integer $targetId
+     * @return ScoreObject
+     */
+    public function setTargetId($targetId)
+    {
+        $this->targetId = $targetId;
+    
+        return $this;
+    }
+
+    /**
+     * Get targetId
+     *
+     * @return integer 
+     */
+    public function getTargetId()
+    {
+        return $this->targetId;
     }
 
     /**

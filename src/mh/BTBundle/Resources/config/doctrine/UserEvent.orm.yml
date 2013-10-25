@@ -19,6 +19,11 @@ mh\BTBundle\Entity\UserEvent:
             length: 32
             fixed: false
             column: event_type
+        objectType:
+            type: string
+            length: 32
+            fixed: false
+            column: object_type
         createdDate:
             type: datetime
             nullable: false

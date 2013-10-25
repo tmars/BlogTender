@@ -14,12 +14,14 @@ class EventsList
 
 	const ADDED_POST = 'added_post';
 	const PUBLISHED_POST = 'published_post';
-	const UNPUBLISHED_POST = 'unpublished_post';
-	const ADDED_QUESTION = 'added_question';
-    const ADDED_ANSWER = 'added_answer';
+    const UNPUBLISHED_POST = 'unpublished_post';
     const LIKE_POST = 'like_post';
-    const LIKE_ANSWER = 'like_answer';
+
+    const ADDED_QUESTION = 'added_question';
     const LIKE_QUESTION = 'like_question';
+
+    const ADDED_ANSWER = 'added_answer';
+    const LIKE_ANSWER = 'like_answer';
 
 	public function __construct($em)
 	{
@@ -28,8 +30,12 @@ class EventsList
 
 	public function happened($type, $object)
 	{
+        $className = get_class($object);
+        $className = substr($className, strrpos($className, '\\') + 1);
+
         $event = new Entity\UserEvent();
         $event->setEventType($type);
+        $event->setObjectType($className);
         $event->setTargetId($object->getId());
         $this->em->persist($event);
         $this->em->flush();

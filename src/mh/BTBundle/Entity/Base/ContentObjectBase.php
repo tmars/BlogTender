@@ -9,13 +9,17 @@ class ContentObjectBase extends ScoreObjectBase
 {
     public function prePersist()
     {
+        $className = get_class($this);
+        $className = substr($className, strrpos($className, '\\') + 1);
+
         $obj = new \mh\BTBundle\Entity\ContentObject();
 	    $obj->setComplaintsCount(0);
 		$obj->setLikesCount(0);
-        $obj->setObjectType($this->objectType);
+        $obj->setObjectType($className);
         $this->setContentObject($obj);
 
 		$this->setIsPublished(true);
+        parent::prePersist();
 	}
 
     public function incComplaintsCount($v = 1)

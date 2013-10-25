@@ -98,7 +98,7 @@ mh\BTBundle\Entity\Post:
             orphanRemoval: false
     oneToOne:
         scoreObject:
-            cascade: [ persist ]
+            cascade: [ persist, remove ]
             targetEntity: ScoreObject
             joinColumns:
                 score_object_id:
@@ -106,7 +106,7 @@ mh\BTBundle\Entity\Post:
                     nullable: false
             orphanRemoval: false
         contentObject:
-            cascade: [ persist ]
+            cascade: [ persist, remove ]
             targetEntity: ContentObject
             joinColumns:
                 content_object_id:

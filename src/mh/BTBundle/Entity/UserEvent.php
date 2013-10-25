@@ -9,6 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserEvent
 {
+    public static function getTrackedEntityNames()
+    {
+        return array(
+            'Post',
+            'Answer',
+            'Question',
+        );
+    }
+
 	/**
      * @ORM\PrePersist
      */
@@ -18,6 +27,7 @@ class UserEvent
     }
 
     /*--------------------------------------------------------------------------*/
+
     /**
      * @var integer
      */
@@ -32,6 +42,11 @@ class UserEvent
      * @var string
      */
     private $eventType;
+
+    /**
+     * @var string
+     */
+    private $objectType;
 
     /**
      * @var \DateTime
@@ -93,6 +108,29 @@ class UserEvent
     public function getEventType()
     {
         return $this->eventType;
+    }
+
+    /**
+     * Set objectType
+     *
+     * @param string $objectType
+     * @return UserEvent
+     */
+    public function setObjectType($objectType)
+    {
+        $this->objectType = $objectType;
+    
+        return $this;
+    }
+
+    /**
+     * Get objectType
+     *
+     * @return string 
+     */
+    public function getObjectType()
+    {
+        return $this->objectType;
     }
 
     /**

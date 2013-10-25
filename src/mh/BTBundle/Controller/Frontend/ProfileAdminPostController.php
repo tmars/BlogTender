@@ -90,7 +90,7 @@ class ProfileAdminPostController extends Base\BaseUserController
 
 		$posts = $this->getPaginated($query, $this->container->getParameter('count_post_per_page'));
 
-		return $this->render("ProfileAdminPost:list.html.twig", array(
+        return $this->render("ProfileAdminPost:list.html.twig", array(
 			'posts' => $posts,
 		));
     }

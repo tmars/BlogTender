@@ -10,9 +10,7 @@ use mh\BTBundle\DBAL\ModerationStatusType;
  */
 class Post extends Base\ContentObjectBase
 {
-    protected  $objectType = 'Post';
-
-	/**
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()

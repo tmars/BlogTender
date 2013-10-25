@@ -19,6 +19,11 @@ mh\BTBundle\Entity\ScoreObject:
             type: datetime
             nullable: false
             column: created_date
+        targetId:
+            type: integer
+            unsigned: false
+            nullable: true
+            column: target_id
         scores:
             type: smallint
             columnDefinition: SMALLINT NOT NULL DEFAULT '0'
